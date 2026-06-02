@@ -2,11 +2,41 @@
   background: var(--clr-footer-bg);
   margin-top: auto;
 
+  /* ======================================================
+     Рядок посилань верхнього меню
+     ====================================================== */
+  &__nav-row {
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    padding-block: var(--space-3);
+  }
+
+  &__nav-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    justify-content: center;
+  }
+
+  &__nav-link {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: rgba(255,255,255,.45);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+    white-space: nowrap;
+
+    &:hover { color: var(--clr-primary); }
+  }
+
+  /* ======================================================
+     Основна сітка
+     ====================================================== */
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-8);
-    padding-block: var(--space-12);
+    padding-block: var(--space-10);
 
     @media (min-width: 768px)  { grid-template-columns: repeat(3, 1fr); }
     @media (min-width: 1200px) { grid-template-columns: repeat(5, 1fr); }
@@ -28,7 +58,6 @@
     position: relative;
     padding-bottom: var(--space-2);
 
-    /* золота лінія під заголовком */
     &::after {
       content: '';
       position: absolute;
@@ -74,10 +103,9 @@
     font-size: var(--fs-2xl);
     font-weight: var(--fw-bold);
     color: var(--clr-primary);
-    transition: color var(--transition-fast);
     line-height: 1;
     letter-spacing: -.02em;
-
+    transition: color var(--transition-fast);
     &:hover { color: var(--clr-primary-dark); }
   }
 
@@ -102,7 +130,6 @@
     &:hover {
       border-color: var(--clr-primary) !important;
       background: rgba(201,168,76,.1) !important;
-      color: var(--clr-primary) !important;
     }
   }
 

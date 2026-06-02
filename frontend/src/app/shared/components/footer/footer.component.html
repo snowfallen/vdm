@@ -1,4 +1,21 @@
 <footer class="footer">
+
+  <!-- ======================================================
+       Рядок з посиланнями верхнього меню (для мобілі особливо)
+       ====================================================== -->
+  <div class="footer__nav-row">
+    <div class="container footer__nav-inner">
+      <a *ngFor="let link of topLinks"
+         [routerLink]="link.path"
+         class="footer__nav-link">
+        {{ link.label }}
+      </a>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       Основна сітка футера
+       ====================================================== -->
   <div class="container footer__grid">
 
     <!-- Компанія -->
@@ -14,8 +31,8 @@
     <!-- Телефон -->
     <div class="footer__col">
       <p class="footer__heading">ТЕЛЕФОН</p>
-      <a [href]="phones.main.href"   class="footer__link">{{ phones.main.label }}</a>
-      <a [href]="phones.email.href"  class="footer__link">{{ phones.email.label }}</a>
+      <a [href]="phones.main.href"  class="footer__link">{{ phones.main.label }}</a>
+      <a [href]="phones.email.href" class="footer__link">{{ phones.email.label }}</a>
     </div>
 
     <!-- Доп. телефони -->
@@ -52,7 +69,7 @@
 
   </div>
 
-  <!-- Підвал -->
+  <!-- Bottom bar -->
   <div class="footer__bottom">
     <div class="container footer__bottom-inner">
       <p class="footer__copy">
@@ -73,4 +90,5 @@
       </div>
     </div>
   </div>
+
 </footer>

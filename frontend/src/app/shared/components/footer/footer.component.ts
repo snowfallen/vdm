@@ -1,15 +1,27 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
   readonly currentYear = new Date().getFullYear();
+
+  // Ті самі посилання що і у верхньому меню header
+  readonly topLinks = [
+    { label: 'Про нас',            path: '/about' },
+    { label: 'Оплата та доставка', path: '/delivery' },
+    { label: 'Сертифікати',        path: '/certificates' },
+    { label: 'Новини',             path: '/news' },
+    { label: 'Статті',             path: '/articles' },
+    { label: 'Виробники',          path: '/brands' },
+    { label: 'Контакти',           path: '/contacts' },
+  ];
 
   readonly companyLinks = [
     { label: 'Про нас',   path: '/about' },
@@ -18,8 +30,8 @@ export class FooterComponent {
   ];
 
   readonly buyerLinks = [
-    { label: 'Контакти',          path: '/contacts' },
-    { label: 'Постачальникам',    path: '/suppliers' },
+    { label: 'Контакти',       path: '/contacts' },
+    { label: 'Постачальникам', path: '/suppliers' },
   ];
 
   readonly phones = {
@@ -28,8 +40,6 @@ export class FooterComponent {
     mobile: { label: 'моб.: (067) 291-71-79',       href: 'tel:+380672917179' },
     email:  { label: 'e-mail: info@vdm.ua',         href: 'mailto:info@vdm.ua' },
   };
-
-  readonly address = '03162, м. Київ, бульвар Жуля Верна (Ромена Роллана), 3';
 
   readonly workHours = [
     'Пн-Пт 09:00 – 17:30',

@@ -10,6 +10,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: end;   /* кнопка каталогу справа на мобілі */
   }
 
   &__list {
@@ -46,8 +47,7 @@
       transition: all var(--transition-base);
     }
 
-    &:hover,
-    &--active {
+    &:hover, &--active {
       color: var(--clr-nav-hover);
       background: rgba(255,255,255,.05);
       &::after { left: 0; right: 0; }
@@ -69,7 +69,7 @@
   }
 }
 
-/* ---- Єдина мобільна кнопка бургера ---- */
+/* ---- Єдина мобільна кнопка ---- */
 .nav-burger {
   display: none;
   align-items: center;
@@ -86,7 +86,6 @@
   flex-shrink: 0;
 
   &:hover { color: var(--clr-nav-hover); }
-
   @media (max-width: 767px) { display: flex; }
 }
 
@@ -110,9 +109,7 @@
   }
 
   &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding-bottom: var(--space-3);
     margin-bottom: var(--space-4);
     border-bottom: 1px solid var(--clr-border);
@@ -177,28 +174,22 @@
 
 /* ============================================================
    MOBILE BOTTOM SHEET
-   Виїжджає знизу — природніше для пальця
    ============================================================ */
 .mobile-sheet {
-  /* Завжди в DOM, прихований transform щоб Angular encapsulation не заважав */
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  height: 80dvh;           /* 80% висоти екрану */
-  max-height: 600px;
+  height: 88dvh;
   background: var(--clr-surface);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   box-shadow: 0 -8px 40px rgba(0,0,0,.2);
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%);        /* прихований — за межами екрану */
+  transform: translateY(100%);
   transition: transform var(--transition-slow);
 
-  &--open {
-    transform: translateY(0);         /* відкритий */
-  }
+  &--open { transform: translateY(0); }
 
-  /* Декоративна ручка */
   &__handle {
     width: 40px; height: 4px;
     border-radius: var(--radius-full);
@@ -211,7 +202,81 @@
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: env(safe-area-inset-bottom, 16px); /* iPhone нотч */
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  /* Заголовок секції */
+  &__section-title {
+    padding: var(--space-3) var(--space-5) var(--space-2);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--clr-bg);
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  /* Роздільник між секціями */
+  &__divider {
+    height: 8px;
+    background: var(--clr-bg);
+    border-top: 1px solid var(--clr-border);
+    border-bottom: 1px solid var(--clr-border);
+    margin-block: 0;
+  }
+
+  /* Інформаційні посилання */
+  &__links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    display: block;
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-medium);
+    color: var(--clr-text-primary);
+    border-bottom: 1px solid var(--clr-border);
+    transition: all var(--transition-fast);
+
+    &:hover {
+      color: var(--clr-primary);
+      background: var(--clr-primary-light);
+      padding-left: var(--space-6);
+    }
+  }
+
+  /* Авторизація */
+  &__auth {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+
+  &__auth-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    border: 1.5px solid var(--clr-border);
+    color: var(--clr-text-primary);
+    transition: all var(--transition-fast);
+    text-align: center;
+
+    &:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+
+    &--primary {
+      background: var(--clr-primary);
+      border-color: var(--clr-primary);
+      color: #1c1c1c;
+      &:hover { background: var(--clr-primary-dark); border-color: var(--clr-primary-dark); }
+    }
   }
 
   /* Overlay */
@@ -224,10 +289,7 @@
     pointer-events: none;
     transition: opacity var(--transition-slow);
 
-    &--visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    &--visible { opacity: 1; pointer-events: auto; }
   }
 }
 
@@ -236,23 +298,15 @@
   border-bottom: 1px solid var(--clr-border);
 
   &__btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     width: 100%;
     padding: var(--space-4) var(--space-5);
-    font-size: var(--fs-md);
-    font-weight: var(--fw-semibold);
+    font-size: var(--fs-md); font-weight: var(--fw-semibold);
     color: var(--clr-text-primary);
-    background: none; border: none; cursor: pointer;
-    text-align: left;
+    background: none; border: none; cursor: pointer; text-align: left;
     transition: all var(--transition-fast);
 
-    svg {
-      transition: transform var(--transition-base);
-      color: var(--clr-text-muted);
-      flex-shrink: 0;
-    }
+    svg { transition: transform var(--transition-base); color: var(--clr-text-muted); flex-shrink: 0; }
 
     &--open {
       color: var(--clr-primary);
@@ -263,17 +317,13 @@
     &:hover:not(.mobile-cat__btn--open) { background: var(--clr-surface-2); }
   }
 
-  &__sub {
-    background: var(--clr-surface-2);
-    padding: var(--space-2) 0;
-  }
+  &__sub { background: var(--clr-surface-2); padding: var(--space-2) 0; }
 }
 
 .mobile-sub__link {
   display: block;
   padding: var(--space-3) var(--space-5) var(--space-3) var(--space-8);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm); font-weight: var(--fw-semibold);
   color: var(--clr-text-primary);
   border-left: 3px solid transparent;
   transition: all var(--transition-fast);
@@ -290,8 +340,7 @@
 .mobile-group__link {
   display: block;
   padding: var(--space-2) var(--space-5) var(--space-2) calc(var(--space-8) + var(--space-4));
-  font-size: var(--fs-sm);
-  color: var(--clr-text-secondary);
+  font-size: var(--fs-sm); color: var(--clr-text-secondary);
   transition: color var(--transition-fast);
 
   &::before { content: '· '; color: var(--clr-primary); opacity: .5; }
