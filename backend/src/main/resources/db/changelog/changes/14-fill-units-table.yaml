@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-units-table
+      author: snowfall
+      changes:
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: symbol, value: "мм" }
+              - column: { name: description, value: "міліметри" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: symbol, value: "м" }
+              - column: { name: description, value: "метри" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: symbol, value: "мл" }
+              - column: { name: description, value: "мілілітри" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: symbol, value: "л" }
+              - column: { name: description, value: "літри" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: symbol, value: "кг" }
+              - column: { name: description, value: "кілограми" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: symbol, value: "W" }
+              - column: { name: description, value: "вати" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: symbol, value: "V" }
+              - column: { name: description, value: "вольти" }
+        - insert:
+            tableName: units
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: symbol, value: "N" }
+              - column: { name: description, value: "ньютони" }

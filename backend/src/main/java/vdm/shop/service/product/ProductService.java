@@ -3,6 +3,7 @@ package vdm.shop.service.product;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import vdm.shop.dto.product.ProductFilterRequestDto;
 import vdm.shop.dto.product.ProductRequestDto;
 import vdm.shop.dto.product.ProductResponseDto;
 
@@ -18,4 +19,14 @@ public interface ProductService {
     ProductResponseDto update(Long id, ProductRequestDto requestDto);
 
     ProductResponseDto delete(Long id);
+
+    // Фільтрація через Specification
+    Page<ProductResponseDto> getByFilter(ProductFilterRequestDto filter, Pageable pageable);
+
+    // Пошук по назві + атрибутах
+    Page<ProductResponseDto> search(String query, Pageable pageable);
+
+    ProductResponseDto getNewArrivals(int size);
+
+    ProductResponseDto getBestsellers(int size);
 }

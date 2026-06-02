@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-units-table
+      author: snowfall
+      changes:
+        - createTable:
+            tableName: units
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints: { primaryKey: true, nullable: false }
+              - column:
+                  name: symbol
+                  type: varchar(20)
+                  constraints: { nullable: false, unique: true }
+              - column:
+                  name: description
+                  type: varchar(255)

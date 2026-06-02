@@ -23,3 +23,15 @@ databaseChangeLog:
       file: db/changelog/changes/11-create-products-table.yaml
   - include:
       file: db/changelog/changes/12-fill-catalog-data.yaml
+  - include:
+      file: db/changelog/changes/13-create-units-table.yaml
+  - include:
+      file: db/changelog/changes/14-fill-units-table.yaml
+  - include:
+      file: db/changelog/changes/15-create-attributes-table.yaml
+  - include:
+      file: db/changelog/changes/16-fill-attributes-table.yaml
+  - include:
+      file: db/changelog/changes/17-create-attribute-options-table.yaml
+  - include:
+      file: db/changelog/changes/18-create-product-attributes-table.yaml
