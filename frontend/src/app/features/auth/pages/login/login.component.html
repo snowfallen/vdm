@@ -1,40 +1,74 @@
-<div class="login-container">
-  <div class="logo-container">
-    <a [routerLink]="['/']">
-      <img src="danzig-carpets-logo.webp" alt="dc portal logo" />
-    </a>
+<div class="login-page">
+  <div class="login-card">
+
+    <!-- Header з логотипом -->
+    <div class="login-card__header">
+      <a routerLink="/" class="login-card__logo">
+        <span class="login-card__logo-vdm">ВДМ</span>
+        <span class="login-card__logo-sub">VDM</span>
+      </a>
+      <h1 class="login-card__title">Вхід до кабінету</h1>
+      <p class="login-card__subtitle">Введіть ваші дані для входу</p>
+    </div>
+
+    <!-- Body з формою -->
+    <div class="login-card__body">
+      <div *ngIf="errorMessage" class="server-error">{{ errorMessage }}</div>
+
+      <form [formGroup]="form" (ngSubmit)="login()">
+
+        <!-- Email -->
+        <div class="form-field">
+          <label class="form-field__label" for="email">Email</label>
+          <div class="form-field__wrap">
+            <input id="email"
+                   type="email"
+                   class="form-field__input"
+                   [class.invalid]="emailInvalid"
+                   formControlName="email"
+                   placeholder="your@email.com"
+                   autocomplete="email" />
+          </div>
+          <span *ngIf="emailInvalid" class="form-field__error">
+            Введіть коректний email
+          </span>
+        </div>
+
+        <!-- Пароль -->
+        <div class="form-field">
+          <label class="form-field__label" for="password">Пароль</label>
+          <div class="form-field__wrap">
+            <input id="password"
+                   [type]="passwordFieldType"
+                   class="form-field__input form-field__input--password"
+                   [class.invalid]="passwordInvalid"
+                   formControlName="password"
+                   placeholder="Мінімум 8 символів"
+                   autocomplete="current-password" />
+            <button type="button"
+                    class="form-field__toggle"
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="passwordFieldType === 'password' ? 'Показати пароль' : 'Приховати пароль'">
+              <i [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <span *ngIf="passwordInvalid" class="form-field__error">
+            Пароль обов'язковий
+          </span>
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="form.invalid">
+          Увійти
+        </button>
+
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-card__footer">
+      Ще немає акаунту?
+      <a routerLink="/register">Зареєструватися</a>
+    </div>
+
   </div>
-  <form [formGroup]="form" (ngSubmit)="login()">
-    <div class="form-group">
-      <input
-        id="email"
-        type="text"
-        formControlName="email"
-        [placeholder]="emailInvalid ? 'Email jest wymagany i musi być poprawny!' : 'Email'"
-        [class.invalid]="emailInvalid"
-        name="email"
-        autocomplete="email"
-        required
-      />
-    </div>
-    <div class="form-group password-container">
-      <input
-        id="password"
-        [type]="passwordFieldType"
-        formControlName="password"
-        [placeholder]="passwordInvalid ? 'Hasło jest wymagane!' : 'Hasło'"
-        [class.invalid]="passwordInvalid"
-        autocomplete="current-password"
-        required
-      />
-      <div class="toggle-password" (click)="togglePasswordVisibility()">
-        <i
-          class="eye-icon"
-          [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"
-        ></i>
-      </div>
-    </div>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <button type="submit" [disabled]="form.invalid">Login</button>
-  </form>
 </div>

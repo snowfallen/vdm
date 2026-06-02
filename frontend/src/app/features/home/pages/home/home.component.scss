@@ -1,10 +1,9 @@
 /* ============================================================
-   HERO SLIDER
+   HERO SLIDER — gold theme
    ============================================================ */
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--clr-text-primary);
 
   &__slides {
     position: relative;
@@ -24,21 +23,18 @@
     background-size: cover;
     background-position: center;
 
-    /* Кольоровий overlay замість зображень (поки немає реальних фото) */
+    /* Темні теплі градієнти під золоту тему */
     &--slide-main {
-      background: linear-gradient(135deg, #0f1729 0%, #1a56db 60%, #1240a8 100%);
+      background: linear-gradient(135deg, #1a1209 0%, #2e1f07 40%, #1c1c1c 100%);
     }
     &--slide-lighting {
-      background: linear-gradient(135deg, #1c1c3a 0%, #2d3a8c 50%, #1a56db 100%);
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1209 50%, #2e1f07 100%);
     }
     &--slide-wardrobe {
-      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      background: linear-gradient(135deg, #111008 0%, #1e1a0f 50%, #2a2215 100%);
     }
 
-    &--active {
-      opacity: 1;
-      z-index: 1;
-    }
+    &--active { opacity: 1; z-index: 1; }
   }
 
   &__content {
@@ -46,22 +42,20 @@
     z-index: 2;
   }
 
-  &__text {
-    max-width: 560px;
-  }
+  &__text { max-width: 560px; }
 
   &__subtitle {
-    font-size: var(--fs-sm);
-    font-weight: var(--fw-medium);
-    color: var(--clr-accent);
-    letter-spacing: .08em;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-primary);
+    letter-spacing: .14em;
     text-transform: uppercase;
     margin-bottom: var(--space-3);
   }
 
   &__title {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
     font-weight: var(--fw-bold);
     color: #fff;
     line-height: var(--lh-tight);
@@ -69,10 +63,19 @@
   }
 
   &__cta {
-    font-size: var(--fs-md) !important;
-    padding: var(--space-4) var(--space-8) !important;
+    font-size: var(--fs-sm) !important;
+    font-weight: var(--fw-semibold) !important;
+    padding: var(--space-3) var(--space-8) !important;
     border-radius: var(--radius-full) !important;
-    box-shadow: 0 8px 24px rgba(26,86,219,.4);
+    background: var(--clr-primary) !important;
+    color: #1c1c1c !important;
+    box-shadow: 0 6px 20px rgba(201,168,76,.35);
+
+    &:hover {
+      background: var(--clr-primary-dark) !important;
+      box-shadow: 0 8px 24px rgba(201,168,76,.45);
+      transform: translateY(-2px);
+    }
   }
 
   /* Dots */
@@ -87,18 +90,18 @@
   }
 
   &__dot {
-    width: 8px; height: 8px;
+    width: 6px; height: 6px;
     border-radius: var(--radius-full);
-    background: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.3);
     transition: all var(--transition-base);
     border: none;
 
     &--active {
-      width: 24px;
-      background: #fff;
+      width: 20px;
+      background: var(--clr-primary);
     }
 
-    &:hover { background: rgba(255,255,255,.7); }
+    &:hover { background: rgba(255,255,255,.6); }
   }
 }
 
@@ -117,7 +120,7 @@
 
     @media (max-width: 575px) {
       grid-template-columns: 1fr;
-      gap: var(--space-3);
+      gap: 0;
     }
   }
 
@@ -126,25 +129,26 @@
     align-items: center;
     gap: var(--space-4);
     justify-content: center;
+    padding-block: var(--space-2);
 
     @media (max-width: 575px) {
       justify-content: flex-start;
-      padding-left: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--clr-border);
+
+      &:last-child { border-bottom: none; }
     }
 
     &:not(:last-child) {
       border-right: 1px solid var(--clr-border);
 
-      @media (max-width: 575px) {
-        border-right: none;
-        border-bottom: 1px solid var(--clr-border);
-        padding-bottom: var(--space-3);
-      }
+      @media (max-width: 575px) { border-right: none; }
     }
   }
 
   &__icon {
-    color: var(--clr-text-muted);
+    color: var(--clr-primary);
+    opacity: .7;
     flex-shrink: 0;
   }
 
@@ -171,7 +175,7 @@
 }
 
 /* ============================================================
-   КАРТКА — ПЛЕЙСХОЛДЕР (без зображення)
+   КАРТКА — ПЛЕЙСХОЛДЕР
    ============================================================ */
 .product-card__placeholder {
   display: flex;
@@ -184,13 +188,22 @@
 }
 
 /* ============================================================
-   ПІДПИСКА
+   ПІДПИСКА — gold theme
    ============================================================ */
 .newsletter {
-  background: linear-gradient(135deg, var(--clr-primary-light) 0%, #fff 100%);
-  border-top: 1px solid var(--clr-border);
-  border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-nav-bg);
   padding-block: var(--space-10);
+  position: relative;
+  overflow: hidden;
+
+  /* декоративна лінія зліва */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--clr-primary);
+  }
 
   &__inner {
     display: flex;
@@ -211,13 +224,13 @@
     font-family: var(--font-display);
     font-size: var(--fs-2xl);
     font-weight: var(--fw-bold);
-    color: var(--clr-text-primary);
+    color: #fff;
     margin-bottom: var(--space-1);
   }
 
   &__sub {
     font-size: var(--fs-sm);
-    color: var(--clr-text-muted);
+    color: rgba(255,255,255,.5);
   }
 
   &__form {
@@ -226,7 +239,27 @@
     flex: 1;
     flex-wrap: wrap;
 
-    .input { flex: 1; min-width: 140px; }
+    .input {
+      flex: 1;
+      min-width: 140px;
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.12);
+      color: #fff;
+
+      &::placeholder { color: rgba(255,255,255,.35); }
+      &:focus {
+        border-color: var(--clr-primary);
+        background: rgba(255,255,255,.12);
+        box-shadow: 0 0 0 3px rgba(201,168,76,.15);
+      }
+    }
+
+    .btn--primary {
+      background: var(--clr-primary);
+      color: #1c1c1c;
+      font-weight: var(--fw-bold);
+      &:hover { background: var(--clr-primary-dark); }
+    }
 
     @media (max-width: 767px) {
       width: 100%;
@@ -241,7 +274,7 @@
 .partners-grid {
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
 }
 
 .partner-card {
@@ -253,11 +286,11 @@
   border-radius: var(--radius-lg);
   background: var(--clr-surface);
   transition: all var(--transition-base);
-  min-height: 64px;
+  min-height: 60px;
 
   &:hover {
     border-color: var(--clr-primary);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(201,168,76,.15);
     transform: translateY(-2px);
   }
 
@@ -266,5 +299,8 @@
     font-weight: var(--fw-semibold);
     color: var(--clr-text-secondary);
     text-align: center;
+    transition: color var(--transition-fast);
   }
+
+  &:hover &__name { color: var(--clr-primary); }
 }

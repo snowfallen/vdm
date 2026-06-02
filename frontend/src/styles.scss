@@ -9,41 +9,41 @@
    ТЕМА 1 — АКТИВНА: Корпоративний синій (сучасний, чистий)
    Відчуття: надійність, професіоналізм, Blum/GTV стиль
    ============================================================ */
-:root {
-  /* --- Кольори --- */
-  --clr-primary:        #1a56db;   /* синій акцент */
-  --clr-primary-dark:   #1240a8;   /* hover стан */
-  --clr-primary-light:  #e8effd;   /* фон бейджів, чіпів */
-  --clr-accent:         #f5a623;   /* жовтий — NEW / TOP бейджі */
-  --clr-accent-dark:    #d4891a;
-
-  --clr-bg:             #f8f9fc;   /* фон сторінки */
-  --clr-surface:        #ffffff;   /* картки, хедер */
-  --clr-surface-2:      #f1f3f8;   /* hover рядки, секції */
-  --clr-border:         #e2e6f0;   /* лінії, роздільники */
-
-  --clr-nav-bg:         #1240a8;   /* фон навбару категорій */
-  --clr-nav-text:       #ffffff;
-  --clr-nav-hover:      #f5a623;   /* жовтий hover в навбарі */
-
-  --clr-text-primary:   #0f1729;   /* заголовки */
-  --clr-text-secondary: #4a5568;   /* описи */
-  --clr-text-muted:     #8a94a8;   /* підписи, плейсхолдери */
-
-  --clr-success:        #22c55e;
-  --clr-danger:         #ef4444;
-
-  /* --- Футер --- */
-  --clr-footer-bg:      #0f1729;
-  --clr-footer-text:    #a0aec0;
-  --clr-footer-heading: #ffffff;
-}
+//:root {
+//  /* --- Кольори --- */
+//  --clr-primary:        #1a56db;   /* синій акцент */
+//  --clr-primary-dark:   #1240a8;   /* hover стан */
+//  --clr-primary-light:  #e8effd;   /* фон бейджів, чіпів */
+//  --clr-accent:         #f5a623;   /* жовтий — NEW / TOP бейджі */
+//  --clr-accent-dark:    #d4891a;
+//
+//  --clr-bg:             #f8f9fc;   /* фон сторінки */
+//  --clr-surface:        #ffffff;   /* картки, хедер */
+//  --clr-surface-2:      #f1f3f8;   /* hover рядки, секції */
+//  --clr-border:         #e2e6f0;   /* лінії, роздільники */
+//
+//  --clr-nav-bg:         #1240a8;   /* фон навбару категорій */
+//  --clr-nav-text:       #ffffff;
+//  --clr-nav-hover:      #f5a623;   /* жовтий hover в навбарі */
+//
+//  --clr-text-primary:   #0f1729;   /* заголовки */
+//  --clr-text-secondary: #4a5568;   /* описи */
+//  --clr-text-muted:     #8a94a8;   /* підписи, плейсхолдери */
+//
+//  --clr-success:        #22c55e;
+//  --clr-danger:         #ef4444;
+//
+//  /* --- Футер --- */
+//  --clr-footer-bg:      #0f1729;
+//  --clr-footer-text:    #a0aec0;
+//  --clr-footer-heading: #ffffff;
+//}
 
 /* ============================================================
    ТЕМА 2 — ЗАКОМЕНТОВАНА: Темний графіт + Золото (преміум)
    Відчуття: luxury, дизайнерські меблі, ексклюзивність
    ============================================================ */
-/*
+
 :root {
   --clr-primary:        #c9a84c;
   --clr-primary-dark:   #a8872d;
@@ -71,7 +71,7 @@
   --clr-footer-text:    #9c9488;
   --clr-footer-heading: #ffffff;
 }
-*/
+
 
 /* ============================================================
    ТИПОГРАФІКА

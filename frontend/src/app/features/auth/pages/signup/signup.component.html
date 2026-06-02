@@ -1,95 +1,199 @@
-<div class="signup-container">
-  <div class="signup-panel">
-    <h2>Utwórz konto klienta</h2> <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" autocomplete="off">
+<div class="login-page">
+  <div class="login-card">
 
-    <h3 class="section-title">Dane logowania</h3>
-    <div formGroupName="userRegistrationData" class="form-grid">
-      <div class="form-item">
-        <label for="firstName">Imię:</label>
-        <input id="firstName" formControlName="firstName" [class.invalid]="firstNameInvalid" [placeholder]="firstNameInvalid ? 'Imię jest wymagane!' : 'Twoje imię'" />
-        <div *ngIf="firstNameInvalid" class="error-message">Imię jest wymagane.</div>
-      </div>
-      <div class="form-item">
-        <label for="lastName">Nazwisko:</label>
-        <input id="lastName" formControlName="lastName" [class.invalid]="lastNameInvalid" [placeholder]="lastNameInvalid ? 'Nazwisko jest wymagane!' : 'Twoje nazwisko'" />
-        <div *ngIf="lastNameInvalid" class="error-message">Nazwisko jest wymagane.</div>
-      </div>
-      <div class="form-item">
-        <label for="email">Email:</label>
-        <input id="email" formControlName="email" [class.invalid]="emailInvalid" [placeholder]="emailInvalid ? 'Email jest wymagany!' : 'twoj.email@example.com'" autocomplete="off" type="email" />
-        <div *ngIf="emailInvalid" class="error-message">
-          <span *ngIf="userEmail?.errors?.['required']">Email jest wymagany.</span>
-          <span *ngIf="userEmail?.errors?.['email']">Wprowadź poprawny adres email.</span>
+    <!-- Header -->
+    <div class="login-card__header">
+      <a routerLink="/" class="login-card__logo">
+        <span class="login-card__logo-vdm">ВДМ</span>
+        <span class="login-card__logo-sub">VDM</span>
+      </a>
+      <h1 class="login-card__title">Створити акаунт</h1>
+      <p class="login-card__subtitle">Заповніть дані для реєстрації</p>
+    </div>
+
+    <!-- Body -->
+    <div class="login-card__body">
+      <div *ngIf="errorMessage" class="server-error">{{ errorMessage }}</div>
+
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+        <!-- ======= СЕКЦІЯ: Дані входу ======= -->
+        <div class="form-section" formGroupName="userRegistrationData">
+          <p class="form-section__title">Дані входу</p>
+
+          <div class="form-grid">
+
+            <div class="form-field">
+              <label class="form-field__label" for="firstName">Ім'я</label>
+              <input id="firstName"
+                     class="form-field__input"
+                     [class.invalid]="firstNameInvalid"
+                     formControlName="firstName"
+                     placeholder="Ваше ім'я" />
+              <span *ngIf="firstNameInvalid" class="form-field__error">Ім'я обов'язкове</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="lastName">Прізвище</label>
+              <input id="lastName"
+                     class="form-field__input"
+                     [class.invalid]="lastNameInvalid"
+                     formControlName="lastName"
+                     placeholder="Ваше прізвище" />
+              <span *ngIf="lastNameInvalid" class="form-field__error">Прізвище обов'язкове</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="email">Email</label>
+              <input id="email"
+                     type="email"
+                     class="form-field__input"
+                     [class.invalid]="emailInvalid"
+                     formControlName="email"
+                     placeholder="your@email.com"
+                     autocomplete="off" />
+              <span *ngIf="emailInvalid" class="form-field__error">
+                <ng-container *ngIf="userEmail?.errors?.['required']">Email обов'язковий</ng-container>
+                <ng-container *ngIf="userEmail?.errors?.['email']">Некоректний email</ng-container>
+              </span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="phoneNumber">Телефон</label>
+              <input id="phoneNumber"
+                     class="form-field__input"
+                     [class.invalid]="phoneNumberInvalid"
+                     formControlName="phoneNumber"
+                     placeholder="+380 XX XXX XX XX" />
+              <span *ngIf="phoneNumberInvalid" class="form-field__error">Телефон обов'язковий</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="password">Пароль</label>
+              <div class="form-field__wrap">
+                <input id="password"
+                       [type]="passwordFieldType"
+                       class="form-field__input form-field__input--password"
+                       [class.invalid]="passwordInvalid"
+                       formControlName="password"
+                       placeholder="Мінімум 8 символів"
+                       autocomplete="new-password" />
+                <button type="button" class="form-field__toggle"
+                        (click)="togglePasswordVisibility()">
+                  <i [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+              <span *ngIf="passwordInvalid" class="form-field__error">
+                <ng-container *ngIf="userPassword?.errors?.['required']">Пароль обов'язковий</ng-container>
+                <ng-container *ngIf="userPassword?.errors?.['minlength']">Мінімум 8 символів</ng-container>
+              </span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="repeatPassword">Повторіть пароль</label>
+              <div class="form-field__wrap">
+                <input id="repeatPassword"
+                       [type]="passwordFieldType"
+                       class="form-field__input form-field__input--password"
+                       [class.invalid]="repeatPasswordInvalid || !passwordEquals"
+                       formControlName="repeatPassword"
+                       placeholder="Повторіть пароль" />
+                <button type="button" class="form-field__toggle"
+                        (click)="togglePasswordVisibility()">
+                  <i [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+              <span *ngIf="repeatPasswordInvalid" class="form-field__error">
+                <ng-container *ngIf="userRepeatPassword?.errors?.['required']">Підтвердження обов'язкове</ng-container>
+                <ng-container *ngIf="userRepeatPassword?.errors?.['mismatch']">Паролі не збігаються</ng-container>
+              </span>
+            </div>
+
+          </div>
         </div>
-      </div>
-      <div class="form-item">
-        <label for="phoneNumber">Numer telefonu:</label>
-        <input id="phoneNumber" formControlName="phoneNumber" [class.invalid]="phoneNumberInvalid" [placeholder]="phoneNumberInvalid ? 'Telefon jest wymagany!' : '+48 XXX XXX XXX'" />
-        <div *ngIf="phoneNumberInvalid" class="error-message">Numer telefonu jest wymagany.</div>
-      </div>
-      <div class="form-item password-container">
-        <label for="password">Hasło:</label>
-        <input id="password" [type]="passwordFieldType" formControlName="password" [placeholder]="passwordInvalid ? 'Hasło jest wymagane!' : 'Minimum 8 znaków'" [class.invalid]="passwordInvalid" required autocomplete="new-password" />
-        <div class="toggle-password" (click)="togglePasswordVisibility()"> <i class="eye-icon" [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i> </div>
-        <div *ngIf="passwordInvalid" class="error-message">
-          <span *ngIf="userPassword?.errors?.['required']">Hasło jest wymagane.</span>
-          <span *ngIf="userPassword?.errors?.['minlength']">Hasło musi mieć co najmniej 8 znaków.</span>
+
+        <!-- ======= СЕКЦІЯ: Адресні дані ======= -->
+        <div class="form-section" formGroupName="clientData">
+          <p class="form-section__title">Адресні дані</p>
+
+          <div class="form-grid">
+
+            <div class="form-field">
+              <label class="form-field__label" for="country">Країна</label>
+              <input id="country"
+                     class="form-field__input"
+                     [class.invalid]="countryInvalid"
+                     formControlName="country"
+                     placeholder="Наприклад: Україна" />
+              <span *ngIf="countryInvalid" class="form-field__error">Країна обов'язкова</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="city">Місто</label>
+              <input id="city"
+                     class="form-field__input"
+                     [class.invalid]="cityInvalid"
+                     formControlName="city"
+                     placeholder="Наприклад: Київ" />
+              <span *ngIf="cityInvalid" class="form-field__error">Місто обов'язкове</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="street">Вулиця</label>
+              <input id="street"
+                     class="form-field__input"
+                     [class.invalid]="streetInvalid"
+                     formControlName="street"
+                     placeholder="Назва вулиці" />
+              <span *ngIf="streetInvalid" class="form-field__error">Вулиця обов'язкова</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="houseNumber">Будинок</label>
+              <input id="houseNumber"
+                     class="form-field__input"
+                     [class.invalid]="houseNumberInvalid"
+                     formControlName="houseNumber"
+                     placeholder="Номер будинку" />
+              <span *ngIf="houseNumberInvalid" class="form-field__error">Номер будинку обов'язковий</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="apartmentNumber">Квартира <span style="opacity:.5">(не обов'язково)</span></label>
+              <input id="apartmentNumber"
+                     class="form-field__input"
+                     formControlName="apartmentNumber"
+                     placeholder="Номер квартири" />
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="postalCode">Індекс</label>
+              <input id="postalCode"
+                     class="form-field__input"
+                     [class.invalid]="postalCodeInvalid"
+                     formControlName="postalCode"
+                     placeholder="Поштовий індекс" />
+              <span *ngIf="postalCodeInvalid" class="form-field__error">
+                <ng-container *ngIf="clientPostalCode?.errors?.['required']">Індекс обов'язковий</ng-container>
+                <ng-container *ngIf="clientPostalCode?.errors?.['pattern']">Невірний формат індексу</ng-container>
+              </span>
+            </div>
+
+          </div>
         </div>
-      </div>
-      <div class="form-item password-container">
-        <label for="repeatPassword">Powtórz hasło:</label>
-        <input id="repeatPassword" [type]="passwordFieldType" formControlName="repeatPassword" [placeholder]="repeatPasswordInvalid ? 'Powtórzenie hasła jest wymagane!' : 'Powtórz hasło'" [class.invalid]="repeatPasswordInvalid || !passwordEquals" required />
-        <div class="toggle-password" (click)="togglePasswordVisibility()"> <i class="eye-icon" [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i> </div>
-        <div *ngIf="repeatPasswordInvalid" class="error-message">
-          <span *ngIf="userRepeatPassword?.errors?.['required']">Powtórzenie hasła jest wymagane.</span>
-          <span *ngIf="userRepeatPassword?.errors?.['mismatch'] && !userRepeatPassword?.errors?.['required']">Hasła nie są takie same!</span>
-        </div>
-      </div>
+
+        <button type="submit" class="login-btn" [disabled]="registrationForm.invalid">
+          Зареєструватися
+        </button>
+
+      </form>
     </div>
 
-    <h3 class="section-title">Dane adresowe</h3> <div formGroupName="clientData" class="form-grid"> <div class="form-item">
-    <label for="country">Kraj:</label>
-    <input id="country" formControlName="country" [class.invalid]="countryInvalid" [placeholder]="countryInvalid ? 'Kraj jest wymagany!' : 'np. Polska'"/>
-    <div *ngIf="countryInvalid" class="error-message">Kraj jest wymagany.</div>
-  </div>
-    <div class="form-item">
-      <label for="city">Miasto:</label>
-      <input id="city" formControlName="city" [class.invalid]="cityInvalid" [placeholder]="cityInvalid ? 'Miasto jest wymagane!' : 'np. Warszawa'"/>
-      <div *ngIf="cityInvalid" class="error-message">Miasto jest wymagane.</div>
+    <!-- Footer -->
+    <div class="login-card__footer">
+      Вже є акаунт?
+      <a routerLink="/login">Увійти</a>
     </div>
-    <div class="form-item">
-      <label for="street">Ulica:</label>
-      <input id="street" formControlName="street" [class.invalid]="streetInvalid" [placeholder]="streetInvalid ? 'Ulica jest wymagana!' : 'np. Marszałkowska'"/>
-      <div *ngIf="streetInvalid" class="error-message">Ulica jest wymagana.</div>
-    </div>
-    <div class="form-item">
-      <label for="houseNumber">Numer domu:</label>
-      <input id="houseNumber" formControlName="houseNumber" [class.invalid]="houseNumberInvalid" [placeholder]="houseNumberInvalid ? 'Numer domu jest wymagany!' : 'np. 10'"/>
-      <div *ngIf="houseNumberInvalid" class="error-message">Numer domu jest wymagany.</div>
-    </div>
-    <div class="form-item">
-      <label for="apartmentNumber">Numer mieszkania (opcjonalnie):</label>
-      <input id="apartmentNumber" formControlName="apartmentNumber" placeholder="np. 5"/>
-    </div>
-    <div class="form-item">
-      <label for="postalCode">Kod pocztowy:</label>
-      <input id="postalCode" formControlName="postalCode" [class.invalid]="postalCodeInvalid" [placeholder]="postalCodeInvalid ? 'Kod pocztowy jest wymagany!' : 'np. 00-001'"/>
-      <div *ngIf="postalCodeInvalid" class="error-message">
-        <span *ngIf="clientPostalCode?.errors?.['required']">Kod pocztowy jest wymagany.</span>
-        <span *ngIf="clientPostalCode?.errors?.['pattern']">Format kodu pocztowego: XX-XXX.</span>
-      </div>
-    </div>
-  </div>
 
-    <div *ngIf="errorMessage" class="error-message server-error">{{ errorMessage }}</div>
-
-    <div class="actions">
-      <button type="submit" class="submit-btn" [disabled]="registrationForm.invalid">
-        <i class="bi bi-person-plus-fill"></i>
-        Zarejestruj się
-      </button>
-      <a routerLink="/login" class="login-link">Masz już konto? Zaloguj się</a>
-    </div>
-  </form>
   </div>
 </div>

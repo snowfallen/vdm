@@ -1,31 +1,26 @@
 <nav class="nav-menu" aria-label="Каталог товарів" (mouseleave)="onMenuLeave()">
-  <div class="container">
+  <div class="container nav-menu__container">
 
-    <!-- Desktop навбар -->
+    <!-- ====== DESKTOP навбар ====== -->
     <ul class="nav-menu__list" role="menubar">
-
-      <!-- Скелетон при завантаженні -->
       <ng-container *ngIf="isLoading()">
         <li *ngFor="let _ of [1,2,3,4,5]" class="nav-menu__item">
           <div class="nav-menu__skeleton"></div>
         </li>
       </ng-container>
 
-      <!-- Категорії -->
       <li *ngFor="let cat of categories()"
           class="nav-menu__item"
           role="none"
           (mouseenter)="onCategoryEnter(cat)">
-
         <a [routerLink]="['/catalog', cat.id]"
            class="nav-menu__link"
            [class.nav-menu__link--active]="activeCategory()?.id === cat.id"
-           role="menuitem"
-           [attr.aria-haspopup]="cat.subCategories.length > 0"
-           [attr.aria-expanded]="activeCategory()?.id === cat.id">
+           role="menuitem">
           {{ cat.name }}
           <svg *ngIf="cat.subCategories.length > 0"
                class="nav-menu__arrow"
+               [class.nav-menu__arrow--open]="activeCategory()?.id === cat.id"
                width="10" height="10" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="6 9 12 15 18 9"/>
@@ -34,23 +29,28 @@
       </li>
     </ul>
 
-    <!-- ============================================================
-         МЕГА-МЕНЮ ДРОПДАУН
-         ============================================================ -->
+    <!-- ====== MOBILE кнопка "Каталог" ====== -->
+    <button class="nav-burger" (click)="toggleMobileNav()" aria-label="Відкрити каталог">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      Каталог
+    </button>
+
+    <!-- ====== DESKTOP мега-меню ====== -->
     <div class="mega-menu"
          *ngIf="activeCategory() && activeCategory()!.subCategories.length > 0"
-         role="menu"
-         (mouseenter)="onCategoryEnter(activeCategory()!)"
-         [@slideDown]>
-
+         (mouseenter)="onCategoryEnter(activeCategory()!)">
       <div class="container mega-menu__inner">
 
-        <!-- Заголовок категорії -->
         <div class="mega-menu__header">
           <a [routerLink]="['/catalog', activeCategory()!.id]"
              class="mega-menu__cat-title">
             {{ activeCategory()!.name }}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2">
               <path d="m9 18 6-6-6-6"/>
             </svg>
@@ -60,32 +60,27 @@
           </span>
         </div>
 
-        <!-- Сітка: підкатегорії + product groups -->
         <div class="mega-menu__grid">
           <div *ngFor="let sub of activeCategory()!.subCategories"
                class="mega-menu__col">
-
-            <!-- Підкатегорія -->
             <a [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
-               class="mega-menu__sub-title">
+               class="mega-menu__sub-title"
+               (click)="onMenuLeave()">
               {{ sub.name }}
             </a>
-
-            <!-- Product groups (якщо є) -->
-            <ul *ngIf="sub.productGroups.length > 0"
-                class="mega-menu__groups">
+            <ul *ngIf="sub.productGroups.length > 0" class="mega-menu__groups">
               <li *ngFor="let group of sub.productGroups">
                 <a [routerLink]="['/catalog', activeCategory()!.id, sub.id, group.id]"
-                   class="mega-menu__group-link">
+                   class="mega-menu__group-link"
+                   (click)="onMenuLeave()">
                   {{ group.name }}
                 </a>
               </li>
             </ul>
-
-            <!-- Якщо немає груп — посилання на всі товари підкатегорії -->
             <a *ngIf="sub.productGroups.length === 0"
                [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
-               class="mega-menu__all-link">
+               class="mega-menu__all-link"
+               (click)="onMenuLeave()">
               Всі товари →
             </a>
           </div>
@@ -93,7 +88,63 @@
 
       </div>
     </div>
-    <!-- / МЕГА-МЕНЮ -->
 
   </div>
+
+  <!-- ====== MOBILE DRAWER ====== -->
+  <!-- position:fixed — виходить за межі nav, рендериться поверх всього -->
+  <div class="mobile-nav" [class.mobile-nav--open]="mobileNavOpen()">
+
+    <div class="mobile-nav__header">
+      <span class="mobile-nav__title">Каталог</span>
+      <button class="mobile-nav__close" (click)="closeMobileNav()" aria-label="Закрити">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-nav__body">
+      <div *ngFor="let cat of categories()" class="mobile-cat">
+
+        <button class="mobile-cat__btn"
+                [class.mobile-cat__btn--open]="isMobileOpen(cat.id)"
+                (click)="toggleMobile(cat.id)">
+          <span>{{ cat.name }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <div class="mobile-cat__sub" *ngIf="isMobileOpen(cat.id)">
+          <div *ngFor="let sub of cat.subCategories" class="mobile-sub">
+            <a [routerLink]="['/catalog', cat.id, sub.id]"
+               class="mobile-sub__link"
+               (click)="closeMobileNav()">
+              {{ sub.name }}
+            </a>
+            <div *ngIf="sub.productGroups.length > 0" class="mobile-groups">
+              <a *ngFor="let group of sub.productGroups"
+                 [routerLink]="['/catalog', cat.id, sub.id, group.id]"
+                 class="mobile-group__link"
+                 (click)="closeMobileNav()">
+                {{ group.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay — окремий елемент, клас додається динамічно -->
+  <div class="mobile-nav__overlay"
+       [class.mobile-nav__overlay--visible]="mobileNavOpen()"
+       (click)="closeMobileNav()">
+  </div>
+
 </nav>

@@ -1,140 +1,230 @@
-.login-container {
-  width: 100vw;
-  height: 100vh;
+/* ============================================================
+   LOGIN — gold theme
+   Використовує глобальні CSS змінні з styles.scss
+   ============================================================ */
+
+.login-page {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #7fd7df;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.logo-container img {
-  height: auto;
-  object-fit: contain;
-  border-radius: 40%;
-}
-
-.logo-container a {
-  cursor: pointer;
-  display: flex;
-}
-
-form {
-  padding: 20px;
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 15px;
-  border: 1px solid gray;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
+  padding: var(--space-6) var(--space-4);
+  background: var(--clr-nav-bg);   /* темний фон як футер */
   position: relative;
-  margin-bottom: 15px;
+  overflow: hidden;
+
+  /* декоративна золота діагональ */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 50%;
+    height: 140%;
+    background: linear-gradient(
+      135deg,
+      rgba(201,168,76,.06) 0%,
+      rgba(201,168,76,.02) 100%
+    );
+    transform: rotate(-8deg);
+    pointer-events: none;
+  }
 }
 
-input {
+.login-card {
   width: 100%;
-  padding: 12px;
-  border-radius: 5px;
-  border: 1px solid rgb(128, 128, 128);
-  margin-top: 10px;
-  font-size: 16px;
-}
-
-input::placeholder {
-  color: gray;
-}
-
-.password-container {
+  max-width: 420px;
+  background: var(--clr-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
   position: relative;
+  z-index: 1;
+
+  &__header {
+    padding: var(--space-8) var(--space-8) var(--space-6);
+    text-align: center;
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  &__logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    text-decoration: none;
+
+    &-vdm {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: var(--fw-bold);
+      color: var(--clr-primary);
+      letter-spacing: .04em;
+      line-height: 1;
+    }
+
+    &-sub {
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-extrabold);
+      color: var(--clr-text-muted);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+  }
+
+  &__title {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  &__subtitle {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
+  }
+
+  &__body {
+    padding: var(--space-6) var(--space-8);
+  }
+
+  &__footer {
+    padding: var(--space-4) var(--space-8) var(--space-6);
+    text-align: center;
+    border-top: 1px solid var(--clr-border);
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
+
+    a {
+      color: var(--clr-primary);
+      font-weight: var(--fw-semibold);
+      transition: color var(--transition-fast);
+      &:hover { color: var(--clr-primary-dark); }
+    }
+  }
 }
 
-.toggle-password {
-  position: absolute;
-  top: 55%;
-  right: 10px;
-  padding: 0;
-  transform: translateY(-50%);
+/* ---- Поля форми ---- */
+.form-field {
+  margin-bottom: var(--space-4);
+
+  &__label {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-secondary);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+
+  &__wrap {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    height: 46px;
+    padding: 0 var(--space-4);
+    border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    background: var(--clr-bg);
+    color: var(--clr-text-primary);
+    font-size: var(--fs-sm);
+    font-family: var(--font-base);
+    outline: none;
+    transition: all var(--transition-fast);
+
+    &::placeholder { color: var(--clr-text-muted); }
+
+    &:focus {
+      border-color: var(--clr-primary);
+      background: var(--clr-surface);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.15);
+    }
+
+    &--password { padding-right: 48px; }
+
+    &.invalid {
+      border-color: var(--clr-danger);
+      background: #fff5f5;
+      &:focus { box-shadow: 0 0 0 3px rgba(239,68,68,.12); }
+    }
+  }
+
+  &__toggle {
+    position: absolute;
+    top: 50%;
+    right: var(--space-3);
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    color: var(--clr-text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      color: var(--clr-primary);
+      background: var(--clr-primary-light);
+    }
+
+    i { font-size: 16px; }
+  }
+
+  &__error {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--clr-danger);
+    margin-top: var(--space-2);
+    font-weight: var(--fw-medium);
+  }
+}
+
+/* ---- Кнопка сабміту ---- */
+.login-btn {
+  width: 100%;
+  height: 48px;
+  background: var(--clr-primary);
+  color: #1c1c1c;
+  font-family: var(--font-base);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
   border: none;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: .04em;
+  margin-top: var(--space-2);
+
+  &:hover:not(:disabled) {
+    background: var(--clr-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(201,168,76,.35);
+  }
+
+  &:active { transform: translateY(0); }
+
+  &:disabled {
+    background: var(--clr-border);
+    color: var(--clr-text-muted);
+    cursor: not-allowed;
+  }
 }
 
-.toggle-password .eye-icon {
-  font-size: 20px;
-  color: rgba(9, 61, 209, 0.64);
-}
-
-input.invalid {
-  border-color: red;
-  background-color: #ffe6e6;
-}
-
-button {
-  background-color: #7fd7df;
-  padding: 15px;
-  border: 0px;
-  border-radius: 15px;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-button:hover:not([disabled]) {
-  background-color: #4a989e;
-}
-
-input.invalid::placeholder {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.9em;
-  margin-bottom: 10px;
+/* ---- Помилка сервера ---- */
+.server-error {
+  padding: var(--space-3) var(--space-4);
+  background: #fff5f5;
+  border: 1px solid rgba(239,68,68,.2);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  color: var(--clr-danger);
   text-align: center;
-}
-
-/* --- Адаптація для десктопу (екрани більше 600px) --- */
-@media (min-width: 601px) {
-  .logo-container img {
-    max-width: 100vh; /* Повернув до оригінального значення для десктопу */
-  }
-
-  form {
-    width: 80%; /* Повернув до оригінального значення для десктопу */
-  }
-}
-
-/* --- Адаптація для мобільних пристроїв (екрани до 600px) --- */
-@media (max-width: 600px) {
-  .logo-container img {
-    max-width: 120vw; /* Залишив адаптивне значення для мобільних */
-  }
-
-  form {
-    padding: 15px;
-    width: 90%; /* Зробив трохи ширше для мобільних */
-  }
+  margin-bottom: var(--space-4);
 }
