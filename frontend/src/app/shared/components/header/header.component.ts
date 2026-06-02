@@ -2,6 +2,7 @@ import { Component, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {AuthService} from '../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +12,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  searchQuery = signal('');
-  cartCount   = signal(0);
-  mobileMenuOpen = signal(false);
-  isScrolled = signal(false);
+  private readonly authService = inject(AuthService);
+
+  searchQuery    = signal('');
+  cartCount      = signal(0);
+  isScrolled     = signal(false);
+
+  // Чи залогінений юзер — перевіряємо наявність JWT cookie
+  get isLoggedIn(): boolean {
+    return !!this.authService.getRoleId();
+  }
 
   readonly phones = [
     { label: '(067) 291-71-97', href: 'tel:+380672917197' },
@@ -39,11 +46,10 @@ export class HeaderComponent {
   }
 
   onSearch(): void {
-    // TODO: підключити search service
     console.log('Search:', this.searchQuery());
   }
 
-  toggleMobileMenu(): void {
-    this.mobileMenuOpen.update(v => !v);
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -1,0 +1,90 @@
+@import '../units/units.component.scss';
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+
+  @media (max-width: 575px) { grid-template-columns: 1fr; }
+}
+
+/* Таби */
+.product-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--clr-border);
+  padding: 0 var(--space-6);
+  background: var(--clr-surface-2);
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover:not(:disabled) { color: var(--clr-text-primary); }
+
+    &--active {
+      color: var(--clr-primary);
+      border-bottom-color: var(--clr-primary);
+    }
+
+    &:disabled { opacity: .4; cursor: not-allowed; }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px; height: 18px;
+    padding: 0 4px;
+    background: var(--clr-primary);
+    color: #fff;
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: var(--fw-bold);
+  }
+}
+
+/* Атрибути вкладка */
+.attr-tab {
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.attr-add {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.attr-add-form {
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+
+    @media (max-width: 575px) { grid-template-columns: 1fr; }
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-end;
+  }
+}

@@ -228,3 +228,68 @@
     @media (max-width: 991px) { display: none; }
   }
 }
+.auth-links {
+  &__btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-base);
+    padding: 0;
+    /* решта стилів наслідується від .auth-links__link */
+  }
+
+  &__link--cabinet {
+    color: var(--clr-primary) !important;
+    font-weight: var(--fw-semibold) !important;
+  }
+}
+
+/* Кнопка кабінету в хедері (поруч з кошиком) */
+.cabinet-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  color: var(--clr-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    color: var(--clr-primary);
+    background: var(--clr-primary-light);
+  }
+
+  &__label {
+    font-size: 10px;
+    font-weight: var(--fw-semibold);
+    letter-spacing: .04em;
+  }
+
+  /* Тільки іконка — мобільна версія */
+  &--icon {
+    padding: var(--space-2);
+
+    .cabinet-btn__label { display: none; }
+  }
+}
+
+/* Мобільна права частина хедера (кошик + кабінет) */
+.header__mobile-actions {
+  display: none;
+  align-items: center;
+  gap: var(--space-1);
+
+  @media (max-width: 991px) { display: flex; }
+}
+
+/* Десктопні контакти/кошик — прибираємо на мобілі */
+.header__contacts {
+  @media (max-width: 991px) { display: none; }
+}
+
+/* cart-btn--icon — тільки іконка без підпису */
+.cart-btn--icon {
+  .cart-btn__label { display: none; }
+}

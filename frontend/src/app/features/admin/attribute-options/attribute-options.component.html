@@ -1,0 +1,91 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Опції атрибутів</h1>
+      <p class="admin-page__sub">
+        Значення для атрибутів типу DICT
+        <span *ngIf="selectedAttrName"> — {{ selectedAttrName }}</span>
+      </p>
+    </div>
+    <button class="btn btn--primary" [disabled]="!selectedAttrId()" (click)="openCreate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Додати опцію
+    </button>
+  </div>
+
+  <!-- Вибір атрибуту -->
+  <div class="admin-page__toolbar">
+    <select class="form-field__select filter-select"
+            [value]="selectedAttrId() ?? ''"
+            (change)="loadByAttribute(+$any($event.target).value)">
+      <option value="" disabled>Оберіть атрибут (DICT)</option>
+      <option *ngFor="let a of attributes()" [value]="a.id">{{ a.name }}</option>
+    </select>
+  </div>
+
+  <!-- Порожній стан — атрибут не обраний -->
+  <div class="empty-state" *ngIf="!selectedAttrId() && !isLoading()">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+      <line x1="7" y1="7" x2="7.01" y2="7"/>
+    </svg>
+    <p>Оберіть атрибут щоб переглянути його значення</p>
+  </div>
+
+  <!-- Таблиця опцій -->
+  <app-data-table *ngIf="selectedAttrId()"
+    [columns]="columns" [data]="options()" [isLoading]="isLoading()"
+    emptyMessage="Опції відсутні — додайте першу"
+    (edit)="openEdit($event)" (delete)="confirmDelete($event)">
+  </app-data-table>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" *ngIf="modalOpen()" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">{{ isEditing ? 'Редагувати опцію' : 'Нова опція' }}</h2>
+        <button class="modal__close" (click)="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="save()" class="modal__form">
+
+        <div class="form-field">
+          <label class="form-field__label">Атрибут *</label>
+          <select class="form-field__select" formControlName="attributeId">
+            <option [ngValue]="null" disabled>Оберіть атрибут</option>
+            <option *ngFor="let a of attributes()" [ngValue]="a.id">{{ a.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Значення *</label>
+          <input class="form-field__input" formControlName="value"
+                 placeholder="Червоний, Польща, 12V..."
+                 [class.invalid]="form.get('value')?.invalid && form.get('value')?.touched" />
+          <span class="form-field__error" *ngIf="form.get('value')?.invalid && form.get('value')?.touched">
+            Обов'язкове поле
+          </span>
+        </div>
+
+        <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" (click)="closeModal()">Скасувати</button>
+          <button type="submit" class="btn btn--primary" [disabled]="form.invalid">
+            {{ isEditing ? 'Зберегти' : 'Додати' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-confirm-dialog [isOpen]="deleteId() !== null"
+    message="Опція буде видалена. Товари що її використовують втратять це значення."
+    (confirmed)="doDelete()" (cancelled)="deleteId.set(null)">
+  </app-confirm-dialog>
+</div>

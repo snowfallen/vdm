@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { IProductAttribute, IProductAttributeRequest } from '../models/models';
-import {environment} from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProductAttributeService {
-  private readonly http = inject(HttpClient);
+  private readonly http   = inject(HttpClient);
   private readonly apiUrl = `${environment.rootUrl}product-attributes`;
 
   private handleError = (e: unknown) => throwError(() => e);

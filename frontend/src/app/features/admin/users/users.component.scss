@@ -1,0 +1,9 @@
+@import '../units/units.component.scss';
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+
+  @media (max-width: 575px) { grid-template-columns: 1fr; }
+}

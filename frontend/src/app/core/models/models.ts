@@ -1,4 +1,7 @@
-// i-page.ts
+// ============================================================
+// models.ts — всі інтерфейси проекту
+// ============================================================
+
 export interface IPage<T> {
   content: T[];
   totalElements: number;
@@ -9,50 +12,44 @@ export interface IPage<T> {
   last: boolean;
 }
 
-// i-category.ts
+// ---- Каталог ----
 export interface ICategory {
   id: number;
   name: string;
 }
 
-// i-sub-category.ts
 export interface ISubCategory {
   id: number;
   name: string;
   categoryId: number;
 }
 
-// i-product-group.ts
 export interface IProductGroup {
   id: number;
   name: string;
   subCategoryId: number;
 }
 
-// i-product.ts
 export interface IProduct {
   id: number;
   name: string;
   price: number;
   productGroupId: number;
-  imageUrl?: string;       // додамо пізніше коли MinIO підключимо
+  imageUrl?: string;
 }
 
+// ---- Користувач ----
 export interface IUser {
-  id: bigint,
+  id: number;          // ← було bigint, виправлено
   firstName: string;
   lastName: string;
   roleId: number;
   email: string;
   phoneNumber: string;
-  createdAt: string,
-  modifiedAt: string,
-  emailVerified: boolean
+  createdAt: string;
+  modifiedAt: string;
+  emailVerified: boolean;
 }
-
-// ============================================================
-// Всі інтерфейси для адмін панелі
-// ============================================================
 
 export interface IUserUpdateRequest {
   firstName: string;
@@ -66,7 +63,7 @@ export interface IUserUpdatePasswordRequest {
   repeatPassword: string;
 }
 
-// i-unit.ts
+// ---- Одиниці виміру ----
 export interface IUnit {
   id: number;
   symbol: string;
@@ -78,7 +75,7 @@ export interface IUnitRequest {
   description?: string;
 }
 
-// i-attribute.ts
+// ---- Атрибути ----
 export type AttributeDataType = 'DICT' | 'TEXT' | 'NUMBER';
 
 export interface IAttribute {
@@ -104,7 +101,6 @@ export interface IAttributeOptionShort {
   value: string;
 }
 
-// i-attribute-option.ts
 export interface IAttributeOption {
   id: number;
   attributeId: number;
@@ -117,7 +113,7 @@ export interface IAttributeOptionRequest {
   value: string;
 }
 
-// i-product-attribute.ts
+// ---- ProductAttribute ----
 export interface IProductAttribute {
   id: number;
   productId: number;
@@ -135,15 +131,3 @@ export interface IProductAttributeRequest {
   optionId?: number | null;
   customValue?: string | null;
 }
-
-// i-page.ts — вже є в core/models але дублюємо для зручності
-export interface IPage<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  first: boolean;
-  last: boolean;
-}
-

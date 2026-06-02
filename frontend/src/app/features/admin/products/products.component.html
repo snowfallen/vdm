@@ -1,0 +1,192 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Товари</h1>
+      <p class="admin-page__sub">{{ totalElements() }} товарів</p>
+    </div>
+    <button class="btn btn--primary" (click)="openCreate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Додати товар
+    </button>
+  </div>
+
+  <app-data-table [columns]="columns" [data]="products()" [isLoading]="isLoading()"
+    [totalElements]="totalElements()" [pageSize]="pageSize" [currentPage]="currentPage()"
+    emptyMessage="Товари відсутні"
+    (edit)="openEdit($event)" (delete)="confirmDelete($event)"
+    (pageChange)="load($event)">
+  </app-data-table>
+
+  <!-- ====== MODAL з табами ====== -->
+  <div class="modal-overlay" *ngIf="modalOpen()" (click)="closeModal()">
+    <div class="modal modal--wide" (click)="$event.stopPropagation()">
+
+      <div class="modal__header">
+        <h2 class="modal__title">{{ isEditing ? 'Редагувати товар' : 'Новий товар' }}</h2>
+        <button class="modal__close" (click)="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Таби -->
+      <div class="product-tabs">
+        <button class="product-tabs__btn"
+                [class.product-tabs__btn--active]="activeTab() === 'info'"
+                (click)="activeTab.set('info')">
+          Основна інформація
+        </button>
+        <button class="product-tabs__btn"
+                [class.product-tabs__btn--active]="activeTab() === 'attributes'"
+                [disabled]="!isEditing"
+                (click)="activeTab.set('attributes')"
+                [title]="!isEditing ? 'Спочатку збережіть товар' : ''">
+          Атрибути
+          <span class="product-tabs__badge" *ngIf="productAttributes().length > 0">
+            {{ productAttributes().length }}
+          </span>
+        </button>
+      </div>
+
+      <!-- ====== ТАБ: Основна інформація ====== -->
+      <ng-container *ngIf="activeTab() === 'info'">
+        <form [formGroup]="form" (ngSubmit)="save()" class="modal__form">
+
+          <div class="form-field">
+            <label class="form-field__label">Назва *</label>
+            <input class="form-field__input" formControlName="name"
+                   placeholder="Назва товару"
+                   [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+            <span class="form-field__error" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+              Обов'язкове поле
+            </span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-field__label">Ціна (грн) *</label>
+              <input class="form-field__input" type="number" step="0.01" formControlName="price"
+                     placeholder="0.00"
+                     [class.invalid]="form.get('price')?.invalid && form.get('price')?.touched" />
+            </div>
+            <div class="form-field">
+              <label class="form-field__label">Товарна група *</label>
+              <select class="form-field__select" formControlName="productGroupId">
+                <option [ngValue]="null" disabled>Оберіть групу</option>
+                <option *ngFor="let g of productGroups()" [ngValue]="g.id">
+                  {{ g.name }} ({{ g.subCategoryId }})
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+
+          <div class="modal__actions">
+            <button type="button" class="btn btn--ghost" (click)="closeModal()">Скасувати</button>
+            <button type="submit" class="btn btn--primary" [disabled]="form.invalid">
+              {{ isEditing ? 'Зберегти' : 'Створити та додати атрибути' }}
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <!-- ====== ТАБ: Атрибути ====== -->
+      <ng-container *ngIf="activeTab() === 'attributes'">
+        <div class="attr-tab">
+
+          <!-- Список атрибутів товару -->
+          <app-data-table
+            [columns]="attrColumns"
+            [data]="productAttributes()"
+            [showActions]="true"
+            emptyMessage="Атрибути не додані"
+            (delete)="confirmDeleteAttr($event)">
+          </app-data-table>
+
+          <!-- Форма додавання атрибуту -->
+          <div class="attr-add" *ngIf="!addAttrOpen()">
+            <button class="btn btn--outline btn--sm" (click)="addAttrOpen.set(true)">
+              + Додати атрибут
+            </button>
+          </div>
+
+          <div class="attr-add-form" *ngIf="addAttrOpen()">
+            <form [formGroup]="attrForm" (ngSubmit)="addAttribute()">
+
+              <div class="attr-add-form__row">
+                <!-- Атрибут -->
+                <div class="form-field">
+                  <label class="form-field__label">Атрибут</label>
+                  <select class="form-field__select" formControlName="attributeId"
+                          (change)="onAttrChange(+$any($event.target).value)">
+                    <option [ngValue]="null" disabled>Оберіть атрибут</option>
+                    <option *ngFor="let a of allAttributes()" [ngValue]="a.id">
+                      {{ a.name }}
+                      <ng-container *ngIf="a.unitSymbol"> ({{ a.unitSymbol }})</ng-container>
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Значення — DICT -->
+                <div class="form-field" *ngIf="selectedAttrType === 'DICT'">
+                  <label class="form-field__label">Значення</label>
+                  <select class="form-field__select" formControlName="optionId">
+                    <option [ngValue]="null" disabled>Оберіть значення</option>
+                    <option *ngFor="let o of attrOptions()" [ngValue]="o.id">{{ o.value }}</option>
+                  </select>
+                </div>
+
+                <!-- Значення — TEXT або NUMBER -->
+                <div class="form-field" *ngIf="selectedAttrType === 'TEXT' || selectedAttrType === 'NUMBER'">
+                  <label class="form-field__label">
+                    Значення
+                    <span *ngIf="selectedAttr?.unitSymbol"> ({{ selectedAttr?.unitSymbol }})</span>
+                  </label>
+                  <input class="form-field__input" formControlName="customValue"
+                         [type]="selectedAttrType === 'NUMBER' ? 'number' : 'text'"
+                         placeholder="Введіть значення" />
+                </div>
+              </div>
+
+              <div class="attr-add-form__actions">
+                <button type="button" class="btn btn--ghost btn--sm"
+                        (click)="addAttrOpen.set(false); attrForm.reset()">
+                  Скасувати
+                </button>
+                <button type="submit" class="btn btn--primary btn--sm"
+                        [disabled]="attrForm.invalid">
+                  Додати
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal__actions">
+            <button class="btn btn--primary" (click)="closeModal(); load(currentPage())">
+              Готово
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- Підтвердження видалення товару -->
+  <app-confirm-dialog [isOpen]="deleteId() !== null"
+    message="Товар та всі його атрибути будуть видалені."
+    (confirmed)="doDelete()" (cancelled)="deleteId.set(null)">
+  </app-confirm-dialog>
+
+  <!-- Підтвердження видалення атрибуту -->
+  <app-confirm-dialog [isOpen]="deleteAttrId() !== null"
+    title="Видалити атрибут товару?"
+    message="Цей атрибут буде видалений з товару."
+    confirmLabel="Видалити"
+    (confirmed)="doDeleteAttr()" (cancelled)="deleteAttrId.set(null)">
+  </app-confirm-dialog>
+</div>

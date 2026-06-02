@@ -1,0 +1,73 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Підкатегорії</h1>
+      <p class="admin-page__sub">{{ totalElements() }} підкатегорій</p>
+    </div>
+    <button class="btn btn--primary" (click)="openCreate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Додати
+    </button>
+  </div>
+
+  <!-- Фільтр по категорії -->
+  <div class="admin-page__toolbar">
+    <select class="form-field__select filter-select"
+            [value]="filterCategory() ?? ''"
+            (change)="filterByCategoryId(+$any($event.target).value || null)">
+      <option value="">Всі категорії</option>
+      <option *ngFor="let c of categories()" [value]="c.id">{{ c.name }}</option>
+    </select>
+  </div>
+
+  <app-data-table [columns]="columns" [data]="subCategories()" [isLoading]="isLoading()"
+    [totalElements]="totalElements()" [pageSize]="pageSize" [currentPage]="currentPage()"
+    emptyMessage="Підкатегорії відсутні"
+    (edit)="openEdit($event)" (delete)="confirmDelete($event)"
+    (pageChange)="load($event)">
+  </app-data-table>
+
+  <div class="modal-overlay" *ngIf="modalOpen()" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">{{ isEditing ? 'Редагувати підкатегорію' : 'Нова підкатегорія' }}</h2>
+        <button class="modal__close" (click)="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="save()" class="modal__form">
+        <div class="form-field">
+          <label class="form-field__label">Категорія *</label>
+          <select class="form-field__select" formControlName="categoryId">
+            <option [ngValue]="null" disabled>Оберіть категорію</option>
+            <option *ngFor="let c of categories()" [ngValue]="c.id">{{ c.name }}</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-field__label">Назва *</label>
+          <input class="form-field__input" formControlName="name" placeholder="Назва підкатегорії"
+            [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+          <span class="form-field__error" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+            Обов'язкове поле
+          </span>
+        </div>
+        <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" (click)="closeModal()">Скасувати</button>
+          <button type="submit" class="btn btn--primary" [disabled]="form.invalid">
+            {{ isEditing ? 'Зберегти' : 'Створити' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-confirm-dialog [isOpen]="deleteId() !== null"
+    message="Підкатегорія та всі товарні групи будуть видалені."
+    (confirmed)="doDelete()" (cancelled)="deleteId.set(null)">
+  </app-confirm-dialog>
+</div>

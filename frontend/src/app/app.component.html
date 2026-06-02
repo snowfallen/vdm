@@ -1,8 +1,16 @@
 <div class="app-layout">
-  <app-header />
-  <app-nav-menu />
-  <main class="app-main">
+
+  <!-- Header і Nav тільки на публічних сторінках -->
+  <ng-container *ngIf="!hideShell()">
+    <app-header />
+    <app-nav-menu />
+  </ng-container>
+
+  <main class="app-main" [class.app-main--full]="hideShell()">
     <router-outlet />
   </main>
-  <app-footer />
+
+  <!-- Footer тільки на публічних сторінках -->
+  <app-footer *ngIf="!hideShell()" />
+
 </div>

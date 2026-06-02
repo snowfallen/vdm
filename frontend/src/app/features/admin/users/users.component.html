@@ -1,0 +1,67 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Користувачі</h1>
+      <p class="admin-page__sub">{{ totalElements() }} користувачів</p>
+    </div>
+  </div>
+
+  <app-data-table [columns]="columns" [data]="users()" [isLoading]="isLoading()"
+    [totalElements]="totalElements()" [pageSize]="pageSize" [currentPage]="currentPage()"
+    emptyMessage="Користувачі відсутні"
+    (edit)="openEdit($event)" (delete)="confirmDelete($event)"
+    (pageChange)="load($event)">
+  </app-data-table>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" *ngIf="modalOpen()" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2 class="modal__title">Редагувати користувача</h2>
+        <button class="modal__close" (click)="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="save()" class="modal__form">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-field__label">Ім'я</label>
+            <input class="form-field__input" formControlName="firstName"
+              [class.invalid]="form.get('firstName')?.invalid && form.get('firstName')?.touched" />
+          </div>
+          <div class="form-field">
+            <label class="form-field__label">Прізвище</label>
+            <input class="form-field__input" formControlName="lastName"
+              [class.invalid]="form.get('lastName')?.invalid && form.get('lastName')?.touched" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Email</label>
+          <input class="form-field__input" type="email" formControlName="email"
+            [class.invalid]="form.get('email')?.invalid && form.get('email')?.touched" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Телефон</label>
+          <input class="form-field__input" formControlName="phoneNumber" />
+        </div>
+
+        <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" (click)="closeModal()">Скасувати</button>
+          <button type="submit" class="btn btn--primary" [disabled]="form.invalid">Зберегти</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-confirm-dialog [isOpen]="deleteId() !== null"
+    message="Користувач та всі пов'язані дані будуть видалені назавжди."
+    (confirmed)="doDelete()" (cancelled)="deleteId.set(null)">
+  </app-confirm-dialog>
+</div>
