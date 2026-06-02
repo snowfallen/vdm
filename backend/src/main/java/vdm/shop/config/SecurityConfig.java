@@ -52,8 +52,13 @@ public class SecurityConfig {
                                 "/categories", "/categories/list", "/categories/**",
                                 "/sub-categories", "/sub-categories/**",
                                 "/product-groups", "/product-groups/**",
-                                "/products", "/products/**"
+                                "/products", "/products/**",
+                                "/units", "/units/**",
+                                "/attributes", "/attributes/list", "/attributes/**",
+                                "/attribute-options/attribute/**"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/search").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/products/filter").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
