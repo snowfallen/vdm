@@ -31,7 +31,7 @@ export class AttributesComponent implements OnInit {
   error       = signal('');
   currentPage = signal(0);
   totalElements = signal(0);
-  readonly pageSize = 50;
+  readonly pageSize = 20;
 
   readonly dataTypes: { value: AttributeDataType; label: string }[] = [
     { value: 'DICT',   label: 'Список (DICT)' },

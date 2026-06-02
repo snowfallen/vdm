@@ -14,7 +14,7 @@ export class AttributeAdminService {
 
   private handleError = (e: unknown) => throwError(() => e);
 
-  getAll(page = 0, size = 50): Observable<IPage<IAttribute>> {
+  getAll(page = 0, size = 20): Observable<IPage<IAttribute>> {
     const params = new HttpParams().set('page', page).set('size', size);
     return this.http.get<IPage<IAttribute>>(this.apiUrl, { params }).pipe(
       catchError(this.handleError)
