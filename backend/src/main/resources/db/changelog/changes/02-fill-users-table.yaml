@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-users-table
+      author: snowfall
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "danzig.carpets.dev@gmail.com"
+              - column:
+                  name: phone_number
+                  value: "+48989298536"
+              - column:
+                  name: first_name
+                  value: "Admin"
+              - column:
+                  name: last_name
+                  value: "Admin"
+              - column:
+                  name: password
+                  value: "$2a$10$acAhBYQCAb4HrppsiMUohOuO9uFrFzeHR9ncziNEudPmEtEROIYNy"
+              - column:
+                  name: created_at
+                  value: "2024-01-11 8:00:00"
+              - column:
+                  name: modified_at
+                  value: "2024-05-11 8:00:00"
+

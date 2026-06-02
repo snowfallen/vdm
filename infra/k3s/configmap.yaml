@@ -1,0 +1,30 @@
+# ============================================================
+# ConfigMap — не-секретні конфігурації Spring Boot + MinIO.
+# ============================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vdm-config
+  namespace: vdm
+data:
+  # --- App ---
+  SPRING_PROFILES_ACTIVE: "production"
+
+  # --- PostgreSQL ---
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-service:5432/vdm_shop"
+  SPRING_DATASOURCE_USERNAME: "vdm"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "validate"
+
+  # --- Redis ---
+  SPRING_DATA_REDIS_HOST: "redis-service"
+  SPRING_DATA_REDIS_PORT: "6379"
+
+  # --- RabbitMQ ---
+  SPRING_RABBITMQ_HOST: "rabbitmq-service"
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_RABBITMQ_VIRTUAL_HOST: "/"
+
+  # --- MinIO (S3-сумісний) ---
+  MINIO_ENDPOINT: "http://minio-service:9000"
+  MINIO_BUCKET_PRODUCTS: "vdm-products"   # бакет для зображень меблів
+  AWS_REGION: "us-east-1"

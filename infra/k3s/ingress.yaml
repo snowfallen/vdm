@@ -1,0 +1,53 @@
+# ============================================================
+# Ingress — Traefik роутинг по домену.
+#
+# yourdomain.com        → frontend (Angular SPA)
+# yourdomain.com/api    → backend (Spring Boot)
+#
+# cert-manager автоматично отримує Let's Encrypt сертифікат.
+#
+# Змінити: yourdomain.com → реальний домен
+# ============================================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vdm-ingress
+  namespace: vdm
+  annotations:
+    # Let's Encrypt через cert-manager
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Максимальний розмір завантаження (для зображень меблів)
+    ingress.kubernetes.io/proxy-body-size: "20m"
+spec:
+  tls:
+    - hosts:
+        - yourdomain.com                  # Змінити!
+      secretName: vdm-tls                 # cert-manager створить цей Secret
+  rules:
+    - host: yourdomain.com                # Змінити!
+      http:
+        paths:
+          # API → Spring Boot
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 8080
+          # Actuator (health checks) → backend, не виставляти назовні якщо не треба
+          # - path: /actuator
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: backend-service
+          #       port:
+          #         number: 8080
+          # Все інше → Angular SPA
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

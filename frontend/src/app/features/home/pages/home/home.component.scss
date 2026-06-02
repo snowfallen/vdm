@@ -1,0 +1,270 @@
+/* ============================================================
+   HERO SLIDER
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--clr-text-primary);
+
+  &__slides {
+    position: relative;
+    height: 420px;
+
+    @media (min-width: 768px)  { height: 480px; }
+    @media (min-width: 1200px) { height: 540px; }
+  }
+
+  &__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 600ms ease;
+    background-size: cover;
+    background-position: center;
+
+    /* Кольоровий overlay замість зображень (поки немає реальних фото) */
+    &--slide-main {
+      background: linear-gradient(135deg, #0f1729 0%, #1a56db 60%, #1240a8 100%);
+    }
+    &--slide-lighting {
+      background: linear-gradient(135deg, #1c1c3a 0%, #2d3a8c 50%, #1a56db 100%);
+    }
+    &--slide-wardrobe {
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    }
+
+    &--active {
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__text {
+    max-width: 560px;
+  }
+
+  &__subtitle {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    color: var(--clr-accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: var(--fw-bold);
+    color: #fff;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-6);
+  }
+
+  &__cta {
+    font-size: var(--fs-md) !important;
+    padding: var(--space-4) var(--space-8) !important;
+    border-radius: var(--radius-full) !important;
+    box-shadow: 0 8px 24px rgba(26,86,219,.4);
+  }
+
+  /* Dots */
+  &__dots {
+    position: absolute;
+    bottom: var(--space-5);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-2);
+    z-index: 10;
+  }
+
+  &__dot {
+    width: 8px; height: 8px;
+    border-radius: var(--radius-full);
+    background: rgba(255,255,255,.4);
+    transition: all var(--transition-base);
+    border: none;
+
+    &--active {
+      width: 24px;
+      background: #fff;
+    }
+
+    &:hover { background: rgba(255,255,255,.7); }
+  }
+}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+  background: var(--clr-surface);
+  border-bottom: 1px solid var(--clr-border);
+  padding-block: var(--space-6);
+
+  &__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    justify-content: center;
+
+    @media (max-width: 575px) {
+      justify-content: flex-start;
+      padding-left: var(--space-4);
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--clr-border);
+
+      @media (max-width: 575px) {
+        border-right: none;
+        border-bottom: 1px solid var(--clr-border);
+        padding-bottom: var(--space-3);
+      }
+    }
+  }
+
+  &__icon {
+    color: var(--clr-text-muted);
+    flex-shrink: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__value {
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-extrabold);
+    color: var(--clr-text-primary);
+    letter-spacing: -.02em;
+  }
+
+  &__label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: var(--clr-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+}
+
+/* ============================================================
+   КАРТКА — ПЛЕЙСХОЛДЕР (без зображення)
+   ============================================================ */
+.product-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--clr-surface-2);
+  color: var(--clr-border);
+}
+
+/* ============================================================
+   ПІДПИСКА
+   ============================================================ */
+.newsletter {
+  background: linear-gradient(135deg, var(--clr-primary-light) 0%, #fff 100%);
+  border-top: 1px solid var(--clr-border);
+  border-bottom: 1px solid var(--clr-border);
+  padding-block: var(--space-10);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+    flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: var(--space-6);
+      text-align: center;
+    }
+  }
+
+  &__text { flex-shrink: 0; }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  &__sub {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
+  }
+
+  &__form {
+    display: flex;
+    gap: var(--space-3);
+    flex: 1;
+    flex-wrap: wrap;
+
+    .input { flex: 1; min-width: 140px; }
+
+    @media (max-width: 767px) {
+      width: 100%;
+      .btn { width: 100%; }
+    }
+  }
+}
+
+/* ============================================================
+   ПАРТНЕРИ
+   ============================================================ */
+.partners-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.partner-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-3);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  background: var(--clr-surface);
+  transition: all var(--transition-base);
+  min-height: 64px;
+
+  &:hover {
+    border-color: var(--clr-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+  }
+
+  &__name {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-secondary);
+    text-align: center;
+  }
+}

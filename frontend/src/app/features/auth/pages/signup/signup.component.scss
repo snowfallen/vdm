@@ -1,0 +1,251 @@
+// Imports and base styles
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
+// Colors
+$primary-color: #2980b9;
+$secondary-color: #ecf0f1;
+$text-color: rgba(0, 7, 23, 0.64);
+$border-color: rgba(0, 25, 97, 0.15);
+$hover-color: rgba(0, 25, 97, 0.05);
+$danger-color: #e74c3c;
+$success-color: #2ecc71;
+$login-background: #7FD7DF; // Колір фону з логіна
+
+// Main container - ДОДАНО ФОН ЯК В ЛОГІНІ
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px 20px 20px;
+  // background-color: #f4f7f6; // Старий фон
+  background-color: $login-background; // Новий фон як у логіна
+}
+
+// Signup panel
+.signup-panel {
+  width: 100%;
+  max-width: 600px;
+  background: white; // Панель залишаємо білою
+  border-radius: 10px;
+  padding: 30px 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid $border-color;
+
+  h2 {
+    margin-bottom: 25px;
+    color: $text-color;
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $border-color;
+    font-weight: 500;
+  }
+}
+
+// Form grid layout
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+}
+
+// Form item styling
+.form-item {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: darken($text-color, 10%);
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  input {
+    padding: 12px 15px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    font-size: 16px;
+    color: $text-color;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: lighten($text-color, 40%);
+    }
+
+    &.invalid {
+      border-color: $danger-color;
+      background-color: lighten($danger-color, 45%);
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($danger-color, 0.2);
+      }
+    }
+  }
+}
+
+// Password specific styles
+.password-container {
+  position: relative; // Переконайся, що це є
+
+  input {
+    padding-right: 45px; // Залишаємо місце
+  }
+
+  .toggle-password {
+    position: absolute;
+    // --- Нове позиціонування ---
+    top: 33px;       // <<< Розрахований відступ зверху
+    right: 10px;       // <<< Залишаємо справа
+    height: 20px;      // <<< Фіксована висота контейнера іконки
+    // bottom: 0;    // <<< ВИДАЛЯЄМО
+    // margin: auto 0; // <<< ВИДАЛЯЄМО
+
+    // --- Стилі для центрування <i> всередині ---
+    display: flex;
+    align-items: center;
+    justify-content: center; // Можна додати для точності
+
+    // --- Решта стилів ---
+    width: auto; // Можна залишити або задати фіксовану ширину, якщо треба
+    cursor: pointer;
+    padding: 0 5px; // Тільки горизонтальний, бо висота фіксована
+    color: lighten($text-color, 30%);
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    .eye-icon {
+      font-size: 20px; // Розмір самої іконки Bootstrap
+      display: block;
+    }
+  }
+  // Поправка для позиціонування іконки відносно input, а не label+input
+  //label + input + .toggle-password, label ~ .toggle-password {
+    //top: calc(50% + 10px); /* Приблизна позиція відносно інпуту, якщо є лейбл зверху. Можливо, потребує коригування */
+    /* Якщо лейбл і інпут в одному рядку, це не потрібно */
+  //}
+  // Альтернатива: Якщо інпут має фіксовану висоту, можна прив'язатися до неї
+  //$input-height: 46px; // Приблизна висота input з padding 12px*2 + font-size 16px + border 1px*2
+  //.toggle-password {
+  //  top: calc(50% + 4px); // Половина висоти інпута + невеликий зсув вниз (підбирається)
+  //  right: 10px;
+  //  transform: translateY(-50%);
+  //  position: absolute; // Переконайся, що це абсолютне позиціонування
+  //  cursor: pointer;
+  //  padding: 5px;
+  //  color: lighten($text-color, 30%);
+  //  transition: color 0.3s ease;
+  //
+  //  .eye-icon {
+  //    font-size: 20px;
+  //    display: block; // Щоб іконка не впливала на висоту контейнера
+  //  }
+  //}
+}
+
+// Error message styling
+.error-message {
+  color: $danger-color;
+  font-size: 13px;
+  margin-top: 5px;
+  font-weight: 500;
+  min-height: 18px; // Резервуємо місце під помилку, щоб форма не стрибала
+
+  &.server-error {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+}
+
+// Actions block (button and link)
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+  margin-top: 10px;
+  border-top: 1px solid $border-color;
+  align-items: center;
+
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: $success-color;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background-color: darken($success-color, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+    }
+
+    &:disabled {
+      background-color: lighten($success-color, 25%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  .login-link {
+    color: $primary-color;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($primary-color, 15%);
+      text-decoration: underline;
+    }
+  }
+}
+
+// Адаптивність
+@media (max-width: 640px) {
+  .signup-panel {
+    padding: 20px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .actions .submit-btn {
+    max-width: none;
+  }
+
+  .password-container .toggle-password {
+    top: 35px;
+  }
+
+}

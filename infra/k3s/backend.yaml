@@ -1,0 +1,64 @@
+# ============================================================
+# Spring Boot API — Deployment + Service.
+# ============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: vdm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/YOUR_GITHUB_USER/vdm-api:latest   # Змінити YOUR_GITHUB_USER!
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: vdm-config
+            - secretRef:
+                name: vdm-secrets
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          # Spring Boot Actuator health endpoints
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: ghcr-secret   # kubectl create secret docker-registry ghcr-secret ...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: vdm
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080

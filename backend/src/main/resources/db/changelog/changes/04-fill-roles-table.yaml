@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-roles-table
+      author: snowfall
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column: {name: "name", value: "ROLE_ADMIN"}
+

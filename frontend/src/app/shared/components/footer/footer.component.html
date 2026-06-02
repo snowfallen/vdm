@@ -1,0 +1,76 @@
+<footer class="footer">
+  <div class="container footer__grid">
+
+    <!-- Компанія -->
+    <div class="footer__col">
+      <p class="footer__heading">КОМПАНІЯ</p>
+      <ul class="footer__links">
+        <li *ngFor="let link of companyLinks">
+          <a [routerLink]="link.path" class="footer__link">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Телефон -->
+    <div class="footer__col">
+      <p class="footer__heading">ТЕЛЕФОН</p>
+      <a [href]="phones.main.href"   class="footer__link">{{ phones.main.label }}</a>
+      <a [href]="phones.email.href"  class="footer__link">{{ phones.email.label }}</a>
+    </div>
+
+    <!-- Доп. телефони -->
+    <div class="footer__col">
+      <p class="footer__heading">ДОД. ТЕЛЕФОНИ</p>
+      <a [href]="phones.main.href"   class="footer__link">{{ phones.main.label }}</a>
+      <a [href]="phones.second.href" class="footer__link">{{ phones.second.label }}</a>
+      <a [href]="phones.mobile.href" class="footer__link">{{ phones.mobile.label }}</a>
+    </div>
+
+    <!-- Покупцям -->
+    <div class="footer__col">
+      <p class="footer__heading">ПОКУПЦЯМ</p>
+      <ul class="footer__links">
+        <li *ngFor="let link of buyerLinks">
+          <a [routerLink]="link.path" class="footer__link">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Відкриті для спілкування -->
+    <div class="footer__col footer__col--cta">
+      <p class="footer__heading">ВІДКРИТІ ДЛЯ СПІЛКУВАННЯ</p>
+      <a [href]="phones.main.href" class="footer__big-phone">
+        (067) 291-71-97
+      </a>
+      <div class="footer__hours">
+        <p *ngFor="let h of workHours" class="footer__hours-line">{{ h }}</p>
+      </div>
+      <a routerLink="/contacts" class="btn btn--outline btn--sm footer__callback">
+        Передзвонити мені
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Підвал -->
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p class="footer__copy">
+        © 2006–{{ currentYear }} Інтернет-магазин "Все Для Меблів". Всі права захищено
+      </p>
+      <div class="footer__socials">
+        <a *ngFor="let s of socials"
+           [href]="s.href"
+           [attr.aria-label]="s.label"
+           target="_blank"
+           rel="noopener"
+           class="footer__social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               [innerHTML]="s.icon">
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

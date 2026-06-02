@@ -1,0 +1,163 @@
+# ============================================================
+# Docker Compose — локальна розробка.
+#
+# Запускає всю інфраструктуру + Spring Boot бекенд.
+# Angular запускаєш локально: cd frontend && ng serve
+#
+# Старт:   docker compose -f infra/dev/docker-compose.yml up -d
+# Стоп:    docker compose -f infra/dev/docker-compose.yml down
+# Логи:    docker compose -f infra/dev/docker-compose.yml logs -f
+#
+# Змінні беруться з infra/dev/.env (скопіюй з .env.example)
+# ============================================================
+
+version: '3.8'
+
+services:
+
+  # ----------------------------------------------------------
+  # PostgreSQL — основна БД
+  # ----------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: vdm-postgres
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: ${TZ}
+    ports:
+      - "${POSTGRES_LOCAL_PORT}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - vdm-app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # Redis — кеш (JWT stateless, сесій нема)
+  # ----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: vdm-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_LOCAL_PORT}:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - vdm-app
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # MinIO — S3-сумісне сховище для файлів/зображень меблів
+  # ----------------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: vdm-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    env_file:
+      - ./.env
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "${MINIO_API_PORT}:9000"      # S3 API → Spring Boot підключається сюди
+      - "${MINIO_CONSOLE_PORT}:9001"  # Web UI → http://localhost:9001
+    volumes:
+      - minio-data:/data
+    networks:
+      - vdm-app
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # RabbitMQ — черги повідомлень (замовлення, нотифікації)
+  # ----------------------------------------------------------
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: vdm-rabbitmq
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
+    ports:
+      - "${RABBITMQ_AMQP_PORT}:5672"    # AMQP → Spring Boot
+      - "${RABBITMQ_MGMT_PORT}:15672"   # Management UI → http://localhost:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - vdm-app
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # Spring Boot — бекенд API
+  # Білдиться з ./backend/Dockerfile при першому запуску.
+  # Rebuild після змін: docker compose -f infra/dev/docker-compose.yml up -d --build app
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: vdm-spring
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    env_file:
+      - ./.env
+    ports:
+      - "${SPRING_LOCAL_PORT}:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+    networks:
+      - vdm-app
+
+networks:
+  vdm-app:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  minio-data:
+  rabbitmq-data:

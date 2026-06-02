@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-product-groups-table
+      author: snowfall
+      changes:
+        - createTable:
+            tableName: product_groups
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sub_category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_product_group_sub_category
+                    references: sub_categories(id)
+                    deleteCascade: true

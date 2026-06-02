@@ -1,0 +1,122 @@
+.footer {
+  background: var(--clr-footer-bg);
+  margin-top: auto;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    padding-block: var(--space-12);
+
+    @media (min-width: 768px)  { grid-template-columns: repeat(3, 1fr); }
+    @media (min-width: 1200px) { grid-template-columns: repeat(5, 1fr); }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+
+    &--cta { gap: var(--space-3); }
+  }
+
+  &__heading {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    color: var(--clr-footer-heading);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-1);
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  &__link {
+    font-size: var(--fs-sm);
+    color: var(--clr-footer-text);
+    transition: color var(--transition-fast);
+    line-height: var(--lh-snug);
+
+    &:hover { color: #fff; }
+  }
+
+  &__big-phone {
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--clr-primary);
+    transition: color var(--transition-fast);
+    line-height: 1;
+
+    &:hover { color: var(--clr-primary-dark); }
+  }
+
+  &__hours {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  &__hours-line {
+    font-size: var(--fs-xs);
+    color: var(--clr-footer-text);
+  }
+
+  &__callback {
+    align-self: flex-start;
+    border-color: rgba(255,255,255,.2) !important;
+    color: var(--clr-footer-text) !important;
+
+    &:hover {
+      border-color: #fff !important;
+      color: #fff !important;
+      background: transparent !important;
+    }
+  }
+
+  /* Bottom bar */
+  &__bottom {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding-block: var(--space-5);
+  }
+
+  &__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+
+    @media (max-width: 575px) { flex-direction: column; text-align: center; }
+  }
+
+  &__copy {
+    font-size: var(--fs-xs);
+    color: var(--clr-footer-text);
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &__social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,.06);
+    color: var(--clr-footer-text);
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: var(--clr-primary);
+      color: #fff;
+    }
+  }
+}

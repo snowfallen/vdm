@@ -1,0 +1,566 @@
+/* ============================================================
+   styles.scss — глобальні стилі VDM Shop
+   Шрифт: Manrope (Google Fonts) — сучасний, геометричний
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+/* ============================================================
+   ТЕМА 1 — АКТИВНА: Корпоративний синій (сучасний, чистий)
+   Відчуття: надійність, професіоналізм, Blum/GTV стиль
+   ============================================================ */
+:root {
+  /* --- Кольори --- */
+  --clr-primary:        #1a56db;   /* синій акцент */
+  --clr-primary-dark:   #1240a8;   /* hover стан */
+  --clr-primary-light:  #e8effd;   /* фон бейджів, чіпів */
+  --clr-accent:         #f5a623;   /* жовтий — NEW / TOP бейджі */
+  --clr-accent-dark:    #d4891a;
+
+  --clr-bg:             #f8f9fc;   /* фон сторінки */
+  --clr-surface:        #ffffff;   /* картки, хедер */
+  --clr-surface-2:      #f1f3f8;   /* hover рядки, секції */
+  --clr-border:         #e2e6f0;   /* лінії, роздільники */
+
+  --clr-nav-bg:         #1240a8;   /* фон навбару категорій */
+  --clr-nav-text:       #ffffff;
+  --clr-nav-hover:      #f5a623;   /* жовтий hover в навбарі */
+
+  --clr-text-primary:   #0f1729;   /* заголовки */
+  --clr-text-secondary: #4a5568;   /* описи */
+  --clr-text-muted:     #8a94a8;   /* підписи, плейсхолдери */
+
+  --clr-success:        #22c55e;
+  --clr-danger:         #ef4444;
+
+  /* --- Футер --- */
+  --clr-footer-bg:      #0f1729;
+  --clr-footer-text:    #a0aec0;
+  --clr-footer-heading: #ffffff;
+}
+
+/* ============================================================
+   ТЕМА 2 — ЗАКОМЕНТОВАНА: Темний графіт + Золото (преміум)
+   Відчуття: luxury, дизайнерські меблі, ексклюзивність
+   ============================================================ */
+/*
+:root {
+  --clr-primary:        #c9a84c;
+  --clr-primary-dark:   #a8872d;
+  --clr-primary-light:  #f5f0e4;
+  --clr-accent:         #c9a84c;
+  --clr-accent-dark:    #a8872d;
+
+  --clr-bg:             #f5f3ef;
+  --clr-surface:        #ffffff;
+  --clr-surface-2:      #ece9e2;
+  --clr-border:         #ddd8ce;
+
+  --clr-nav-bg:         #1c1c1c;
+  --clr-nav-text:       #ffffff;
+  --clr-nav-hover:      #c9a84c;
+
+  --clr-text-primary:   #1c1c1c;
+  --clr-text-secondary: #5a5348;
+  --clr-text-muted:     #9c9488;
+
+  --clr-success:        #22c55e;
+  --clr-danger:         #ef4444;
+
+  --clr-footer-bg:      #1c1c1c;
+  --clr-footer-text:    #9c9488;
+  --clr-footer-heading: #ffffff;
+}
+*/
+
+/* ============================================================
+   ТИПОГРАФІКА
+   ============================================================ */
+:root {
+  --font-base:     'Manrope', sans-serif;
+  --font-display:  'Playfair Display', serif;   /* для заголовків секцій */
+
+  --fs-xs:   0.75rem;    /* 12px */
+  --fs-sm:   0.875rem;   /* 14px */
+  --fs-md:   1rem;       /* 16px */
+  --fs-lg:   1.125rem;   /* 18px */
+  --fs-xl:   1.25rem;    /* 20px */
+  --fs-2xl:  1.5rem;     /* 24px */
+  --fs-3xl:  1.875rem;   /* 30px */
+  --fs-4xl:  2.25rem;    /* 36px */
+
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extrabold:800;
+
+  --lh-tight:  1.2;
+  --lh-snug:   1.4;
+  --lh-normal: 1.6;
+  --lh-loose:  1.8;
+}
+
+/* ============================================================
+   SPACING & RADIUS & SHADOWS
+   ============================================================ */
+:root {
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-full:9999px;
+
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm:  0 1px 4px rgba(0,0,0,.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.1);
+  --shadow-lg:  0 8px 24px rgba(0,0,0,.12);
+  --shadow-xl:  0 16px 40px rgba(0,0,0,.14);
+}
+
+/* ============================================================
+   BREAKPOINTS (для довідки — юзаємо mixins або media inline)
+   --bp-sm:  576px
+   --bp-md:  768px
+   --bp-lg:  992px
+   --bp-xl:  1200px
+   --bp-2xl: 1440px
+   ============================================================ */
+
+/* ============================================================
+   TRANSITIONS
+   ============================================================ */
+:root {
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+  --transition-spring: 300ms cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ============================================================
+   CSS RESET
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-base);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--clr-text-primary);
+  background-color: var(--clr-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+input, textarea, select { font-family: inherit; font-size: inherit; }
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+
+  @media (min-width: 576px)  { padding-inline: var(--space-6); }
+  @media (min-width: 992px)  { padding-inline: var(--space-8); }
+  @media (min-width: 1440px) { padding-inline: var(--space-10); }
+}
+
+.container--narrow { max-width: 960px; }
+.container--wide   { max-width: 1600px; }
+
+/* ============================================================
+   КНОПКИ
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  user-select: none;
+
+  &--primary {
+    background: var(--clr-primary);
+    color: #fff;
+    &:hover {
+      background: var(--clr-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(26,86,219,.3);
+    }
+    &:active { transform: translateY(0); }
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--clr-primary);
+    border: 1.5px solid var(--clr-primary);
+    &:hover {
+      background: var(--clr-primary);
+      color: #fff;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--clr-text-secondary);
+    &:hover {
+      background: var(--clr-surface-2);
+      color: var(--clr-text-primary);
+    }
+  }
+
+  &--accent {
+    background: var(--clr-accent);
+    color: #fff;
+    &:hover { background: var(--clr-accent-dark); }
+  }
+
+  &--sm { padding: var(--space-2) var(--space-4); font-size: var(--fs-xs); }
+  &--lg { padding: var(--space-4) var(--space-8); font-size: var(--fs-md); }
+  &--full { width: 100%; }
+
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* ============================================================
+   БЕЙДЖІ
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+
+  &--new     { background: var(--clr-accent);   color: #fff; }
+  &--top     { background: var(--clr-primary);  color: #fff; }
+  &--sale    { background: var(--clr-danger);   color: #fff; }
+  &--instock { background: var(--clr-success);  color: #fff; }
+  &--muted   { background: var(--clr-surface-2); color: var(--clr-text-muted); }
+}
+
+/* ============================================================
+   КАРТКА ТОВАРУ
+   ============================================================ */
+.product-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  position: relative;
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: var(--clr-primary-light);
+  }
+
+  &__badge {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 1;
+  }
+
+  &__image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--clr-surface-2);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+  }
+
+  &:hover &__image img { transform: scale(1.06); }
+
+  &__body {
+    padding: var(--space-4);
+  }
+
+  &__name {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    color: var(--clr-text-primary);
+    line-height: var(--lh-snug);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+  }
+
+  &__availability {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-success);
+    margin-bottom: var(--space-3);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  &__price {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+
+    span {
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-regular);
+      color: var(--clr-text-muted);
+    }
+  }
+}
+
+/* ============================================================
+   СІТКА ТОВАРІВ
+   ============================================================ */
+.products-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 576px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 768px)  { grid-template-columns: repeat(3, 1fr); }
+  @media (min-width: 1200px) { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================================
+   СЕКЦІЇ
+   ============================================================ */
+.section {
+  padding-block: var(--space-12);
+
+  @media (min-width: 768px) { padding-block: var(--space-16); }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+    letter-spacing: -.02em;
+
+    @media (min-width: 768px) { font-size: var(--fs-3xl); }
+  }
+
+  &__link {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    transition: gap var(--transition-base);
+
+    &:hover { gap: var(--space-3); }
+  }
+}
+
+/* ============================================================
+   ФОРМА / ІНПУТИ
+   ============================================================ */
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  background: var(--clr-surface);
+  color: var(--clr-text-primary);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+  outline: none;
+
+  &::placeholder { color: var(--clr-text-muted); }
+
+  &:focus {
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 3px rgba(26,86,219,.12);
+  }
+
+  &--search {
+    padding-left: var(--space-10);
+    border-radius: var(--radius-full);
+    background: var(--clr-surface-2);
+    border-color: transparent;
+
+    &:focus {
+      background: var(--clr-surface);
+      border-color: var(--clr-primary);
+    }
+  }
+}
+
+/* ============================================================
+   СКЕЛЕТОН (лоадер для карток)
+   ============================================================ */
+.skeleton {
+  background: linear-gradient(
+      90deg,
+      var(--clr-surface-2) 25%,
+      var(--clr-border) 50%,
+      var(--clr-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-pulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   ХЛІБНІ КРИХТИ
+   ============================================================ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  padding-block: var(--space-4);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    &::after {
+      content: '›';
+      color: var(--clr-border);
+    }
+
+    &:last-child {
+      color: var(--clr-text-primary);
+      font-weight: var(--fw-medium);
+      &::after { display: none; }
+    }
+  }
+
+  a:hover { color: var(--clr-primary); }
+}
+
+/* ============================================================
+   SCROLLBAR (webkit)
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-surface-2); }
+::-webkit-scrollbar-thumb {
+  background: var(--clr-border);
+  border-radius: var(--radius-full);
+  &:hover { background: var(--clr-text-muted); }
+}
+
+/* ============================================================
+   АНІМАЦІЇ
+   ============================================================ */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fade-in var(--transition-slow) both; }
+
+/* staggered delay хелпери */
+@for $i from 1 through 8 {
+  .delay-#{$i} { animation-delay: #{$i * 60}ms; }
+}
+
+/* ============================================================
+   УТИЛІТИ
+   ============================================================ */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.text-muted     { color: var(--clr-text-muted); }
+.text-primary   { color: var(--clr-primary); }
+.text-center    { text-align: center; }
+.fw-bold        { font-weight: var(--fw-bold); }
+.fw-semibold    { font-weight: var(--fw-semibold); }
+
+.mt-auto { margin-top: auto; }
+.ml-auto { margin-left: auto; }
+
+.d-flex         { display: flex; }
+.align-center   { align-items: center; }
+.justify-between{ justify-content: space-between; }
+.gap-2          { gap: var(--space-2); }
+.gap-4          { gap: var(--space-4); }
+.gap-6          { gap: var(--space-6); }
+
+.w-full  { width: 100%; }
+.h-full  { height: 100%; }

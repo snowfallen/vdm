@@ -1,0 +1,95 @@
+<div class="signup-container">
+  <div class="signup-panel">
+    <h2>Utwórz konto klienta</h2> <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <h3 class="section-title">Dane logowania</h3>
+    <div formGroupName="userRegistrationData" class="form-grid">
+      <div class="form-item">
+        <label for="firstName">Imię:</label>
+        <input id="firstName" formControlName="firstName" [class.invalid]="firstNameInvalid" [placeholder]="firstNameInvalid ? 'Imię jest wymagane!' : 'Twoje imię'" />
+        <div *ngIf="firstNameInvalid" class="error-message">Imię jest wymagane.</div>
+      </div>
+      <div class="form-item">
+        <label for="lastName">Nazwisko:</label>
+        <input id="lastName" formControlName="lastName" [class.invalid]="lastNameInvalid" [placeholder]="lastNameInvalid ? 'Nazwisko jest wymagane!' : 'Twoje nazwisko'" />
+        <div *ngIf="lastNameInvalid" class="error-message">Nazwisko jest wymagane.</div>
+      </div>
+      <div class="form-item">
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" [class.invalid]="emailInvalid" [placeholder]="emailInvalid ? 'Email jest wymagany!' : 'twoj.email@example.com'" autocomplete="off" type="email" />
+        <div *ngIf="emailInvalid" class="error-message">
+          <span *ngIf="userEmail?.errors?.['required']">Email jest wymagany.</span>
+          <span *ngIf="userEmail?.errors?.['email']">Wprowadź poprawny adres email.</span>
+        </div>
+      </div>
+      <div class="form-item">
+        <label for="phoneNumber">Numer telefonu:</label>
+        <input id="phoneNumber" formControlName="phoneNumber" [class.invalid]="phoneNumberInvalid" [placeholder]="phoneNumberInvalid ? 'Telefon jest wymagany!' : '+48 XXX XXX XXX'" />
+        <div *ngIf="phoneNumberInvalid" class="error-message">Numer telefonu jest wymagany.</div>
+      </div>
+      <div class="form-item password-container">
+        <label for="password">Hasło:</label>
+        <input id="password" [type]="passwordFieldType" formControlName="password" [placeholder]="passwordInvalid ? 'Hasło jest wymagane!' : 'Minimum 8 znaków'" [class.invalid]="passwordInvalid" required autocomplete="new-password" />
+        <div class="toggle-password" (click)="togglePasswordVisibility()"> <i class="eye-icon" [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i> </div>
+        <div *ngIf="passwordInvalid" class="error-message">
+          <span *ngIf="userPassword?.errors?.['required']">Hasło jest wymagane.</span>
+          <span *ngIf="userPassword?.errors?.['minlength']">Hasło musi mieć co najmniej 8 znaków.</span>
+        </div>
+      </div>
+      <div class="form-item password-container">
+        <label for="repeatPassword">Powtórz hasło:</label>
+        <input id="repeatPassword" [type]="passwordFieldType" formControlName="repeatPassword" [placeholder]="repeatPasswordInvalid ? 'Powtórzenie hasła jest wymagane!' : 'Powtórz hasło'" [class.invalid]="repeatPasswordInvalid || !passwordEquals" required />
+        <div class="toggle-password" (click)="togglePasswordVisibility()"> <i class="eye-icon" [ngClass]="passwordFieldType === 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i> </div>
+        <div *ngIf="repeatPasswordInvalid" class="error-message">
+          <span *ngIf="userRepeatPassword?.errors?.['required']">Powtórzenie hasła jest wymagane.</span>
+          <span *ngIf="userRepeatPassword?.errors?.['mismatch'] && !userRepeatPassword?.errors?.['required']">Hasła nie są takie same!</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Dane adresowe</h3> <div formGroupName="clientData" class="form-grid"> <div class="form-item">
+    <label for="country">Kraj:</label>
+    <input id="country" formControlName="country" [class.invalid]="countryInvalid" [placeholder]="countryInvalid ? 'Kraj jest wymagany!' : 'np. Polska'"/>
+    <div *ngIf="countryInvalid" class="error-message">Kraj jest wymagany.</div>
+  </div>
+    <div class="form-item">
+      <label for="city">Miasto:</label>
+      <input id="city" formControlName="city" [class.invalid]="cityInvalid" [placeholder]="cityInvalid ? 'Miasto jest wymagane!' : 'np. Warszawa'"/>
+      <div *ngIf="cityInvalid" class="error-message">Miasto jest wymagane.</div>
+    </div>
+    <div class="form-item">
+      <label for="street">Ulica:</label>
+      <input id="street" formControlName="street" [class.invalid]="streetInvalid" [placeholder]="streetInvalid ? 'Ulica jest wymagana!' : 'np. Marszałkowska'"/>
+      <div *ngIf="streetInvalid" class="error-message">Ulica jest wymagana.</div>
+    </div>
+    <div class="form-item">
+      <label for="houseNumber">Numer domu:</label>
+      <input id="houseNumber" formControlName="houseNumber" [class.invalid]="houseNumberInvalid" [placeholder]="houseNumberInvalid ? 'Numer domu jest wymagany!' : 'np. 10'"/>
+      <div *ngIf="houseNumberInvalid" class="error-message">Numer domu jest wymagany.</div>
+    </div>
+    <div class="form-item">
+      <label for="apartmentNumber">Numer mieszkania (opcjonalnie):</label>
+      <input id="apartmentNumber" formControlName="apartmentNumber" placeholder="np. 5"/>
+    </div>
+    <div class="form-item">
+      <label for="postalCode">Kod pocztowy:</label>
+      <input id="postalCode" formControlName="postalCode" [class.invalid]="postalCodeInvalid" [placeholder]="postalCodeInvalid ? 'Kod pocztowy jest wymagany!' : 'np. 00-001'"/>
+      <div *ngIf="postalCodeInvalid" class="error-message">
+        <span *ngIf="clientPostalCode?.errors?.['required']">Kod pocztowy jest wymagany.</span>
+        <span *ngIf="clientPostalCode?.errors?.['pattern']">Format kodu pocztowego: XX-XXX.</span>
+      </div>
+    </div>
+  </div>
+
+    <div *ngIf="errorMessage" class="error-message server-error">{{ errorMessage }}</div>
+
+    <div class="actions">
+      <button type="submit" class="submit-btn" [disabled]="registrationForm.invalid">
+        <i class="bi bi-person-plus-fill"></i>
+        Zarejestruj się
+      </button>
+      <a routerLink="/login" class="login-link">Masz już konto? Zaloguj się</a>
+    </div>
+  </form>
+  </div>
+</div>

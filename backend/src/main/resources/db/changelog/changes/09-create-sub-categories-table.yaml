@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sub-categories-table
+      author: snowfall
+      changes:
+        - createTable:
+            tableName: sub_categories
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_sub_category_category
+                    references: categories(id)
+                    deleteCascade: true

@@ -1,0 +1,888 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-categories-table
+      author: snowfall
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "ГАРДЕРОБНІ СИСТЕМИ" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "РОЗСУВНІ СИСТЕМИ" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "МЕБЛЕВІ РУЧКИ ТА ГАЧКИ" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: "МЕБЛЕВА ФУРНІТУРА" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: "КРАЙКА ПВХ ТА ABS" }
+
+  - changeSet:
+      id: fill-sub-categories-table
+      author: snowfall
+      changes:
+        # --- ГАРДЕРОБНІ СИСТЕМИ (category_id: 1) ---
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "КОМПЛЕКТУЮЧІ ДО ГАРДЕРОБНОЇ СИСТЕМИ" }
+              - column: { name: category_id, valueNumeric: 1 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "ГОТОВІ ГАРДЕРОБНІ РІШЕННЯ" }
+              - column: { name: category_id, valueNumeric: 1 }
+
+        # --- РОЗСУВНІ СИСТЕМИ (category_id: 2) ---
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "РОЗСУВНІ СИСТЕМИ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: "ВИРІВНЮВАЧІ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: "ДЛЯ РОЗСУВНИХ СКЛЯНИХ ДВЕРЕЙ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: "СИСТЕМИ ДЛЯ СКЛАДНИХ ДВЕРЕЙ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: "СТАЛЬНІ СИСТЕМИ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: "РУЧКА ВЕРТИКАЛЬНА ДЛЯ РОЗСУВНИХ СИСТЕМ" }
+              - column: { name: category_id, valueNumeric: 2 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: name, value: "ПІДВІСНІ СИСТЕМИ" }
+              - column: { name: category_id, valueNumeric: 2 }
+
+        # --- МЕБЛЕВІ РУЧКИ ТА ГАЧКИ (category_id: 3) ---
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: name, value: "ГАЧКИ МЕБЛЕВІ" }
+              - column: { name: category_id, valueNumeric: 3 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 11 }
+              - column: { name: name, value: "РУЧКИ МЕБЛЕВІ" }
+              - column: { name: category_id, valueNumeric: 3 }
+
+        # --- МЕБЛЕВА ФУРНІТУРА (category_id: 4) ---
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 12 }
+              - column: { name: name, value: "ІНСТРУМЕНТИ ТА ВИТРАТНІ МАТЕРІАЛИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 13 }
+              - column: { name: name, value: "ВИСУВНІ МЕХАНІЗМИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 14 }
+              - column: { name: name, value: "ДЕКОР ДЛЯ МЕБЛЕВИХ ФАСАДІВ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 15 }
+              - column: { name: name, value: "ЗАВІСИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 16 }
+              - column: { name: name, value: "ЗАГЛУШКИ ДЛЯ ДРОТІВ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 17 }
+              - column: { name: name, value: "ЗАГЛУШКИ МЕБЛЕВІ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 18 }
+              - column: { name: name, value: "ЗАМКИ, МАГНІТИ, ЗАСУВКИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 19 }
+              - column: { name: name, value: "КОЛЕСА" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 20 }
+              - column: { name: name, value: "КОМПЛЕКТУЮЧІ ДЛЯ ШАФ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 21 }
+              - column: { name: name, value: "КРІПЛЕННЯ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 22 }
+              - column: { name: name, value: "КУХОННІ КОМПЛЕКТУЮЧІ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 23 }
+              - column: { name: name, value: "НІЖКИ, ОПОРИ, ПОВСТЬ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 24 }
+              - column: { name: name, value: "ОБМЕЖУВАЧ ВІДКРИВАННЯ ДВЕРЕЙ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 25 }
+              - column: { name: name, value: "ОСВІТЛЕННЯ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 26 }
+              - column: { name: name, value: "ПІДЙОМНІ МЕХАНІЗМИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 27 }
+              - column: { name: name, value: "ПРОФІЛЬ АЛЮМІНІЄВИЙ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 28 }
+              - column: { name: name, value: "ПРОФІЛЬ ДЛЯ ПАНЕЛЕЙ З ПІДСВІТКОЮ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 29 }
+              - column: { name: name, value: "ПРОФІЛЬ ТОРЦЕВИЙ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 30 }
+              - column: { name: name, value: "РЕСТАВРАЦІЙНІ МАТЕРІАЛИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 31 }
+              - column: { name: name, value: "РОЗПРОДАЖ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 32 }
+              - column: { name: name, value: "ТРУБИ, КОЛОНИ І РЕЙЛІНГИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 33 }
+              - column: { name: name, value: "ФУРНІТУРА ДЛЯ СТОЛІВ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 34 }
+              - column: { name: name, value: "ЦОКОЛЯ ТА БОРТИКИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 35 }
+              - column: { name: name, value: "МЕТИЗИ" }
+              - column: { name: category_id, valueNumeric: 4 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 36 }
+              - column: { name: name, value: "МЕХАНІЗМИ ТРАНСФОРМАЦІЇ" }
+              - column: { name: category_id, valueNumeric: 4 }
+
+        # --- КРАЙКА ПВХ ТА ABS (category_id: 5) ---
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 37 }
+              - column: { name: name, value: "КРАЙКА З КЛЕЄМ" }
+              - column: { name: category_id, valueNumeric: 5 }
+        - insert:
+            tableName: sub_categories
+            columns:
+              - column: { name: id, valueNumeric: 38 }
+              - column: { name: name, value: "ПВХ/ABS" }
+              - column: { name: category_id, valueNumeric: 5 }
+
+  - changeSet:
+      id: fill-product-groups-table
+      author: snowfall
+      changes:
+        # --- ПІДВІСНІ СИСТЕМИ (sub_category_id: 9) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "комплект подвесных систем" }
+              - column: { name: sub_category_id, valueNumeric: 9 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "підвісні системи" }
+              - column: { name: sub_category_id, valueNumeric: 9 }
+
+        # --- ІНСТРУМЕНТИ ТА ВИТРАТНІ МАТЕРІАЛИ (sub_category_id: 12) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "інструмент" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: "інструмент садовий, малярний" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: "клей, силікон, піна" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: "наконечники та тримачі" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: "органайзери" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: "свердла" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: name, value: "скотч, стрейч" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: name, value: "спецодяг" }
+              - column: { name: sub_category_id, valueNumeric: 12 }
+
+        # --- ВИСУВНІ МЕХАНІЗМИ (sub_category_id: 13) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 11 }
+              - column: { name: name, value: "напрямні" }
+              - column: { name: sub_category_id, valueNumeric: 13 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 12 }
+              - column: { name: name, value: "шухляди" }
+              - column: { name: sub_category_id, valueNumeric: 13 }
+
+        # --- ЗАВІСИ (sub_category_id: 15) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 13 }
+              - column: { name: name, value: "завіси для дсп" }
+              - column: { name: sub_category_id, valueNumeric: 15 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 14 }
+              - column: { name: name, value: "завіси для скла" }
+              - column: { name: sub_category_id, valueNumeric: 15 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 15 }
+              - column: { name: name, value: "спец завіси" }
+              - column: { name: sub_category_id, valueNumeric: 15 }
+
+        # --- ЗАГЛУШКИ ДЛЯ ДРОТІВ (sub_category_id: 16) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 16 }
+              - column: { name: name, value: "заглушки металеві" }
+              - column: { name: sub_category_id, valueNumeric: 16 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 17 }
+              - column: { name: name, value: "заглушки пластикові" }
+              - column: { name: sub_category_id, valueNumeric: 16 }
+
+        # --- ЗАГЛУШКИ МЕБЛЕВІ (sub_category_id: 17) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 18 }
+              - column: { name: name, value: "заглушки для конфірматів" }
+              - column: { name: sub_category_id, valueNumeric: 17 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 19 }
+              - column: { name: name, value: "заглушки для мініфіксів" }
+              - column: { name: sub_category_id, valueNumeric: 17 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 20 }
+              - column: { name: name, value: "заглушки для саморізів" }
+              - column: { name: sub_category_id, valueNumeric: 17 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 21 }
+              - column: { name: name, value: "заглушки самоклеючі для дсп" }
+              - column: { name: sub_category_id, valueNumeric: 17 }
+
+        # --- ЗАМКИ, МАГНІТИ, ЗАСУВКИ (sub_category_id: 18) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 22 }
+              - column: { name: name, value: "замки для дсп" }
+              - column: { name: sub_category_id, valueNumeric: 18 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 23 }
+              - column: { name: name, value: "замки для скла" }
+              - column: { name: sub_category_id, valueNumeric: 18 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 24 }
+              - column: { name: name, value: "магніти, засувки" }
+              - column: { name: sub_category_id, valueNumeric: 18 }
+
+        # --- КОМПЛЕКТУЮЧІ ДЛЯ ШАФ (sub_category_id: 20) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 25 }
+              - column: { name: name, value: "вішалка для одягу" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 26 }
+              - column: { name: name, value: "вішалка для пилососа" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 27 }
+              - column: { name: name, value: "корзини для шаф" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 28 }
+              - column: { name: name, value: "пантограф" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 29 }
+              - column: { name: name, value: "полиці для взуття" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 30 }
+              - column: { name: name, value: "щітка ущільнювач" }
+              - column: { name: sub_category_id, valueNumeric: 20 }
+
+        # --- КРІПЛЕННЯ (sub_category_id: 21) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 31 }
+              - column: { name: name, value: "кріплення (різне)" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 32 }
+              - column: { name: name, value: "кріплення двох плит" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 33 }
+              - column: { name: name, value: "кріплення для дзеркал / скла" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 34 }
+              - column: { name: name, value: "кріплення для ліжка" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 35 }
+              - column: { name: name, value: "кріплення для панелей" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 36 }
+              - column: { name: name, value: "кріплення для скляних столів" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 37 }
+              - column: { name: name, value: "кріплення полиці" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 38 }
+              - column: { name: name, value: "кріплення прихованого монтажу" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 39 }
+              - column: { name: name, value: "кутики монтажні" }
+              - column: { name: sub_category_id, valueNumeric: 21 }
+
+        # --- КУХОННІ КОМПЛЕКТУЮЧІ (sub_category_id: 22) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 40 }
+              - column: { name: name, value: "амортизатори" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 41 }
+              - column: { name: name, value: "відбійники" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 42 }
+              - column: { name: name, value: "відра" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 43 }
+              - column: { name: name, value: "карго" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 44 }
+              - column: { name: name, value: "коврик гофрований" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 45 }
+              - column: { name: name, value: "корзини" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 46 }
+              - column: { name: name, value: "лотки для столових приборів" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 47 }
+              - column: { name: name, value: "навіси регульовані, шина" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 48 }
+              - column: { name: name, value: "піддони під мийку" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 49 }
+              - column: { name: name, value: "планки для стільниць" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 50 }
+              - column: { name: name, value: "профіль для фасадів без ручок" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 51 }
+              - column: { name: name, value: "профіль-ручка" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 52 }
+              - column: { name: name, value: "решітки вентиляційні" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 53 }
+              - column: { name: name, value: "сушарки" }
+              - column: { name: sub_category_id, valueNumeric: 22 }
+
+        # --- НІЖКИ, ОПОРИ, ПОВСТЬ (sub_category_id: 23) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 54 }
+              - column: { name: name, value: "войлок" }
+              - column: { name: sub_category_id, valueNumeric: 23 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 55 }
+              - column: { name: name, value: "ніжки" }
+              - column: { name: sub_category_id, valueNumeric: 23 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 56 }
+              - column: { name: name, value: "опори" }
+              - column: { name: sub_category_id, valueNumeric: 23 }
+
+        # --- ОСВІТЛЕННЯ (sub_category_id: 25) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 57 }
+              - column: { name: name, value: "led профіль і комплектуючі" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 58 }
+              - column: { name: name, value: "вимикачі" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 59 }
+              - column: { name: name, value: "люстри" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 60 }
+              - column: { name: name, value: "розетки та подовжувачі" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 61 }
+              - column: { name: name, value: "світлодіодні світильники" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 62 }
+              - column: { name: name, value: "світлодіодна стрічка та комплектуючі" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 63 }
+              - column: { name: name, value: "трансформатори" }
+              - column: { name: sub_category_id, valueNumeric: 25 }
+
+        # --- ПІДЙОМНІ МЕХАНІЗМИ (sub_category_id: 26) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 64 }
+              - column: { name: name, value: "hf" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 65 }
+              - column: { name: name, value: "hk" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 66 }
+              - column: { name: name, value: "hks" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 67 }
+              - column: { name: name, value: "hkxs" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 68 }
+              - column: { name: name, value: "hl" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 69 }
+              - column: { name: name, value: "hs" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 70 }
+              - column: { name: name, value: "барні механізми" }
+              - column: { name: sub_category_id, valueNumeric: 26 }
+
+        # --- ПРОФІЛЬ АЛЮМІНІЄВИЙ (sub_category_id: 27) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 71 }
+              - column: { name: name, value: "профіль для полиць з підсвіткою" }
+              - column: { name: sub_category_id, valueNumeric: 27 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 72 }
+              - column: { name: name, value: "профіль для фасадів в рамці" }
+              - column: { name: sub_category_id, valueNumeric: 27 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 73 }
+              - column: { name: name, value: "профиль для стеклянных полок" }
+              - column: { name: sub_category_id, valueNumeric: 27 }
+
+        # --- ПРОФІЛЬ ТОРЦЕВИЙ (sub_category_id: 29) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 74 }
+              - column: { name: name, value: "профіль торцевий" }
+              - column: { name: sub_category_id, valueNumeric: 29 }
+
+        # --- РЕСТАВРАЦІЙНІ МАТЕРІАЛИ (sub_category_id: 30) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 75 }
+              - column: { name: name, value: "замазки меблеві" }
+              - column: { name: sub_category_id, valueNumeric: 30 }
+
+        # --- ТРУБИ, КОЛОНИ І РЕЙЛІНГИ (sub_category_id: 32) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 76 }
+              - column: { name: name, value: "колона і комплектуючі" }
+              - column: { name: sub_category_id, valueNumeric: 32 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 77 }
+              - column: { name: name, value: "рейлінг та комплектуючі" }
+              - column: { name: sub_category_id, valueNumeric: 32 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 78 }
+              - column: { name: name, value: "труби та комплектуючі" }
+              - column: { name: sub_category_id, valueNumeric: 32 }
+
+        # --- ФУРНІТУРА ДЛЯ СТОЛІВ (sub_category_id: 33) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 79 }
+              - column: { name: name, value: "кріплення для столів" }
+              - column: { name: sub_category_id, valueNumeric: 33 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 80 }
+              - column: { name: name, value: "направляючі для розсувних столів" }
+              - column: { name: sub_category_id, valueNumeric: 33 }
+
+        # --- ЦОКОЛЯ ТА БОРТИКИ (sub_category_id: 34) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 81 }
+              - column: { name: name, value: "бортик кухонний" }
+              - column: { name: sub_category_id, valueNumeric: 34 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 82 }
+              - column: { name: name, value: "уплотнитель цоколя" }
+              - column: { name: sub_category_id, valueNumeric: 34 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 83 }
+              - column: { name: name, value: "цоколь" }
+              - column: { name: sub_category_id, valueNumeric: 34 }
+
+        # --- МЕТИЗИ (sub_category_id: 35) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 84 }
+              - column: { name: name, value: "гвинти" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 85 }
+              - column: { name: name, value: "дюбель/ анкер" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 86 }
+              - column: { name: name, value: "кілочки" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 87 }
+              - column: { name: name, value: "конфірмати" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 88 }
+              - column: { name: name, value: "ламелі" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 89 }
+              - column: { name: name, value: "саморізи по дереву" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 90 }
+              - column: { name: name, value: "саморізи по металу" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 91 }
+              - column: { name: name, value: "саморізи універсальні" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 92 }
+              - column: { name: name, value: "стяжки меблеві" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 93 }
+              - column: { name: name, value: "шайби, гайки" }
+              - column: { name: sub_category_id, valueNumeric: 35 }
+
+        # --- МЕХАНІЗМИ ТРАНСФОРМАЦІЇ (sub_category_id: 36) ---
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 94 }
+              - column: { name: name, value: "механізм трансформації ліжка" }
+              - column: { name: sub_category_id, valueNumeric: 36 }
+        - insert:
+            tableName: product_groups
+            columns:
+              - column: { name: id, valueNumeric: 95 }
+              - column: { name: name, value: "механізм трансформації столу" }
+              - column: { name: sub_category_id, valueNumeric: 36 }

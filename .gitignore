@@ -1,0 +1,49 @@
+# ============================================================
+# .gitignore — монорепо vdm
+# ============================================================
+
+# --- Секрети ---
+.env
+*.pem
+*.key
+*.p12
+*.jks
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# ========================
+# Backend (Spring Boot)
+# ========================
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+backend/HELP.md
+
+# ========================
+# Frontend (Angular)
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.idea/
+
+# ========================
+# Infra
+# ========================
+infra/dev/.env
+
+# ========================
+# IDE / editors
+# ========================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+/frontend/.editorconfig
