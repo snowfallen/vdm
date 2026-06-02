@@ -1,7 +1,7 @@
 import { inject } from "@angular/core"
-import { CookieCustomService } from "../services/cookie.custom.service"
 import { Router } from "@angular/router"
-import { Roles } from "../role/roles"
+import {CookieCustomService} from '../../services/cookie.custom.service';
+import {Roles} from '../enums/roles';
 
 export const roleAdminGuard = () => {
     const cookieService: CookieCustomService = inject(CookieCustomService)

@@ -1,0 +1,89 @@
+<div class="admin-page">
+
+  <!-- Page header -->
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Одиниці виміру</h1>
+      <p class="admin-page__sub">{{ units().length }} одиниць</p>
+    </div>
+    <button class="btn btn--primary" (click)="openCreate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Додати
+    </button>
+  </div>
+
+  <!-- Таблиця -->
+  <app-data-table
+    [columns]="columns"
+    [data]="units()"
+    [isLoading]="isLoading()"
+    [showActions]="true"
+    emptyMessage="Одиниці виміру відсутні"
+    (edit)="openEdit($event)"
+    (delete)="confirmDelete($event)">
+  </app-data-table>
+
+  <!-- ====== MODAL ====== -->
+  <div class="modal-overlay" *ngIf="modalOpen()" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+
+      <div class="modal__header">
+        <h2 class="modal__title">
+          {{ isEditing ? 'Редагувати одиницю' : 'Нова одиниця виміру' }}
+        </h2>
+        <button class="modal__close" (click)="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="save()" class="modal__form">
+
+        <div class="form-field">
+          <label class="form-field__label">Символ *</label>
+          <input class="form-field__input"
+                 formControlName="symbol"
+                 placeholder="мм, кг, W..."
+                 [class.invalid]="form.get('symbol')?.invalid && form.get('symbol')?.touched" />
+          <span class="form-field__error"
+                *ngIf="form.get('symbol')?.invalid && form.get('symbol')?.touched">
+            Обов'язкове поле
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Опис</label>
+          <input class="form-field__input"
+                 formControlName="description"
+                 placeholder="міліметри, кілограми..." />
+        </div>
+
+        <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" (click)="closeModal()">Скасувати</button>
+          <button type="submit" class="btn btn--primary" [disabled]="form.invalid">
+            {{ isEditing ? 'Зберегти' : 'Створити' }}
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Підтвердження видалення -->
+  <app-confirm-dialog
+    [isOpen]="deleteId() !== null"
+    message="Одиниця виміру буде видалена. Атрибути що її використовують втратять зв'язок."
+    (confirmed)="doDelete()"
+    (cancelled)="deleteId.set(null)">
+  </app-confirm-dialog>
+
+</div>

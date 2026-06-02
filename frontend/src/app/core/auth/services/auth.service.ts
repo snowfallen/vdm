@@ -61,4 +61,9 @@ export class AuthService {
       responseType: 'text'          // ← також plain-text
     });
   }
+
+  public getRoleId(): number {
+    const roleId = this.cookieService.getCookie(AuthService.ROLE_ID);
+    return roleId ? Number(roleId) : 0;
+  }
 }

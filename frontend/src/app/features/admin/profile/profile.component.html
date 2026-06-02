@@ -1,0 +1,132 @@
+<div class="admin-page" *ngIf="!isLoading()">
+
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Мій профіль</h1>
+      <p class="admin-page__sub">
+        {{ user()?.firstName }} {{ user()?.lastName }} ·
+        <span class="status-badge status-badge--info">{{ getRoleLabel(user()?.roleId ?? 0) }}</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+
+    <!-- ====== Основна інформація ====== -->
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Особисті дані</h2>
+        <span class="status-badge"
+              [class.status-badge--success]="user()?.emailVerified"
+              [class.status-badge--warning]="!user()?.emailVerified">
+          Email {{ user()?.emailVerified ? 'підтверджено' : 'не підтверджено' }}
+        </span>
+      </div>
+
+      <form [formGroup]="infoForm" (ngSubmit)="saveInfo()" class="card__form">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-field__label">Ім'я</label>
+            <input class="form-field__input" formControlName="firstName"
+                   [class.invalid]="infoForm.get('firstName')?.invalid && infoForm.get('firstName')?.touched" />
+          </div>
+          <div class="form-field">
+            <label class="form-field__label">Прізвище</label>
+            <input class="form-field__input" formControlName="lastName"
+                   [class.invalid]="infoForm.get('lastName')?.invalid && infoForm.get('lastName')?.touched" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Email</label>
+          <input class="form-field__input" formControlName="email" type="email"
+                 [class.invalid]="infoForm.get('email')?.invalid && infoForm.get('email')?.touched" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Телефон</label>
+          <input class="form-field__input" formControlName="phoneNumber" />
+        </div>
+
+        <div class="form-field__error" *ngIf="error()">{{ error() }}</div>
+
+        <div class="card__footer">
+          <span class="status-badge status-badge--success" *ngIf="saveOk()">
+            ✓ Збережено
+          </span>
+          <button type="submit" class="btn btn--primary"
+                  [disabled]="infoForm.invalid || infoForm.pristine">
+            Зберегти зміни
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ====== Зміна пароля ====== -->
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Зміна пароля</h2>
+      </div>
+
+      <form [formGroup]="pwForm" (ngSubmit)="savePassword()" class="card__form">
+
+        <div class="form-field">
+          <label class="form-field__label">Новий пароль</label>
+          <input class="form-field__input" type="password" formControlName="password"
+                 placeholder="Мінімум 8 символів"
+                 [class.invalid]="pwForm.get('password')?.invalid && pwForm.get('password')?.touched" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label">Повторіть пароль</label>
+          <input class="form-field__input" type="password" formControlName="repeatPassword"
+                 [class.invalid]="pwForm.get('repeatPassword')?.invalid && pwForm.get('repeatPassword')?.touched" />
+        </div>
+
+        <div class="form-field__error" *ngIf="pwError()">{{ pwError() }}</div>
+
+        <div class="card__footer">
+          <span class="status-badge status-badge--success" *ngIf="pwOk()">
+            ✓ Пароль змінено
+          </span>
+          <button type="submit" class="btn btn--primary"
+                  [disabled]="pwForm.invalid">
+            Змінити пароль
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ====== Інфо акаунту (тільки читання) ====== -->
+    <div class="card card--info">
+      <div class="card__header">
+        <h2 class="card__title">Інформація</h2>
+      </div>
+      <div class="info-list">
+        <div class="info-list__item">
+          <span class="info-list__key">ID</span>
+          <span class="info-list__val">{{ user()?.id }}</span>
+        </div>
+        <div class="info-list__item">
+          <span class="info-list__key">Роль</span>
+          <span class="info-list__val">{{ getRoleLabel(user()?.roleId ?? 0) }}</span>
+        </div>
+        <div class="info-list__item">
+          <span class="info-list__key">Дата реєстрації</span>
+          <span class="info-list__val">{{ user()?.createdAt | date:'dd.MM.yyyy HH:mm' }}</span>
+        </div>
+        <div class="info-list__item">
+          <span class="info-list__key">Останнє оновлення</span>
+          <span class="info-list__val">{{ user()?.modifiedAt | date:'dd.MM.yyyy HH:mm' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Завантаження -->
+<div class="admin-loading" *ngIf="isLoading()">
+  <div class="skeleton" style="height: 200px; border-radius: 12px;"></div>
+</div>

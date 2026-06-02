@@ -1,0 +1,179 @@
+/* ============================================================
+   ADMIN LAYOUT — sidebar + main content
+   ============================================================ */
+
+$sidebar-w:           240px;
+$sidebar-w-collapsed: 60px;
+
+.admin {
+  display: flex;
+  min-height: 100vh;
+  background: var(--clr-bg);
+
+  &--collapsed {
+    .sidebar { width: $sidebar-w-collapsed; }
+    .admin__main { margin-left: $sidebar-w-collapsed; }
+  }
+
+  &__main {
+    flex: 1;
+    margin-left: $sidebar-w;
+    padding: var(--space-6) var(--space-8);
+    min-height: 100vh;
+    transition: margin-left var(--transition-base);
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      padding: var(--space-4);
+    }
+  }
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  width: $sidebar-w;
+  min-height: 100vh;
+  background: var(--clr-nav-bg);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  transition: width var(--transition-base);
+  overflow: hidden;
+
+  @media (max-width: 767px) {
+    display: none;  /* TODO: мобільний drawer якщо треба */
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-4);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+
+    &-vdm {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: var(--fw-bold);
+      color: var(--clr-primary);
+      flex-shrink: 0;
+    }
+
+    &-panel {
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-bold);
+      color: rgba(255,255,255,.5);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: var(--radius-md);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+
+    &:hover { background: rgba(255,255,255,.08); color: #fff; }
+  }
+
+  &__nav {
+    flex: 1;
+    padding: var(--space-3) var(--space-2);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.1) transparent;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-md);
+    color: rgba(255,255,255,.6);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    margin-bottom: 2px;
+
+    &:hover {
+      background: rgba(255,255,255,.06);
+      color: #fff;
+    }
+
+    &--active {
+      background: rgba(201,168,76,.15);
+      color: var(--clr-primary) !important;
+
+      .sidebar__icon svg { stroke: var(--clr-primary); }
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    flex-shrink: 0;
+
+    svg { stroke: currentColor; }
+  }
+
+  &__label { overflow: hidden; text-overflow: ellipsis; }
+
+  &__footer {
+    flex-shrink: 0;
+    padding: var(--space-3) var(--space-2);
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  &__role {
+    padding: 0 var(--space-2);
+  }
+
+  &__logout {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-md);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.5);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+
+    &:hover { background: rgba(239,68,68,.1); color: #ef4444; }
+  }
+}

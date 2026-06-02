@@ -1,0 +1,195 @@
+/* ============================================================
+   Загальні стилі для admin сторінок
+   Підключати в кожному компоненті або в глобальному scss
+   ============================================================ */
+
+/* Page header */
+.admin-page {
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-6);
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  &__sub {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
+  }
+
+  &__toolbar {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    flex-wrap: wrap;
+  }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: var(--space-4);
+  animation: fade-in 150ms ease both;
+}
+
+.modal {
+  background: var(--clr-surface);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  animation: fade-in 200ms ease both;
+
+  &--wide { max-width: 720px; }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--clr-border);
+  }
+
+  &__title {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-primary);
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: var(--radius-md);
+    background: none; border: none;
+    color: var(--clr-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    &:hover { background: var(--clr-surface-2); color: var(--clr-text-primary); }
+  }
+
+  &__form {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: flex-end;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--clr-border);
+    margin-top: var(--space-2);
+  }
+}
+
+/* Form fields */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  &__label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    color: var(--clr-text-secondary);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    background: var(--clr-bg);
+    color: var(--clr-text-primary);
+    font-size: var(--fs-sm);
+    font-family: var(--font-base);
+    outline: none;
+    transition: all var(--transition-fast);
+
+    &::placeholder { color: var(--clr-text-muted); }
+
+    &:focus {
+      border-color: var(--clr-primary);
+      background: var(--clr-surface);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.15);
+    }
+
+    &.invalid {
+      border-color: var(--clr-danger);
+      &:focus { box-shadow: 0 0 0 3px rgba(239,68,68,.1); }
+    }
+  }
+
+  &__textarea { resize: vertical; min-height: 80px; }
+
+  &__error {
+    font-size: var(--fs-xs);
+    color: var(--clr-danger);
+    font-weight: var(--fw-medium);
+  }
+
+  &__hint {
+    font-size: var(--fs-xs);
+    color: var(--clr-text-muted);
+  }
+
+  &--row {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-4);
+  }
+}
+
+/* Форма пошуку */
+.search-bar-admin {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+
+  &__input {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+/* Статус бейдж */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+
+  &--success { background: rgba(34,197,94,.1); color: #16a34a; }
+  &--danger  { background: rgba(239,68,68,.1); color: #dc2626; }
+  &--warning { background: rgba(245,158,11,.1); color: #d97706; }
+  &--info    { background: var(--clr-primary-light); color: var(--clr-primary); }
+}
