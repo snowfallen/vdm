@@ -25,14 +25,18 @@ export interface INavCategory extends ICategory {
   styleUrl: './nav-menu.component.scss'
 })
 export class NavMenuComponent implements OnInit {
-  private readonly categoryService    = inject(CategoryService);
-  private readonly subCategoryService = inject(SubCategoryService);
+  private readonly categoryService     = inject(CategoryService);
+  private readonly subCategoryService  = inject(SubCategoryService);
   private readonly productGroupService = inject(ProductGroupService);
 
-  categories      = signal<INavCategory[]>([]);
-  activeCategory  = signal<INavCategory | null>(null);
-  isLoading       = signal(true);
-  mobileOpen      = signal<number | null>(null); // id відкритої категорії на мобілі
+  categories     = signal<INavCategory[]>([]);
+  activeCategory = signal<INavCategory | null>(null);
+  isLoading      = signal(true);
+
+  // Mobile
+  mobileNavOpen = signal(false);
+  mobileOpen    = signal<number | null>(null);
+  mobileMenuOpen = signal<number | null>(null); // сумісність зі старим шаблоном
 
   ngOnInit(): void {
     this.loadMenu();
@@ -41,14 +45,12 @@ export class NavMenuComponent implements OnInit {
   private loadMenu(): void {
     this.categoryService.getAllList().subscribe({
       next: (cats) => {
-        // Завантажуємо підкатегорії для всіх категорій паралельно
         const subRequests = cats.map(cat =>
           this.subCategoryService.getByCategoryId(cat.id)
         );
 
         forkJoin(subRequests).subscribe({
           next: (subCatsPerCategory) => {
-            // Для кожної підкатегорії завантажуємо product groups
             const allSubCats = subCatsPerCategory.flat();
             const groupRequests = allSubCats.map(sub =>
               this.productGroupService.getBySubCategoryId(sub.id)
@@ -56,20 +58,15 @@ export class NavMenuComponent implements OnInit {
 
             forkJoin(groupRequests).subscribe({
               next: (groupsPerSub) => {
-                // Збираємо в повну структуру
+                let globalIdx = 0;
                 const navCats: INavCategory[] = cats.map((cat, catIdx) => ({
                   ...cat,
-                  subCategories: subCatsPerCategory[catIdx].map((sub, subIdx) => {
-                    const globalSubIdx = subCatsPerCategory
-                      .slice(0, catIdx)
-                      .reduce((acc, arr) => acc + arr.length, 0) + subIdx;
-                    return {
-                      ...sub,
-                      productGroups: groupsPerSub[globalSubIdx] || []
-                    };
+                  subCategories: subCatsPerCategory[catIdx].map(sub => {
+                    const groups = groupsPerSub[globalIdx] || [];
+                    globalIdx++;
+                    return { ...sub, productGroups: groups };
                   })
                 }));
-
                 this.categories.set(navCats);
                 this.isLoading.set(false);
               }
@@ -89,7 +86,19 @@ export class NavMenuComponent implements OnInit {
     this.activeCategory.set(null);
   }
 
-  // ---- Mobile accordion ----
+  // ---- Mobile nav ----
+  toggleMobileNav(): void {
+    this.mobileNavOpen.update(v => !v);
+    if (!this.mobileNavOpen()) {
+      this.mobileOpen.set(null);
+    }
+  }
+
+  closeMobileNav(): void {
+    this.mobileNavOpen.set(false);
+    this.mobileOpen.set(null);
+  }
+
   toggleMobile(catId: number): void {
     this.mobileOpen.update(v => v === catId ? null : catId);
   }
@@ -98,9 +107,9 @@ export class NavMenuComponent implements OnInit {
     return this.mobileOpen() === catId;
   }
 
-  // Закрити мега-меню при кліку поза ним
   @HostListener('document:keydown.escape')
   onEscape(): void {
     this.activeCategory.set(null);
+    this.closeMobileNav();
   }
 }
