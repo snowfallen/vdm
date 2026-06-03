@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: email
-                  value: "danzig.carpets.dev@gmail.com"
+                  value: "vdm.dev@gmail.com"
               - column:
                   name: phone_number
                   value: "+48989298536"

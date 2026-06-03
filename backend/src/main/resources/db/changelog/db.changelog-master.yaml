@@ -45,3 +45,5 @@ databaseChangeLog:
       file: db/changelog/changes/22-create-shopping-cart-tables.yaml
   - include:
       file: db/changelog/changes/23-add-image-url-to-product.yaml
+  - include:
+      file: db/changelog/changes/24-fill-test-client.yaml

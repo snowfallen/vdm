@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import {canActivateRoute} from './core/auth/guards/auth.guard';
+import {roleClientGuard} from './core/auth/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -21,6 +23,20 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/product-detail/product-detail.component')
         .then(m => m.ProductDetailComponent)
+  },
+  // ← КОШИК — тільки для CLIENT
+  {
+    path: 'cart',
+    canActivate: [roleClientGuard],
+    loadComponent: () =>
+      import('./features/cart/cart.component').then(m => m.CartComponent)
+  },
+  // ← КАБІНЕТ КЛІЄНТА
+  {
+    path: 'cabinet',
+    canActivate: [canActivateRoute],
+    loadComponent: () =>
+      import('./features/client/cabinet/cabinet.component').then(m => m.CabinetComponent)
   },
   {
     path: 'catalog',

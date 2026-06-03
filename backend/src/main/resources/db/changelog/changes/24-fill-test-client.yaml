@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-test-client
+      author: snowfall
+      # Тестовий клієнт:
+      # email: client@vdm.ua
+      # password: Client123!  (bcrypt)
+      # role: ROLE_CLIENT (id=2)
+      changes:
+
+        # 1. Додаємо роль ROLE_CLIENT якщо ще немає
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: id,   valueNumeric: 2 }
+              - column: { name: name, value: "ROLE_CLIENT" }
+
+        # 2. Користувач
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id,           valueNumeric: 2 }
+              - column: { name: email,         value: "client@vdm.ua" }
+              - column: { name: email_verified, valueBoolean: true }
+              - column: { name: phone_number,  value: "+380991234567" }
+              - column: { name: first_name,    value: "Тест" }
+              - column: { name: last_name,     value: "Клієнт" }
+              - column: { name: password,      value: "$2a$10$acAhBYQCAb4HrppsiMUohOuO9uFrFzeHR9ncziNEudPmEtEROIYNy" }
+              - column: { name: created_at,    value: "2024-01-11 09:00:00" }
+              - column: { name: modified_at,   value: "2024-01-11 09:00:00" }
+
+        # 3. Прив'язка ролі
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: { name: user_id, valueNumeric: 2 }
+              - column: { name: role_id, valueNumeric: 2 }
+
+        # 4. Запис в clients
+        - insert:
+            tableName: clients
+            columns:
+              - column: { name: id,               valueNumeric: 1 }
+              - column: { name: user_id,           valueNumeric: 2 }
+              - column: { name: country,           value: "Україна" }
+              - column: { name: city,              value: "Київ" }
+              - column: { name: street,            value: "Хрещатик" }
+              - column: { name: house_number,      value: "1" }
+              - column: { name: apartment_number,  value: "10" }
+              - column: { name: postal_code,       value: "01001" }
+              - column: { name: created_at,        value: "2024-01-11 09:00:00" }
+              - column: { name: modified_at,       value: "2024-01-11 09:00:00" }

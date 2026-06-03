@@ -63,7 +63,8 @@ public class SecurityConfig {
                                 "/products/search",
                                 "/units/**",
                                 "/attributes/**",
-                                "/attribute-options/**"
+                                "/attribute-options/**",
+                                "/product-attributes/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()

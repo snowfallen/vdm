@@ -1,0 +1,125 @@
+<div class="cabinet-page">
+  <div class="container">
+
+    <!-- Заголовок -->
+    <div class="cabinet-hero">
+      <div class="cabinet-hero__avatar">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="cabinet-hero__info">
+        <h1 class="cabinet-hero__name" *ngIf="profile()">
+          {{ profile()!.firstName }} {{ profile()!.lastName }}
+        </h1>
+        <span class="cabinet-hero__email" *ngIf="profile()">{{ profile()!.email }}</span>
+        <span class="cabinet-hero__role">
+          {{ isAdmin ? 'Адміністратор' : 'Покупець' }}
+        </span>
+      </div>
+      <button class="cabinet-hero__logout btn btn--ghost btn--sm" (click)="logout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Вийти
+      </button>
+    </div>
+
+    <!-- Картки-швидкі дії -->
+    <div class="cabinet-cards">
+
+      <!-- Кошик — тільки CLIENT -->
+      <a *ngIf="isClient" routerLink="/cart" class="cabinet-card cabinet-card--cart">
+        <div class="cabinet-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cabinet-card__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
+        </div>
+        <div class="cabinet-card__body">
+          <span class="cabinet-card__title">Мій кошик</span>
+          <span class="cabinet-card__sub">
+            {{ cartCount() > 0 ? cartCount() + ' товарів' : 'Порожній' }}
+          </span>
+        </div>
+        <svg class="cabinet-card__arrow" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      </a>
+
+      <!-- Адмін-панель — для ADMIN -->
+      <a *ngIf="isAdmin" routerLink="/admin" class="cabinet-card">
+        <div class="cabinet-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="cabinet-card__body">
+          <span class="cabinet-card__title">Панель адміна</span>
+          <span class="cabinet-card__sub">Товари, категорії, замовлення</span>
+        </div>
+        <svg class="cabinet-card__arrow" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      </a>
+
+      <!-- Каталог -->
+      <a routerLink="/catalog" class="cabinet-card">
+        <div class="cabinet-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <polyline points="3 6 12 13 21 6"/>
+          </svg>
+        </div>
+        <div class="cabinet-card__body">
+          <span class="cabinet-card__title">До каталогу</span>
+          <span class="cabinet-card__sub">Переглянути всі товари</span>
+        </div>
+        <svg class="cabinet-card__arrow" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Профіль -->
+    <div class="cabinet-section" *ngIf="profile()">
+      <h2 class="cabinet-section__title">Мої дані</h2>
+      <div class="profile-grid">
+        <div class="profile-field">
+          <span class="profile-field__label">Ім'я</span>
+          <span class="profile-field__val">{{ profile()!.firstName }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="profile-field__label">Прізвище</span>
+          <span class="profile-field__val">{{ profile()!.lastName }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="profile-field__label">Email</span>
+          <span class="profile-field__val">
+            {{ profile()!.email }}
+            <span class="profile-field__verified" *ngIf="profile()!.emailVerified">✓ підтверджено</span>
+          </span>
+        </div>
+        <div class="profile-field">
+          <span class="profile-field__label">Телефон</span>
+          <span class="profile-field__val">{{ profile()!.phoneNumber }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

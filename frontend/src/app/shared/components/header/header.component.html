@@ -32,7 +32,9 @@
 
       <!-- ЗАЛОГІНЕНИЙ -->
       <div class="auth-links" *ngIf="isLoggedIn">
-        <a routerLink="/admin" class="auth-links__link auth-links__link--cabinet">
+        <!-- Адмін → /admin, Клієнт → /cabinet -->
+        <a [routerLink]="isAdmin ? '/admin' : '/cabinet'"
+           class="auth-links__link auth-links__link--cabinet">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
@@ -112,8 +114,10 @@
         <span class="icon-btn__label">Кошик</span>
       </a>
 
-      <!-- Кабінет залогінений -->
-      <a *ngIf="isLoggedIn" routerLink="/admin" class="icon-btn" aria-label="Кабінет">
+      <!-- Кабінет: адмін → /admin, клієнт → /cabinet -->
+      <a *ngIf="isLoggedIn"
+         [routerLink]="isAdmin ? '/admin' : '/cabinet'"
+         class="icon-btn" aria-label="Кабінет">
         <div class="icon-btn__icon-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.8">
@@ -138,7 +142,9 @@
           <span class="icon-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
         </div>
       </a>
-      <a *ngIf="isLoggedIn" routerLink="/admin" class="icon-btn icon-btn--sm">
+      <a *ngIf="isLoggedIn"
+         [routerLink]="isAdmin ? '/admin' : '/cabinet'"
+         class="icon-btn icon-btn--sm">
         <div class="icon-btn__icon-wrap">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.8">

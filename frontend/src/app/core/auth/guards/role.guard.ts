@@ -11,3 +11,12 @@ export const roleAdminGuard = () => {
 
     return roleId === Roles.ADMIN.valueOf().toString() ? true : router.navigate(['/'])
 }
+
+export const roleClientGuard = () => {
+  const cookieService: CookieCustomService = inject(CookieCustomService)
+  const router: Router = inject(Router)
+
+  const roleId = cookieService.getCookie('roleId');
+
+  return roleId === Roles.CLIENT.valueOf().toString() ? true : router.navigate(['/'])
+}
