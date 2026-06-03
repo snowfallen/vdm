@@ -71,6 +71,154 @@
       <div class="logo__tagline">Все для меблів</div>
     </a>
 
+
+    <div class="container nav-menu__container">
+
+      <div class="nav-desktop-trigger">
+
+        <button class="btn-catalog"
+                [class.btn-catalog--active]="desktopMenuOpen()"
+                (click)="toggleDesktopMenu($event)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <span>Каталог</span>
+        </button>
+
+        <div class="mega-menu" *ngIf="desktopMenuOpen()">
+
+          <div class="mega-menu__inner container">
+
+            <div class="mega-menu__sidebar">
+              <ng-container *ngIf="isLoading()">
+                <div *ngFor="let _ of [1,2,3,4,5,6]" class="mega-menu__skeleton"></div>
+              </ng-container>
+
+              <ul class="mega-menu__sidebar-list" *ngIf="!isLoading()">
+                <li *ngFor="let cat of categories()"
+                    class="mega-menu__sidebar-item"
+                    (mouseenter)="onCategoryEnter(cat)"
+                    [class.mega-menu__sidebar-item--active]="activeCategory()?.id === cat.id">
+                  <a [routerLink]="['/catalog', cat.id]" (click)="onLinkClick()" class="mega-menu__sidebar-link">
+                    {{ cat.name }}
+                    <svg class="mega-menu__sidebar-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mega-menu__content" *ngIf="activeCategory() && !isLoading()">
+
+              <div class="mega-menu__content-header">
+                <a [routerLink]="['/catalog', activeCategory()!.id]"
+                   class="mega-menu__cat-title"
+                   (click)="onLinkClick()">
+                  {{ activeCategory()!.name }}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </a>
+                <span class="mega-menu__count">
+                {{ activeCategory()!.subCategories.length }} підкатегорій
+              </span>
+              </div>
+
+              <div class="mega-menu__grid">
+                <div *ngFor="let sub of activeCategory()!.subCategories" class="mega-menu__col">
+                  <a [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
+                     class="mega-menu__sub-title"
+                     (click)="onLinkClick()">
+                    {{ sub.name }}
+                  </a>
+
+                  <ul *ngIf="sub.productGroups.length > 0" class="mega-menu__groups">
+                    <li *ngFor="let group of sub.productGroups">
+                      <a [routerLink]="['/catalog', activeCategory()!.id, sub.id, group.id]"
+                         class="mega-menu__group-link"
+                         (click)="onLinkClick()">
+                        {{ group.name }}
+                      </a>
+                    </li>
+                  </ul>
+
+                  <a *ngIf="sub.productGroups.length === 0"
+                     [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
+                     class="mega-menu__all-link"
+                     (click)="onLinkClick()">
+                    Всі товари →
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-sheet" [class.mobile-sheet--open]="mobileNavOpen()">
+      <div class="mobile-sheet__handle"></div>
+      <div class="mobile-sheet__body">
+
+        <div class="mobile-sheet__section-title">Каталог товарів</div>
+
+        <div *ngFor="let cat of categories()" class="mobile-cat">
+          <button class="mobile-cat__btn"
+                  [class.mobile-cat__btn--open]="isMobileOpen(cat.id)"
+                  (click)="toggleMobile(cat.id)">
+            <span>{{ cat.name }}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          <div class="mobile-cat__sub" *ngIf="isMobileOpen(cat.id)">
+            <div *ngFor="let sub of cat.subCategories">
+              <a [routerLink]="['/catalog', cat.id, sub.id]" class="mobile-sub__link" (click)="closeMobileNav()">
+                {{ sub.name }}
+              </a>
+              <div *ngIf="sub.productGroups.length > 0" class="mobile-groups">
+                <a *ngFor="let group of sub.productGroups"
+                   [routerLink]="['/catalog', cat.id, sub.id, group.id]"
+                   class="mobile-group__link"
+                   (click)="closeMobileNav()">
+                  {{ group.name }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-sheet__divider"></div>
+        <div class="mobile-sheet__section-title">Інформація</div>
+        <nav class="mobile-sheet__links">
+          <a routerLink="/about" class="mobile-sheet__link" (click)="closeMobileNav()">Про нас</a>
+          <a routerLink="/delivery" class="mobile-sheet__link" (click)="closeMobileNav()">Оплата та доставка</a>
+          <a routerLink="/certificates" class="mobile-sheet__link" (click)="closeMobileNav()">Сертифікати</a>
+          <a routerLink="/news" class="mobile-sheet__link" (click)="closeMobileNav()">Новини</a>
+          <a routerLink="/articles" class="mobile-sheet__link" (click)="closeMobileNav()">Статті</a>
+          <a routerLink="/brands" class="mobile-sheet__link" (click)="closeMobileNav()">Виробники</a>
+          <a routerLink="/contacts" class="mobile-sheet__link" (click)="closeMobileNav()">Контакти</a>
+        </nav>
+
+        <div class="mobile-sheet__divider"></div>
+        <div class="mobile-sheet__auth">
+          <a routerLink="/login" class="mobile-sheet__auth-btn" (click)="closeMobileNav()">Вхід</a>
+          <a routerLink="/register" class="mobile-sheet__auth-btn mobile-sheet__auth-btn--primary" (click)="closeMobileNav()">Реєстрація</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mobile-sheet__overlay"
+         [class.mobile-sheet__overlay--visible]="mobileNavOpen()"
+         (click)="closeMobileNav()">
+    </div>
+
     <div class="search-bar">
       <div class="search-bar__wrap">
         <svg class="search-bar__icon" width="16" height="16" viewBox="0 0 24 24"
@@ -142,17 +290,23 @@
           <span class="icon-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
         </div>
       </a>
-      <a *ngIf="isLoggedIn"
-         [routerLink]="isAdmin ? '/admin' : '/cabinet'"
-         class="icon-btn icon-btn--sm">
-        <div class="icon-btn__icon-wrap">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.8">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
+      <button class="nav-burger"
+              (click)="toggleMobileNav()"
+              [attr.aria-label]="mobileNavOpen() ? 'Закрити меню' : 'Відкрити каталог'">
+        <ng-container *ngIf="!mobileNavOpen()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
-        </div>
-      </a>
+        </ng-container>
+        <ng-container *ngIf="mobileNavOpen()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </ng-container>
+      </button>
     </div>
 
   </div>

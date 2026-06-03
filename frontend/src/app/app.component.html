@@ -3,7 +3,6 @@
   <!-- Header і Nav тільки на публічних сторінках -->
   <ng-container *ngIf="!hideShell()">
     <app-header />
-    <app-nav-menu />
   </ng-container>
 
   <main class="app-main" [class.app-main--full]="hideShell()">

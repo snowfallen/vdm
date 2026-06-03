@@ -1,5 +1,5 @@
 /* ============================================================
-   NAV MENU
+   NAV MENU CONTAINER
    ============================================================ */
 .nav-menu {
   background: var(--clr-nav-bg);
@@ -10,170 +10,260 @@
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: end;   /* кнопка каталогу справа на мобілі */
+    justify-content: space-between; /* Розносить десктопну кнопку вліво, якщо треба, або центрує */
+    height: 60px;
   }
-
-  &__list {
-    display: flex;
-    align-items: stretch;
-    overflow-x: auto;
-    scrollbar-width: none;
-    flex: 1;
-    &::-webkit-scrollbar { display: none; }
-    @media (max-width: 767px) { display: none; }
-  }
-
-  &__item { flex-shrink: 0; }
-
-  &__link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: 0 var(--space-4);
-    font-size: var(--fs-sm);
-    font-weight: var(--fw-semibold);
-    color: var(--clr-nav-text);
-    white-space: nowrap;
-    height: 48px;
-    transition: all var(--transition-fast);
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 50%; right: 50%;
-      height: 2px;
-      background: var(--clr-nav-hover);
-      transition: all var(--transition-base);
-    }
-
-    &:hover, &--active {
-      color: var(--clr-nav-hover);
-      background: rgba(255,255,255,.05);
-      &::after { left: 0; right: 0; }
-    }
-  }
-
-  &__arrow {
-    transition: transform var(--transition-base);
-    opacity: .6;
-    &--open { transform: rotate(180deg); }
-  }
-
-  &__skeleton {
-    width: 100px; height: 14px;
-    margin: 17px var(--space-4);
-    border-radius: var(--radius-sm);
-    background: rgba(255,255,255,.08);
-    animation: skeleton-pulse 1.5s infinite;
-  }
-}
-
-/* ---- Єдина мобільна кнопка ---- */
-.nav-burger {
-  display: none;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0 var(--space-4);
-  height: 48px;
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--clr-nav-text);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color var(--transition-fast);
-  flex-shrink: 0;
-
-  &:hover { color: var(--clr-nav-hover); }
-  @media (max-width: 767px) { display: flex; }
 }
 
 /* ============================================================
-   DESKTOP МЕГА-МЕНЮ
+   DESKTOP TRIGGER BUTTON
+   ============================================================ */
+.nav-desktop-trigger {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 991px) {
+    display: none; // Ховаємо на мобілках та планшетах
+  }
+}
+
+.btn-catalog {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  height: 44px;
+  background: var(--clr-primary);
+  color: #1c1c1c; // Темний текст для контрасту, адаптуй якщо треба
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover, &--active {
+    background: var(--clr-primary-dark, #b39240);
+  }
+}
+
+
+/* ============================================================
+   DESKTOP MEGA-MENU (ROZETKA STYLE)
    ============================================================ */
 .mega-menu {
   position: absolute;
-  top: 100%; left: 0; right: 0;
+  top: 100%;
+  left: 0;
+  width: 100%;
   background: var(--clr-surface);
   border-top: 2px solid var(--clr-primary);
   box-shadow: 0 12px 40px rgba(0,0,0,.18);
   z-index: 200;
-  animation: slide-down 180ms ease both;
+  animation: slide-down 200ms ease both;
 
   &__inner {
-    padding-block: var(--space-5);
-    max-height: 70vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
+    display: flex;
+    min-height: 450px; // Щоб меню завжди виглядало солідно
+    max-height: 75vh;
   }
 
-  &__header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-bottom: var(--space-3);
-    margin-bottom: var(--space-4);
+  &__inner.container {
+    padding: 0 !important;
+  }
+
+  /* ---- ЛІВА КОЛОНКА (САЙДБАР) ---- */
+  &__sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--clr-border);
+    padding: var(--space-3) 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    background: var(--clr-bg);
+  }
+
+  &__sidebar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__sidebar-item {
+    &--active {
+      background: var(--clr-surface);
+      border-right: 3px solid var(--clr-primary);
+    }
+  }
+
+  &__sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-primary);
+    transition: all var(--transition-fast);
+
+    &:hover, .mega-menu__sidebar-item--active & {
+      color: var(--clr-primary);
+    }
+  }
+
+  &__sidebar-arrow {
+    opacity: 0.4;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+
+    .mega-menu__sidebar-item--active & {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+  }
+
+  &__skeleton {
+    height: 24px;
+    margin: var(--space-3) var(--space-5);
+    border-radius: var(--radius-sm);
+    background: rgba(150, 150, 150, 0.1);
+    animation: skeleton-pulse 1.5s infinite;
+  }
+
+  /* ---- ПРАВА КОЛОНКА (КОНТЕНТ) ---- */
+  &__content {
+    flex: 1;
+    padding: var(--space-5) var(--space-6);
+    overflow-y: auto;
+    background: var(--clr-surface);
+  }
+
+  &__content-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
     border-bottom: 1px solid var(--clr-border);
   }
 
   &__cat-title {
-    display: flex; align-items: center; gap: var(--space-2);
-    font-size: var(--fs-lg); font-weight: var(--fw-bold);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-bold);
     color: var(--clr-text-primary);
     transition: color var(--transition-fast);
+
     &:hover { color: var(--clr-primary); }
   }
 
   &__count {
-    font-size: var(--fs-xs); color: var(--clr-text-muted);
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
     background: var(--clr-surface-2);
-    padding: 3px var(--space-3);
+    padding: 4px var(--space-3);
     border-radius: var(--radius-full);
   }
 
   &__grid {
     display: grid;
-    gap: var(--space-4) var(--space-6);
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-6) var(--space-5);
+    /* Сітка адаптується сама: мінімум 220px на колонку */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 
-  &__col { display: flex; flex-direction: column; gap: var(--space-1); }
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
 
   &__sub-title {
-    font-size: var(--fs-xs); font-weight: var(--fw-bold);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
     color: var(--clr-text-primary);
-    text-transform: uppercase; letter-spacing: .06em;
+    text-transform: uppercase;
+    letter-spacing: .03em;
     padding-bottom: var(--space-2);
-    border-bottom: 1.5px solid var(--clr-primary-light);
+    border-bottom: 2px solid var(--clr-primary-light);
     margin-bottom: var(--space-1);
-    line-height: var(--lh-snug);
     transition: color var(--transition-fast);
+
     &:hover { color: var(--clr-primary); }
   }
 
-  &__groups { display: flex; flex-direction: column; gap: 2px; }
+  &__groups {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
   &__group-link {
-    font-size: var(--fs-xs); color: var(--clr-text-secondary);
-    padding: 3px 0 3px var(--space-2);
-    border-left: 2px solid transparent;
-    display: block; line-height: var(--lh-snug);
+    font-size: var(--fs-sm);
+    color: var(--clr-text-secondary);
+    padding: 4px 0;
+    display: block;
+    line-height: var(--lh-snug);
     transition: all var(--transition-fast);
+
     &:hover {
       color: var(--clr-primary);
-      border-left-color: var(--clr-primary);
-      padding-left: var(--space-3);
+      transform: translateX(4px);
     }
   }
 
   &__all-link {
-    font-size: var(--fs-xs); font-weight: var(--fw-semibold);
-    color: var(--clr-primary); padding: var(--space-1) 0;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-primary);
+    padding: var(--space-2) 0;
+    display: inline-block;
+
     &:hover { text-decoration: underline; }
   }
 }
 
+/* Animations */
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes skeleton-pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
 /* ============================================================
-   MOBILE BOTTOM SHEET
+   MOBILE BURGER BUTTON
+   ============================================================ */
+.nav-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--clr-nav-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+
+  &:hover { color: var(--clr-nav-hover); }
+
+  @media (max-width: 991px) {
+    display: flex;
+  }
+}
+
+/* ============================================================
+   MOBILE BOTTOM SHEET (Твій оригінальний код без змін)
    ============================================================ */
 .mobile-sheet {
   position: fixed;
@@ -205,7 +295,6 @@
     padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 
-  /* Заголовок секції */
   &__section-title {
     padding: var(--space-3) var(--space-5) var(--space-2);
     font-size: var(--fs-xs);
@@ -217,7 +306,6 @@
     border-bottom: 1px solid var(--clr-border);
   }
 
-  /* Роздільник між секціями */
   &__divider {
     height: 8px;
     background: var(--clr-bg);
@@ -226,7 +314,6 @@
     margin-block: 0;
   }
 
-  /* Інформаційні посилання */
   &__links {
     display: flex;
     flex-direction: column;
@@ -248,7 +335,6 @@
     }
   }
 
-  /* Авторизація */
   &__auth {
     display: flex;
     gap: var(--space-3);
@@ -279,7 +365,6 @@
     }
   }
 
-  /* Overlay */
   &__overlay {
     position: fixed;
     inset: 0;
@@ -293,7 +378,6 @@
   }
 }
 
-/* ---- Мобільні категорії ---- */
 .mobile-cat {
   border-bottom: 1px solid var(--clr-border);
 
