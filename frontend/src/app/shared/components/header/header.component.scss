@@ -362,13 +362,18 @@
 .mega-menu {
   position: absolute;
   top: 65px;
-  left: 2vw;
-  width: 60vw;
+  left: 0;
+  width: 500%;
   background: var(--clr-surface);
   border-top: 2px solid var(--clr-primary);
   box-shadow: 0 12px 40px rgba(0,0,0,.18);
   z-index: 200;
   animation: slide-down 200ms ease both;
+
+  @media (max-width: 1200px) {
+    width: 450%;
+    left: -10%;
+  }
 
   &__inner {
     display: flex;
