@@ -1,13 +1,11 @@
 <!-- TOP BAR -->
 <div class="top-bar">
   <div class="container top-bar__inner">
-    <nav class="top-bar__nav" aria-label="Вторинне меню">
+    <nav class="top-bar__nav">
       <a *ngFor="let link of topLinks"
          [routerLink]="link.path"
          routerLinkActive="top-bar__link--active"
-         class="top-bar__link">
-        {{ link.label }}
-      </a>
+         class="top-bar__link">{{ link.label }}</a>
     </nav>
 
     <div class="top-bar__actions">
@@ -32,25 +30,23 @@
         </a>
       </div>
 
-      <!-- Залогінений — кабінет + вийти -->
+      <!-- ЗАЛОГІНЕНИЙ -->
       <div class="auth-links" *ngIf="isLoggedIn">
         <a routerLink="/admin" class="auth-links__link auth-links__link--cabinet">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
-          Кабінет
+          {{ isAdmin ? 'Панель адміна' : 'Кабінет' }}
         </a>
         <span class="auth-links__sep">|</span>
         <button class="auth-links__link auth-links__btn" (click)="logout()">Вийти</button>
       </div>
 
-      <!-- Незалогінений — вхід + реєстрація -->
+      <!-- ГІСТЬ -->
       <div class="auth-links" *ngIf="!isLoggedIn">
         <a routerLink="/login" class="auth-links__link">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
           Вхід
         </a>
@@ -77,21 +73,18 @@
       <div class="search-bar__wrap">
         <svg class="search-bar__icon" width="16" height="16" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-        <input type="search"
-               class="search-bar__input"
-               placeholder="Пошук товару..."
-               [(ngModel)]="searchQuery"
-               (keyup.enter)="onSearch()" />
+        <input type="search" class="search-bar__input" placeholder="Пошук товару..."
+               [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
         <button class="search-bar__btn btn btn--primary btn--sm" (click)="onSearch()">
           Знайти
         </button>
       </div>
     </div>
 
-    <div class="header__contacts">
+    <!-- Десктоп: контакти + кошик + кабінет -->
+    <div class="header__right">
       <div class="contacts-block">
         <svg class="contacts-block__icon" width="18" height="18" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="1.5">
@@ -105,51 +98,54 @@
         </div>
       </div>
 
-      <!-- Кошик десктоп -->
-      <button class="cart-btn" aria-label="Кошик">
-        <div class="cart-btn__icon-wrap">
+      <!-- Кошик — тільки для CLIENT -->
+      <a *ngIf="isClient" routerLink="/cart" class="icon-btn" aria-label="Кошик">
+        <div class="icon-btn__icon-wrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.8">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
-          <span class="cart-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
+          <span class="icon-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
         </div>
-        <span class="cart-btn__label">Кошик</span>
-      </button>
+        <span class="icon-btn__label">Кошик</span>
+      </a>
 
-      <!-- Кабінет десктоп (якщо залогінений) -->
-      <a *ngIf="isLoggedIn" routerLink="/admin" class="cabinet-btn" aria-label="Кабінет">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.8">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-        <span class="cabinet-btn__label">Кабінет</span>
+      <!-- Кабінет залогінений -->
+      <a *ngIf="isLoggedIn" routerLink="/admin" class="icon-btn" aria-label="Кабінет">
+        <div class="icon-btn__icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="icon-btn__label">{{ isAdmin ? 'Адмін' : 'Кабінет' }}</span>
       </a>
     </div>
 
-    <!-- Мобільна права частина: кошик + кабінет -->
+    <!-- Мобільні іконки -->
     <div class="header__mobile-actions">
-      <button class="cart-btn cart-btn--icon" aria-label="Кошик">
-        <div class="cart-btn__icon-wrap">
+      <a *ngIf="isClient" routerLink="/cart" class="icon-btn icon-btn--sm">
+        <div class="icon-btn__icon-wrap">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="1.8">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
-          <span class="cart-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
+          <span class="icon-btn__badge" *ngIf="cartCount() > 0">{{ cartCount() }}</span>
         </div>
-      </button>
-
-      <a *ngIf="isLoggedIn" routerLink="/admin" class="cabinet-btn cabinet-btn--icon" aria-label="Кабінет">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1.8">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
+      </a>
+      <a *ngIf="isLoggedIn" routerLink="/admin" class="icon-btn icon-btn--sm">
+        <div class="icon-btn__icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
       </a>
     </div>
 

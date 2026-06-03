@@ -1,0 +1,53 @@
+<a class="product-card" [routerLink]="['/products', product.id]">
+
+  <div class="product-card__img-wrap">
+    <img *ngIf="product.imageUrl"
+         [src]="product.imageUrl" [alt]="product.name"
+         class="product-card__img" loading="lazy" />
+    <div *ngIf="!product.imageUrl" class="product-card__no-img">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="product-card__body">
+    <h3 class="product-card__name">{{ product.name }}</h3>
+
+    <div class="product-card__footer">
+      <span class="product-card__price">{{ product.price | number:'1.2-2' }} грн</span>
+
+      <!-- Кнопка кошика — тільки для CLIENT -->
+      <button *ngIf="isClient"
+              class="product-card__btn"
+              [class.product-card__btn--added]="added()"
+              (click)="onAddToCart($event)"
+              [title]="added() ? 'Додано!' : 'В кошик'">
+        <ng-container *ngIf="!added()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </ng-container>
+        <ng-container *ngIf="added()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </ng-container>
+      </button>
+
+      <!-- Незалогінений — іконка кошика без дії (клік веде на продукт) -->
+      <div *ngIf="!isClient && !isAdmin" class="product-card__btn product-card__btn--ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</a>

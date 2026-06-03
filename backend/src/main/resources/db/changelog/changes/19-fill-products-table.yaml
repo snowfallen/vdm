@@ -1,0 +1,401 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-products-table
+      author: snowfall
+      # product_group_id посилається на групи з changeset 13 (fill-product-groups-table)
+      # Перші product groups по даним з проекту:
+      # 1  - Напрямні для розсувних дверей
+      # 2  - Шухляди та системи висування
+      # 3  - Підйомні механізми
+      # 4  - Барні механізми
+      # 5  - Петлі меблеві
+      # 6  - Ручки меблеві
+      # 7  - Замки меблеві
+      # 8  - Куточки та кріплення
+      # 9  - Ніжки меблеві
+      # 10 - Направляючі телескопічні
+      # 11 - Вішалки та гачки
+      # 12 - Кошики та органайзери
+      # 13 - Освітлення меблеве
+      # 14 - Цоколі та плінтуси
+      # 15 - Кромка ПВХ
+      changes:
+        # --- product_group_id: 1 (Напрямні для розсувних дверей) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Напрямна верхня алюмінієва 1800мм" }
+              - column: { name: price, valueNumeric: 285.00 }
+              - column: { name: product_group_id, valueNumeric: 1 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Напрямна нижня сталева 2400мм" }
+              - column: { name: price, valueNumeric: 196.00 }
+              - column: { name: product_group_id, valueNumeric: 1 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "Комплект напрямних розсувних дверей 2м Hafele" }
+              - column: { name: price, valueNumeric: 1240.00 }
+              - column: { name: product_group_id, valueNumeric: 1 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: "Ролик для розсувних дверей пластиковий" }
+              - column: { name: price, valueNumeric: 48.00 }
+              - column: { name: product_group_id, valueNumeric: 1 }
+
+        # --- product_group_id: 2 (Шухляди та системи висування) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: "Шухляда Legrabox Pure 500мм антрацит" }
+              - column: { name: price, valueNumeric: 3850.00 }
+              - column: { name: product_group_id, valueNumeric: 2 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: "Шухляда Tandembox 450мм біла" }
+              - column: { name: price, valueNumeric: 1290.00 }
+              - column: { name: product_group_id, valueNumeric: 2 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: "Напрямна повного висування 500мм Blum" }
+              - column: { name: price, valueNumeric: 680.00 }
+              - column: { name: product_group_id, valueNumeric: 2 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: "Бічна направляюча роликова 400мм" }
+              - column: { name: price, valueNumeric: 145.00 }
+              - column: { name: product_group_id, valueNumeric: 2 }
+
+        # --- product_group_id: 3 (Підйомні механізми) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: name, value: "Підйомник Aventos HK-S Blum до 11кг" }
+              - column: { name: price, valueNumeric: 2140.00 }
+              - column: { name: product_group_id, valueNumeric: 3 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: name, value: "Підйомник Aventos HL Blum для фасаду 800-1800мм" }
+              - column: { name: price, valueNumeric: 3650.00 }
+              - column: { name: product_group_id, valueNumeric: 3 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 11 }
+              - column: { name: name, value: "Газовий підйомник 80N білий" }
+              - column: { name: price, valueNumeric: 320.00 }
+              - column: { name: product_group_id, valueNumeric: 3 }
+
+        # --- product_group_id: 4 (Барні механізми) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 12 }
+              - column: { name: name, value: "Барний механізм складної стійки хром" }
+              - column: { name: price, valueNumeric: 890.00 }
+              - column: { name: product_group_id, valueNumeric: 4 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 13 }
+              - column: { name: name, value: "Барний підіймач для фасаду 450мм" }
+              - column: { name: price, valueNumeric: 1150.00 }
+              - column: { name: product_group_id, valueNumeric: 4 }
+
+        # --- product_group_id: 5 (Петлі меблеві) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 14 }
+              - column: { name: name, value: "Петля Clip Top 110° напівнакладна Blum" }
+              - column: { name: price, valueNumeric: 148.00 }
+              - column: { name: product_group_id, valueNumeric: 5 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 15 }
+              - column: { name: name, value: "Петля Clip Top Blumotion 110° вбудована" }
+              - column: { name: price, valueNumeric: 245.00 }
+              - column: { name: product_group_id, valueNumeric: 5 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 16 }
+              - column: { name: name, value: "Петля Clip Top 165° для кутових шаф" }
+              - column: { name: price, valueNumeric: 310.00 }
+              - column: { name: product_group_id, valueNumeric: 5 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 17 }
+              - column: { name: name, value: "Петля прихована 45° для складних дверей" }
+              - column: { name: price, valueNumeric: 185.00 }
+              - column: { name: product_group_id, valueNumeric: 5 }
+
+        # --- product_group_id: 6 (Ручки меблеві) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 18 }
+              - column: { name: name, value: "Ручка скоба 160мм матовий нікель" }
+              - column: { name: price, valueNumeric: 95.00 }
+              - column: { name: product_group_id, valueNumeric: 6 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 19 }
+              - column: { name: name, value: "Ручка скоба 192мм хром" }
+              - column: { name: price, valueNumeric: 88.00 }
+              - column: { name: product_group_id, valueNumeric: 6 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 20 }
+              - column: { name: name, value: "Ручка врізна Push to Open прихована" }
+              - column: { name: price, valueNumeric: 210.00 }
+              - column: { name: product_group_id, valueNumeric: 6 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 21 }
+              - column: { name: name, value: "Ручка профільна 320мм чорна матова" }
+              - column: { name: price, valueNumeric: 175.00 }
+              - column: { name: product_group_id, valueNumeric: 6 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 22 }
+              - column: { name: name, value: "Ручка-кнопка квадратна 32мм золото" }
+              - column: { name: price, valueNumeric: 65.00 }
+              - column: { name: product_group_id, valueNumeric: 6 }
+
+        # --- product_group_id: 7 (Замки меблеві) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 23 }
+              - column: { name: name, value: "Замок меблевий циліндровий 18мм" }
+              - column: { name: price, valueNumeric: 125.00 }
+              - column: { name: product_group_id, valueNumeric: 7 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 24 }
+              - column: { name: name, value: "Замок-засувка для шухляди магнітна" }
+              - column: { name: price, valueNumeric: 78.00 }
+              - column: { name: product_group_id, valueNumeric: 7 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 25 }
+              - column: { name: name, value: "Замок із ключем для офісних меблів" }
+              - column: { name: price, valueNumeric: 195.00 }
+              - column: { name: product_group_id, valueNumeric: 7 }
+
+        # --- product_group_id: 8 (Куточки та кріплення) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 26 }
+              - column: { name: name, value: "Куточок меблевий сталевий 40x40мм" }
+              - column: { name: price, valueNumeric: 18.00 }
+              - column: { name: product_group_id, valueNumeric: 8 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 27 }
+              - column: { name: name, value: "Ексцентрик + шпилька 15мм комплект" }
+              - column: { name: price, valueNumeric: 24.00 }
+              - column: { name: product_group_id, valueNumeric: 8 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 28 }
+              - column: { name: name, value: "Конфірмат 7x50мм (50 шт)" }
+              - column: { name: price, valueNumeric: 42.00 }
+              - column: { name: product_group_id, valueNumeric: 8 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 29 }
+              - column: { name: name, value: "З'єднувач Minifix 15мм хром" }
+              - column: { name: price, valueNumeric: 35.00 }
+              - column: { name: product_group_id, valueNumeric: 8 }
+
+        # --- product_group_id: 9 (Ніжки меблеві) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 30 }
+              - column: { name: name, value: "Ніжка регульована пластикова 50мм чорна" }
+              - column: { name: price, valueNumeric: 22.00 }
+              - column: { name: product_group_id, valueNumeric: 9 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 31 }
+              - column: { name: name, value: "Ніжка металева з регулюванням 100-130мм хром" }
+              - column: { name: price, valueNumeric: 68.00 }
+              - column: { name: product_group_id, valueNumeric: 9 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 32 }
+              - column: { name: name, value: "Ніжка диванна дерев'яна конусна 120мм" }
+              - column: { name: price, valueNumeric: 115.00 }
+              - column: { name: product_group_id, valueNumeric: 9 }
+
+        # --- product_group_id: 10 (Направляючі телескопічні) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 33 }
+              - column: { name: name, value: "Направляюча телескопічна 300мм 45кг" }
+              - column: { name: price, valueNumeric: 185.00 }
+              - column: { name: product_group_id, valueNumeric: 10 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 34 }
+              - column: { name: name, value: "Направляюча телескопічна 450мм 45кг" }
+              - column: { name: price, valueNumeric: 225.00 }
+              - column: { name: product_group_id, valueNumeric: 10 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 35 }
+              - column: { name: name, value: "Направляюча телескопічна 500мм push-to-open" }
+              - column: { name: price, valueNumeric: 310.00 }
+              - column: { name: product_group_id, valueNumeric: 10 }
+
+        # --- product_group_id: 11 (Вішалки та гачки) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 36 }
+              - column: { name: name, value: "Вішалка штангова алюмінієва 1000мм" }
+              - column: { name: price, valueNumeric: 340.00 }
+              - column: { name: product_group_id, valueNumeric: 11 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 37 }
+              - column: { name: name, value: "Гачок меблевий подвійний хром" }
+              - column: { name: price, valueNumeric: 45.00 }
+              - column: { name: product_group_id, valueNumeric: 11 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 38 }
+              - column: { name: name, value: "Пантограф для штанги підйомний" }
+              - column: { name: price, valueNumeric: 680.00 }
+              - column: { name: product_group_id, valueNumeric: 11 }
+
+        # --- product_group_id: 12 (Кошики та органайзери) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 39 }
+              - column: { name: name, value: "Кошик дротяний 450x500мм хром" }
+              - column: { name: price, valueNumeric: 580.00 }
+              - column: { name: product_group_id, valueNumeric: 12 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 40 }
+              - column: { name: name, value: "Кошик для взуття 800мм антрацит" }
+              - column: { name: price, valueNumeric: 890.00 }
+              - column: { name: product_group_id, valueNumeric: 12 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 41 }
+              - column: { name: name, value: "Лоток для столових приборів шириною 600мм" }
+              - column: { name: price, valueNumeric: 295.00 }
+              - column: { name: product_group_id, valueNumeric: 12 }
+
+        # --- product_group_id: 13 (Освітлення меблеве) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 42 }
+              - column: { name: name, value: "Світлодіодна стрічка 12V 5м тепле світло" }
+              - column: { name: price, valueNumeric: 420.00 }
+              - column: { name: product_group_id, valueNumeric: 13 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 43 }
+              - column: { name: name, value: "Освітлювач LED для шафи з датчиком руху" }
+              - column: { name: price, valueNumeric: 380.00 }
+              - column: { name: product_group_id, valueNumeric: 13 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 44 }
+              - column: { name: name, value: "Блок живлення 12V 30W для LED" }
+              - column: { name: price, valueNumeric: 195.00 }
+              - column: { name: product_group_id, valueNumeric: 13 }
+
+        # --- product_group_id: 14 (Цоколі та плінтуси) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 45 }
+              - column: { name: name, value: "Цоколь меблевий ПВХ 100мм 2.5м білий" }
+              - column: { name: price, valueNumeric: 145.00 }
+              - column: { name: product_group_id, valueNumeric: 14 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 46 }
+              - column: { name: name, value: "Цоколь алюмінієвий H=150мм анодований" }
+              - column: { name: price, valueNumeric: 280.00 }
+              - column: { name: product_group_id, valueNumeric: 14 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 47 }
+              - column: { name: name, value: "Ніжка цокольна регульована 100мм" }
+              - column: { name: price, valueNumeric: 38.00 }
+              - column: { name: product_group_id, valueNumeric: 14 }
+
+        # --- product_group_id: 15 (Кромка ПВХ) ---
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 48 }
+              - column: { name: name, value: "Кромка ПВХ 0.4мм біла 50м" }
+              - column: { name: price, valueNumeric: 185.00 }
+              - column: { name: product_group_id, valueNumeric: 15 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 49 }
+              - column: { name: name, value: "Кромка АБС 2мм дуб натуральний 25м" }
+              - column: { name: price, valueNumeric: 460.00 }
+              - column: { name: product_group_id, valueNumeric: 15 }
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: id, valueNumeric: 50 }
+              - column: { name: name, value: "Кромка меламінова з клеєм 19мм венге 50м" }
+              - column: { name: price, valueNumeric: 210.00 }
+              - column: { name: product_group_id, valueNumeric: 15 }

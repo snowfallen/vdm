@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-image-url-to-products
+      author: snowfall
+      changes:
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: image_url
+                  type: varchar(500)
+                  # nullable — заповниться після підключення MinIO

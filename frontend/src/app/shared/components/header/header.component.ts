@@ -1,8 +1,10 @@
-import { Component, inject, signal, HostListener } from '@angular/core';
+import { Component, inject, signal, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {AuthService} from '../../../core/auth/services/auth.service';
+import {AuthService} from "../../../core/auth/services/auth.service";
+import {CartService} from "../../../core/services/cart.service";
+import {Roles} from "../../../core/auth/enums/roles";
 
 @Component({
   selector: 'app-header',
@@ -11,17 +13,19 @@ import {AuthService} from '../../../core/auth/services/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private readonly authService = inject(AuthService);
+  private readonly cartService = inject(CartService);
 
-  searchQuery    = signal('');
-  cartCount      = signal(0);
-  isScrolled     = signal(false);
+  searchQuery = signal('');
+  isScrolled  = signal(false);
 
-  // Чи залогінений юзер — перевіряємо наявність JWT cookie
-  get isLoggedIn(): boolean {
-    return !!this.authService.getRoleId();
-  }
+  // Живий лічильник кошика з CartService
+  readonly cartCount = this.cartService.cartCount;
+
+  get isLoggedIn(): boolean { return !!this.authService.getRoleId(); }
+  get isAdmin():    boolean { return this.authService.getRoleId() === Roles.ADMIN; }
+  get isClient():   boolean { return this.authService.getRoleId() === 2; }
 
   readonly phones = [
     { label: '(067) 291-71-97', href: 'tel:+380672917197' },
@@ -40,16 +44,21 @@ export class HeaderComponent {
     { label: 'Контакти',           path: '/contacts' },
   ];
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    this.isScrolled.set(window.scrollY > 40);
+  ngOnInit(): void {
+    // Завантажуємо кількість в кошику при старті якщо клієнт
+    if (this.isClient) {
+      this.cartService.getCart().subscribe({
+        error: () => {}  // ігноруємо помилку — просто лічильник не оновиться
+      });
+    }
   }
+
+  @HostListener('window:scroll')
+  onScroll(): void { this.isScrolled.set(window.scrollY > 40); }
 
   onSearch(): void {
-    console.log('Search:', this.searchQuery());
+    // TODO: navigate to search
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
+  logout(): void { this.authService.logout(); }
 }

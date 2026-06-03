@@ -35,3 +35,13 @@ databaseChangeLog:
       file: db/changelog/changes/17-create-attribute-options-table.yaml
   - include:
       file: db/changelog/changes/18-create-product-attributes-table.yaml
+  - include:
+      file: db/changelog/changes/19-fill-products-table.yaml
+  - include:
+      file: db/changelog/changes/20-fill-attribute-options.yaml
+  - include:
+      file: db/changelog/changes/21-fill-product-attributes.yaml
+  - include:
+      file: db/changelog/changes/22-create-shopping-cart-tables.yaml
+  - include:
+      file: db/changelog/changes/23-add-image-url-to-product.yaml

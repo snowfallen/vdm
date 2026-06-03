@@ -16,29 +16,35 @@ public interface ProductAttributeRepository extends JpaRepository<ProductAttribu
             + "WHERE pa.product.id = :productId")
     List<ProductAttribute> findAllByProductId(Long productId);
 
-    // Повертає всі унікальні пари (attributeId, value) для товарів підкатегорії
-    // Використовується для побудови фільтрів на сторінці підкатегорії
-    @Query("SELECT pa.attribute.id, pa.attribute.name, pa.attribute.dataType, "
-            + "pa.attribute.unit.symbol, "
-            + "COALESCE(pa.optionValue.value, pa.customValue) AS val "
+    // ВАЖЛИВО: pa.attribute.unit може бути null для DICT/TEXT атрибутів.
+    // Тому використовуємо явний LEFT JOIN FETCH через нативний підхід:
+    // вибираємо unit окремо через LEFT JOIN щоб уникнути NPE при null unit.
+    @Query("SELECT pa.attribute.id, pa.attribute.name, "
+            + "CAST(pa.attribute.dataType AS string), "
+            + "u.symbol, "
+            + "COALESCE(ov.value, pa.customValue) "
             + "FROM ProductAttribute pa "
             + "JOIN pa.product p "
             + "JOIN p.productGroup pg "
+            + "LEFT JOIN pa.attribute.unit u "
+            + "LEFT JOIN pa.optionValue ov "
             + "WHERE pg.subCategory.id = :subCategoryId "
             + "GROUP BY pa.attribute.id, pa.attribute.name, pa.attribute.dataType, "
-            + "pa.attribute.unit.symbol, val "
-            + "ORDER BY pa.attribute.name, val")
+            + "u.symbol, COALESCE(ov.value, pa.customValue) "
+            + "ORDER BY pa.attribute.name, COALESCE(ov.value, pa.customValue)")
     List<Object[]> findFiltersForSubCategory(Long subCategoryId);
 
-    // Те саме для product group
-    @Query("SELECT pa.attribute.id, pa.attribute.name, pa.attribute.dataType, "
-            + "pa.attribute.unit.symbol, "
-            + "COALESCE(pa.optionValue.value, pa.customValue) AS val "
+    @Query("SELECT pa.attribute.id, pa.attribute.name, "
+            + "CAST(pa.attribute.dataType AS string), "
+            + "u.symbol, "
+            + "COALESCE(ov.value, pa.customValue) "
             + "FROM ProductAttribute pa "
             + "JOIN pa.product p "
+            + "LEFT JOIN pa.attribute.unit u "
+            + "LEFT JOIN pa.optionValue ov "
             + "WHERE p.productGroup.id = :productGroupId "
             + "GROUP BY pa.attribute.id, pa.attribute.name, pa.attribute.dataType, "
-            + "pa.attribute.unit.symbol, val "
-            + "ORDER BY pa.attribute.name, val")
+            + "u.symbol, COALESCE(ov.value, pa.customValue) "
+            + "ORDER BY pa.attribute.name, COALESCE(ov.value, pa.customValue)")
     List<Object[]> findFiltersForProductGroup(Long productGroupId);
 }

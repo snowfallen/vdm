@@ -88,11 +88,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponseDto> getByFilter(ProductFilterRequestDto filter,
-                                                 Pageable pageable) {
-        log.info("Filtering products with filter: {}", filter);
+    public Page<ProductResponseDto> getByFilter(ProductFilterRequestDto filter, Pageable pageable) {
+        log.info("getByFilter: subCat={}, group={}, attrs={}",
+                filter.getSubCategoryId(), filter.getProductGroupId(),
+                filter.getAttributes() != null ? filter.getAttributes().size() : 0);
         Specification<Product> spec = productSpecificationBuilder.build(filter);
-        return productMapper.toDtoPage(productRepository.findAll(spec, pageable));
+        return productRepository.findAll(spec, pageable)
+                .map(productMapper::toDto);
     }
 
     @Override

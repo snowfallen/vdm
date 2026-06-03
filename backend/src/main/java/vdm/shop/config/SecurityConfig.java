@@ -43,22 +43,29 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/clients").permitAll()
-                        .requestMatchers("/auth/login", "/auth/verify",
-                                "/auth/resend-verification").permitAll()
+                        .requestMatchers(HttpMethod.POST,
+                                "/clients",
+                                "/auth/login",
+                                "/auth/register",
+                                "/auth/verify",
+                                "/auth/resend-verification",
+                                "/products/filter"
+                        ).permitAll()
+
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**")
                         .permitAll()
+
                         .requestMatchers(HttpMethod.GET,
-                                "/categories", "/categories/list", "/categories/**",
-                                "/sub-categories", "/sub-categories/**",
-                                "/product-groups", "/product-groups/**",
-                                "/products", "/products/**",
-                                "/units", "/units/**",
-                                "/attributes", "/attributes/list", "/attributes/**",
-                                "/attribute-options/attribute/**"
+                                "/categories/**",
+                                "/sub-categories/**",
+                                "/product-groups/**",
+                                "/products/**",
+                                "/products/search",
+                                "/units/**",
+                                "/attributes/**",
+                                "/attribute-options/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products/search").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/products/filter").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())

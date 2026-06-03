@@ -126,8 +126,7 @@ public class AttributeServiceImpl implements AttributeService {
     @Override
     public SubCategoryFiltersResponseDto getFiltersForSubCategory(Long subCategoryId) {
         log.info("Building filters for subCategory id: {}", subCategoryId);
-        List<Object[]> rows = productAttributeRepository
-                .findFiltersForSubCategory(subCategoryId);
+        List<Object[]> rows = productAttributeRepository.findFiltersForSubCategory(subCategoryId);
         return buildFiltersResponse(subCategoryId, rows);
     }
 
@@ -139,16 +138,15 @@ public class AttributeServiceImpl implements AttributeService {
         return buildFiltersResponse(productGroupId, rows);
     }
 
-    // Збираємо згруповані фільтри з Object[] рядків
     private SubCategoryFiltersResponseDto buildFiltersResponse(Long id, List<Object[]> rows) {
-        Map<Long, SubCategoryFiltersResponseDto.FilterAttributeDto> map =
-                new LinkedHashMap<>();
+        Map<Long, SubCategoryFiltersResponseDto.FilterAttributeDto> map = new LinkedHashMap<>();
 
         for (Object[] row : rows) {
-            Long attrId = (Long) row[0];
+            Long attrId = toLong(row[0]);
             String attrName = (String) row[1];
-            AttributeDataType dataType = AttributeDataType.valueOf((String) row[2]);
-            String unitSymbol = (String) row[3];
+            // row[2] може бути String (з CAST) або AttributeDataType enum — обробляємо обидва
+            AttributeDataType dataType = toDataType(row[2]);
+            String unitSymbol = (String) row[3]; // може бути null для DICT/TEXT
             String val = (String) row[4];
 
             SubCategoryFiltersResponseDto.FilterAttributeDto filter =
@@ -163,23 +161,26 @@ public class AttributeServiceImpl implements AttributeService {
                         return f;
                     });
 
-            if (val != null) {
-                if (dataType == AttributeDataType.NUMBER) {
-                    // Для NUMBER — min/max
-                    try {
-                        double num = Double.parseDouble(val);
-                        if (filter.getMinValue() == null
-                                || num < Double.parseDouble(filter.getMinValue())) {
-                            filter.setMinValue(val);
-                        }
-                        if (filter.getMaxValue() == null
-                                || num > Double.parseDouble(filter.getMaxValue())) {
-                            filter.setMaxValue(val);
-                        }
-                    } catch (NumberFormatException ignored) {
-                        filter.getValues().add(val);
+            if (val == null) {
+                continue;
+            }
+
+            if (dataType == AttributeDataType.NUMBER) {
+                try {
+                    double num = Double.parseDouble(val);
+                    if (filter.getMinValue() == null
+                            || num < Double.parseDouble(filter.getMinValue())) {
+                        filter.setMinValue(val);
                     }
-                } else {
+                    if (filter.getMaxValue() == null
+                            || num > Double.parseDouble(filter.getMaxValue())) {
+                        filter.setMaxValue(val);
+                    }
+                } catch (NumberFormatException ignored) {
+                    filter.getValues().add(val);
+                }
+            } else {
+                if (!filter.getValues().contains(val)) {
                     filter.getValues().add(val);
                 }
             }
@@ -189,6 +190,23 @@ public class AttributeServiceImpl implements AttributeService {
         response.setSubCategoryId(id);
         response.setFilters(new ArrayList<>(map.values()));
         return response;
+    }
+
+    private Long toLong(Object val) {
+        if (val instanceof Long l) {
+            return l;
+        }
+        if (val instanceof Number n) {
+            return n.longValue();
+        }
+        return Long.parseLong(val.toString());
+    }
+
+    private AttributeDataType toDataType(Object val) {
+        if (val instanceof AttributeDataType dt) {
+            return dt;
+        }
+        return AttributeDataType.valueOf(val.toString());
     }
 
     private Attribute getAttribute(Long id) {

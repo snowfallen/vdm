@@ -1,4 +1,6 @@
-/* TOP BAR */
+/* ============================================================
+   TOP BAR
+   ============================================================ */
 .top-bar {
   background: var(--clr-text-primary);
   border-bottom: 1px solid rgba(255,255,255,.06);
@@ -26,25 +28,23 @@
     border-radius: var(--radius-sm);
     transition: color var(--transition-fast);
     white-space: nowrap;
+    text-decoration: none;
     &:hover, &--active { color: #fff; }
   }
 
   &__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-3);
     margin-left: auto;
   }
 }
 
 .lang-switch {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
+  display: flex; align-items: center; gap: var(--space-1);
   &__btn {
-    font-size: var(--fs-xs);
-    font-weight: var(--fw-medium);
-    color: rgba(255,255,255,.5);
+    font-size: var(--fs-xs); font-weight: var(--fw-medium);
+    color: rgba(255,255,255,.5); background: none; border: none; cursor: pointer;
     transition: color var(--transition-fast);
     &:hover, &--active { color: #fff; }
   }
@@ -55,30 +55,45 @@
 
 .social-icon {
   display: flex; align-items: center; justify-content: center;
-  width: 24px; height: 24px;
-  border-radius: var(--radius-sm);
-  color: rgba(255,255,255,.5);
+  width: 24px; height: 24px; border-radius: var(--radius-sm);
+  color: rgba(255,255,255,.5); text-decoration: none;
   transition: all var(--transition-fast);
   &:hover { color: #fff; background: rgba(255,255,255,.08); }
 }
 
+/* FIX: display:flex завжди — visibility через *ngIf в HTML, не через CSS */
 .auth-links {
-  display: none;
+  display: flex;
   align-items: center;
   gap: var(--space-2);
-  @media (min-width: 576px) { display: flex; }
 
   &__link {
     display: flex; align-items: center; gap: var(--space-1);
+    font-size: var(--fs-xs); font-weight: var(--fw-medium);
+    color: rgba(255,255,255,.65); text-decoration: none;
+    transition: color var(--transition-fast);
+    &:hover { color: #fff; }
+    &--cabinet {
+      color: var(--clr-primary) !important;
+      font-weight: var(--fw-semibold) !important;
+    }
+  }
+
+  &__sep { color: rgba(255,255,255,.2); font-size: var(--fs-xs); }
+
+  &__btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-base); padding: 0;
     font-size: var(--fs-xs); font-weight: var(--fw-medium);
     color: rgba(255,255,255,.65);
     transition: color var(--transition-fast);
     &:hover { color: #fff; }
   }
-  &__sep { color: rgba(255,255,255,.2); font-size: var(--fs-xs); }
 }
 
-/* MAIN HEADER */
+/* ============================================================
+   MAIN HEADER
+   ============================================================ */
 .header {
   background: var(--clr-surface);
   border-bottom: 1px solid var(--clr-border);
@@ -95,29 +110,40 @@
     gap: var(--space-4);
     height: 68px;
 
-    /* На мобілі: лого + пошук + кошик */
-    @media (max-width: 991px) {
-      grid-template-columns: auto 1fr auto;
-      gap: var(--space-3);
-    }
-
-    @media (max-width: 575px) {
-      height: 56px;
-      gap: var(--space-2);
-    }
+    @media (max-width: 991px) { gap: var(--space-3); height: 56px; }
+    @media (max-width: 575px) { gap: var(--space-2); height: 52px; }
   }
 
-  &__contacts {
+  /* Десктопна права частина — контакти + кошик + кабінет */
+  &__right {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-3);
+    flex-shrink: 0;
+    @media (max-width: 991px) { display: none; }
+  }
+
+  /* Мобільна права частина — тільки іконки */
+  &__mobile-actions {
+    display: none;
+    align-items: center;
+    gap: var(--space-1);
+    flex-shrink: 0;
+    @media (max-width: 991px) { display: flex; }
+  }
+
+  /* Стара назва — залишаємо для сумісності */
+  &__contacts {
     @media (max-width: 991px) { display: none; }
   }
 }
 
-/* ЛОГО */
+/* ============================================================
+   ЛОГО
+   ============================================================ */
 .logo {
-  display: flex; flex-direction: column; gap: 1px; text-decoration: none;
+  display: flex; flex-direction: column; gap: 1px;
+  text-decoration: none; flex-shrink: 0;
 
   &__mark { display: flex; flex-direction: column; line-height: 1; }
 
@@ -125,6 +151,7 @@
     font-family: var(--font-display);
     font-size: 1.5rem; font-weight: var(--fw-bold);
     color: var(--clr-primary); letter-spacing: .04em;
+    @media (max-width: 575px) { font-size: 1.2rem; }
   }
 
   &__sub {
@@ -139,8 +166,12 @@
   }
 }
 
-/* ПОШУК */
+/* ============================================================
+   ПОШУК
+   ============================================================ */
 .search-bar {
+  min-width: 0;
+
   &__wrap { display: flex; align-items: center; position: relative; }
 
   &__icon {
@@ -156,14 +187,11 @@
     background: var(--clr-surface-2);
     font-size: var(--fs-sm); color: var(--clr-text-primary);
     outline: none; transition: all var(--transition-fast);
-
     &::placeholder { color: var(--clr-text-muted); }
     &:focus {
-      background: var(--clr-surface);
-      border-color: var(--clr-primary);
+      background: var(--clr-surface); border-color: var(--clr-primary);
       box-shadow: 0 0 0 3px rgba(201,168,76,.1);
     }
-
     @media (max-width: 575px) { height: 36px; font-size: var(--fs-xs); }
   }
 
@@ -172,80 +200,35 @@
     border-radius: 0 var(--radius-full) var(--radius-full) 0 !important;
     padding-inline: var(--space-4) !important;
     font-size: var(--fs-xs) !important;
-    white-space: nowrap;
-    flex-shrink: 0;
-
+    white-space: nowrap; flex-shrink: 0;
     @media (max-width: 575px) { height: 36px !important; padding-inline: var(--space-3) !important; }
   }
 }
 
-/* КОНТАКТИ */
+/* ============================================================
+   КОНТАКТИ
+   ============================================================ */
 .contacts-block {
-  display: flex; align-items: flex-start; gap: var(--space-2);
+  display: flex; align-items: flex-start; gap: var(--space-2); flex-shrink: 0;
+
   &__icon { color: var(--clr-primary); flex-shrink: 0; margin-top: 2px; }
   &__info { display: flex; flex-direction: column; gap: 1px; }
+
   &__phone {
     font-size: var(--fs-sm); font-weight: var(--fw-semibold);
-    color: var(--clr-text-primary); white-space: nowrap;
+    color: var(--clr-text-primary); white-space: nowrap; text-decoration: none;
     transition: color var(--transition-fast);
     &:hover { color: var(--clr-primary); }
   }
+
   &__hours { font-size: var(--fs-xs); color: var(--clr-text-muted); }
 }
 
-/* КОШИК */
-.cart-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: var(--space-2); border-radius: var(--radius-md);
-  color: var(--clr-text-secondary); transition: all var(--transition-fast);
-
-  &:hover { color: var(--clr-primary); background: var(--clr-primary-light); }
-
-  &__icon-wrap { position: relative; }
-
-  &__badge {
-    position: absolute; top: -5px; right: -7px;
-    min-width: 16px; height: 16px; padding: 0 3px;
-    background: var(--clr-accent); color: #1c1c1c;
-    border-radius: var(--radius-full);
-    font-size: 10px; font-weight: var(--fw-bold);
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  &__label {
-    font-size: 10px; font-weight: var(--fw-semibold); letter-spacing: .04em;
-    @media (max-width: 991px) { display: none; }
-  }
-
-  /* Мобільний кошик — замість contacts блоку */
-  &--mobile {
-    display: none;
-    @media (max-width: 991px) { display: flex; }
-  }
-
-  /* Десктопний кошик — прихований на мобілі */
-  &:not(&--mobile) {
-    @media (max-width: 991px) { display: none; }
-  }
-}
-.auth-links {
-  &__btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-base);
-    padding: 0;
-    /* решта стилів наслідується від .auth-links__link */
-  }
-
-  &__link--cabinet {
-    color: var(--clr-primary) !important;
-    font-weight: var(--fw-semibold) !important;
-  }
-}
-
-/* Кнопка кабінету в хедері (поруч з кошиком) */
-.cabinet-btn {
+/* ============================================================
+   ICON-BTN — новий клас для кошика і кабінету
+   Замінює старі .cart-btn і .cabinet-btn
+   ============================================================ */
+.icon-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -255,41 +238,69 @@
   color: var(--clr-text-secondary);
   text-decoration: none;
   transition: all var(--transition-fast);
+  flex-shrink: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
 
   &:hover {
     color: var(--clr-primary);
     background: var(--clr-primary-light);
   }
 
+  &__icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__badge {
+    position: absolute; top: -5px; right: -7px;
+    min-width: 16px; height: 16px; padding: 0 3px;
+    background: var(--clr-accent); color: #1c1c1c;
+    border-radius: var(--radius-full);
+    font-size: 10px; font-weight: var(--fw-bold);
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
   &__label {
-    font-size: 10px;
-    font-weight: var(--fw-semibold);
-    letter-spacing: .04em;
+    font-size: 10px; font-weight: var(--fw-semibold);
+    letter-spacing: .04em; white-space: nowrap;
   }
 
-  /* Тільки іконка — мобільна версія */
-  &--icon {
-    padding: var(--space-2);
-
-    .cabinet-btn__label { display: none; }
+  &--sm {
+    .icon-btn__label { display: none; }
   }
 }
 
-/* Мобільна права частина хедера (кошик + кабінет) */
-.header__mobile-actions {
-  display: none;
-  align-items: center;
-  gap: var(--space-1);
-
-  @media (max-width: 991px) { display: flex; }
+/* Залишаємо старі класи для сумісності (якщо десь ще є) */
+.cart-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: var(--space-2); border-radius: var(--radius-md);
+  color: var(--clr-text-secondary); text-decoration: none;
+  transition: all var(--transition-fast);
+  &:hover { color: var(--clr-primary); background: var(--clr-primary-light); }
+  &__icon-wrap { position: relative; display: flex; }
+  &__badge {
+    position: absolute; top: -5px; right: -7px;
+    min-width: 16px; height: 16px; padding: 0 3px;
+    background: var(--clr-accent); color: #1c1c1c;
+    border-radius: var(--radius-full);
+    font-size: 10px; font-weight: var(--fw-bold);
+    display: flex; align-items: center; justify-content: center;
+  }
+  &__label {
+    font-size: 10px; font-weight: var(--fw-semibold); letter-spacing: .04em;
+  }
 }
 
-/* Десктопні контакти/кошик — прибираємо на мобілі */
-.header__contacts {
-  @media (max-width: 991px) { display: none; }
-}
-
-/* cart-btn--icon — тільки іконка без підпису */
-.cart-btn--icon {
-  .cart-btn__label { display: none; }
+.cabinet-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: var(--space-2); border-radius: var(--radius-md);
+  color: var(--clr-text-secondary); text-decoration: none;
+  transition: all var(--transition-fast);
+  &:hover { color: var(--clr-primary); background: var(--clr-primary-light); }
+  &__label { font-size: 10px; font-weight: var(--fw-semibold); letter-spacing: .04em; }
 }

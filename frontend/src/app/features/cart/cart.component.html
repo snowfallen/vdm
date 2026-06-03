@@ -1,0 +1,146 @@
+<div class="cart-page">
+  <div class="container">
+
+    <h1 class="cart-page__title">Кошик</h1>
+
+    <!-- Скелетон -->
+    <div *ngIf="isLoading()" class="cart-skeleton">
+      <div *ngFor="let _ of [1,2,3]" class="skeleton cart-skeleton__row"></div>
+    </div>
+
+    <!-- Помилка -->
+    <div *ngIf="error() && !isLoading()" class="cart-error">{{ error() }}</div>
+
+    <ng-container *ngIf="!isLoading() && !error()">
+
+      <!-- Порожній кошик -->
+      <div *ngIf="isEmpty" class="cart-empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <h3>Кошик порожній</h3>
+        <p>Додайте товари щоб продовжити покупки</p>
+        <a routerLink="/catalog" class="btn btn--primary">До каталогу</a>
+      </div>
+
+      <!-- Список товарів -->
+      <div *ngIf="!isEmpty" class="cart-layout">
+
+        <!-- Ліва колонка — товари -->
+        <div class="cart-items">
+
+          <div class="cart-items__header">
+            <span>Товар</span>
+            <span>Ціна</span>
+            <span>Кількість</span>
+            <span>Сума</span>
+            <span></span>
+          </div>
+
+          <div *ngFor="let item of items" class="cart-item">
+
+            <!-- Фото -->
+            <div class="cart-item__img-wrap">
+              <a [routerLink]="['/products', item.productId]">
+                <img *ngIf="item.productImageUrl"
+                     [src]="item.productImageUrl" [alt]="item.productName"
+                     class="cart-item__img" />
+                <div *ngIf="!item.productImageUrl" class="cart-item__no-img">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+              </a>
+            </div>
+
+            <!-- Назва -->
+            <div class="cart-item__name-col">
+              <a [routerLink]="['/products', item.productId]"
+                 class="cart-item__name">{{ item.productName }}</a>
+            </div>
+
+            <!-- Ціна за одиницю -->
+            <div class="cart-item__price">
+              {{ item.pricePerUnit | number:'1.2-2' }} грн
+            </div>
+
+            <!-- Кількість -->
+            <div class="cart-item__qty">
+              <div class="qty-ctrl">
+                <button class="qty-ctrl__btn" (click)="updateQty(item, -1)">−</button>
+                <input type="number" class="qty-ctrl__input"
+                       [value]="item.quantity"
+                       min="1"
+                       (change)="setQty(item, $event)" />
+                <button class="qty-ctrl__btn" (click)="updateQty(item, 1)">+</button>
+              </div>
+            </div>
+
+            <!-- Підсума -->
+            <div class="cart-item__subtotal">
+              {{ item.subTotal | number:'1.2-2' }} грн
+            </div>
+
+            <!-- Видалити -->
+            <button class="cart-item__remove" (click)="remove(item)" title="Видалити">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                <path d="M10 11v6M14 11v6"/>
+              </svg>
+            </button>
+
+          </div>
+
+          <!-- Очистити кошик -->
+          <div class="cart-items__footer">
+            <button class="btn btn--ghost btn--sm" (click)="clear()">
+              Очистити кошик
+            </button>
+            <a routerLink="/catalog" class="btn btn--outline btn--sm">
+              ← Продовжити покупки
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Права колонка — підсумок -->
+        <aside class="cart-summary">
+          <div class="cart-summary__card">
+            <h2 class="cart-summary__title">Підсумок замовлення</h2>
+
+            <div class="cart-summary__rows">
+              <div class="cart-summary__row">
+                <span>Товарів</span>
+                <span>{{ items.length }} шт.</span>
+              </div>
+              <div class="cart-summary__row cart-summary__row--total">
+                <span>Разом</span>
+                <span class="cart-summary__total-price">
+                  {{ total | number:'1.2-2' }} грн
+                </span>
+              </div>
+            </div>
+
+            <button class="btn btn--primary cart-summary__order-btn">
+              Оформити замовлення
+            </button>
+
+            <p class="cart-summary__note">
+              Доставка та знижки розраховуються при оформленні
+            </p>
+          </div>
+        </aside>
+
+      </div>
+    </ng-container>
+
+  </div>
+</div>

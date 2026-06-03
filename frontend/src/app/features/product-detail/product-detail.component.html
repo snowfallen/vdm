@@ -1,0 +1,158 @@
+<div class="product-page">
+
+  <!-- Скелетон -->
+  <div class="container" *ngIf="isLoading()">
+    <div class="product-skeleton">
+      <div class="skeleton product-skeleton__img"></div>
+      <div class="product-skeleton__info">
+        <div class="skeleton" style="height:32px;width:70%;border-radius:8px;"></div>
+        <div class="skeleton" style="height:20px;width:40%;border-radius:8px;margin-top:12px;"></div>
+        <div class="skeleton" style="height:100px;border-radius:8px;margin-top:24px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!isLoading() && product()">
+    <div class="container">
+
+      <!-- Хлібні крихти -->
+      <nav class="breadcrumbs">
+        <a routerLink="/" class="breadcrumbs__link">Головна</a>
+        <span class="breadcrumbs__sep">›</span>
+        <a *ngIf="productGroup()"
+           [routerLink]="['/catalog/group', product()!.productGroupId]"
+           class="breadcrumbs__link">
+          {{ productGroup()?.name }}
+        </a>
+        <span class="breadcrumbs__sep">›</span>
+        <span class="breadcrumbs__current">{{ product()!.name }}</span>
+      </nav>
+
+      <!-- ====== Основна секція ====== -->
+      <div class="product-layout">
+
+        <!-- Фото -->
+        <div class="product-gallery">
+          <div class="product-gallery__main">
+            <img *ngIf="product()!.imageUrl"
+                 [src]="product()!.imageUrl"
+                 [alt]="product()!.name"
+                 class="product-gallery__img" />
+            <div *ngIf="!product()!.imageUrl" class="product-gallery__placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <span>Фото незабаром</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Інфо -->
+        <div class="product-info">
+
+          <h1 class="product-info__name">{{ product()!.name }}</h1>
+
+          <!-- Ціна -->
+          <div class="product-info__price-block">
+            <span class="product-info__price">
+              {{ product()!.price | number:'1.2-2' }} грн
+            </span>
+            <span class="product-info__in-stock">● В наявності</span>
+          </div>
+
+          <!-- Кнопки дій -->
+          <div class="product-info__actions">
+
+            <!-- Лічильник кількості -->
+            <div class="qty-picker" *ngIf="isClient">
+              <button class="qty-picker__btn" (click)="changeQuantity(-1)">−</button>
+              <span class="qty-picker__val">{{ quantity() }}</span>
+              <button class="qty-picker__btn" (click)="changeQuantity(1)">+</button>
+            </div>
+
+            <!-- Кнопка додати в кошик (тільки CLIENT) -->
+            <button *ngIf="isClient"
+                    class="btn btn--primary btn--cart"
+                    [class.btn--success]="addedToCart()"
+                    (click)="addToCart()">
+              <ng-container *ngIf="!addedToCart()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Додати в кошик
+              </ng-container>
+              <ng-container *ngIf="addedToCart()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Додано!
+              </ng-container>
+            </button>
+
+            <!-- Незалогінений — кнопка увійти -->
+            <a *ngIf="isGuest"
+               routerLink="/login"
+               class="btn btn--outline">
+              Увійдіть щоб купити
+            </a>
+
+            <!-- Адмін — без кнопки кошика -->
+            <div *ngIf="isAdmin" class="product-info__admin-note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              Режим адміністратора
+            </div>
+
+            <span class="product-info__error" *ngIf="cartError()">{{ cartError() }}</span>
+          </div>
+
+          <!-- Коротка таблиця атрибутів -->
+          <div class="product-attrs" *ngIf="attributes().length > 0">
+            <div class="product-attrs__title">Характеристики</div>
+            <table class="product-attrs__table">
+              <tbody>
+                <tr *ngFor="let attr of dictAttributes">
+                  <td class="product-attrs__key">{{ attr.attributeName }}</td>
+                  <td class="product-attrs__val">{{ attr.value }}</td>
+                </tr>
+                <tr *ngFor="let attr of numberAttributes">
+                  <td class="product-attrs__key">{{ attr.attributeName }}</td>
+                  <td class="product-attrs__val">
+                    {{ attr.value }}
+                    <span *ngIf="attr.unitSymbol" class="product-attrs__unit">{{ attr.unitSymbol }}</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let attr of textAttributes">
+                  <td class="product-attrs__key">{{ attr.attributeName }}</td>
+                  <td class="product-attrs__val">{{ attr.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ====== Схожі товари ====== -->
+      <div class="related-section" *ngIf="related().length > 0">
+        <h2 class="related-section__title">Дивляться також</h2>
+        <div class="related-grid">
+          <app-product-card *ngFor="let p of related()" [product]="p" />
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+</div>
