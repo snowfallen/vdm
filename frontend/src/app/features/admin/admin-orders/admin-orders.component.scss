@@ -1,0 +1,101 @@
+.admin-orders {
+  &__header {
+    display: flex; align-items: center; gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+  &__title { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--clr-text-primary); margin: 0; }
+  &__total { font-size: var(--fs-sm); color: var(--clr-text-muted); }
+}
+
+.success-msg {
+  background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;
+  padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
+  font-size: var(--fs-sm); margin-bottom: var(--space-4);
+}
+
+/* Order detail */
+.order-detail {
+  background: var(--clr-surface); border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl); padding: var(--space-6);
+
+  &__top {
+    display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;
+    margin-bottom: var(--space-5);
+    h3 { font-size: var(--fs-lg); font-weight: var(--fw-bold); flex: 1; margin: 0; }
+  }
+
+  &__user { font-size: var(--fs-sm); color: var(--clr-text-muted); }
+
+  &__statuses {
+    display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap;
+    margin-bottom: var(--space-5); padding: var(--space-4);
+    background: var(--clr-surface-2); border-radius: var(--radius-md);
+  }
+
+  &__payment-badge {
+    display: flex; align-items: center; gap: var(--space-2);
+    font-size: var(--fs-sm); color: var(--clr-text-muted);
+  }
+}
+
+.status-control {
+  display: flex; align-items: center; gap: var(--space-3);
+  &__label { font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--clr-text-muted); white-space: nowrap; }
+  &__select {
+    padding: var(--space-2) var(--space-4); border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-md); background: var(--clr-surface);
+    font-size: var(--fs-sm); color: var(--clr-text-primary); outline: none;
+    cursor: pointer;
+    &:focus { border-color: var(--clr-primary); }
+  }
+}
+
+.order-table {
+  width: 100%; border-collapse: collapse; margin-bottom: var(--space-4);
+  th, td { padding: var(--space-3) var(--space-4); text-align: left; border-bottom: 1px solid var(--clr-border); font-size: var(--fs-sm); }
+  th { background: var(--clr-surface-2); font-weight: var(--fw-bold); color: var(--clr-text-muted); text-transform: uppercase; font-size: var(--fs-xs); letter-spacing: .05em; }
+  tfoot td { font-weight: var(--fw-bold); border-top: 2px solid var(--clr-border); }
+}
+
+.order-address {
+  padding: var(--space-3) var(--space-4); background: var(--clr-surface-2);
+  border-radius: var(--radius-md); font-size: var(--fs-sm); color: var(--clr-text-secondary);
+}
+
+/* Data table */
+.data-table {
+  width: 100%; border-collapse: collapse;
+  th, td { padding: var(--space-3) var(--space-4); text-align: left; border-bottom: 1px solid var(--clr-border); font-size: var(--fs-sm); }
+  th { background: var(--clr-surface-2); font-weight: var(--fw-bold); color: var(--clr-text-muted); text-transform: uppercase; font-size: var(--fs-xs); }
+  tr:hover td { background: var(--clr-surface-2); }
+
+  &__user { display: flex; flex-direction: column; gap: 2px; }
+  &__email { font-size: var(--fs-xs); color: var(--clr-text-muted); }
+}
+
+/* Pagination */
+.pagination {
+  display: flex; align-items: center; gap: var(--space-3); justify-content: center;
+  padding: var(--space-5);
+  &__btn {
+    width: 36px; height: 36px; border: 1.5px solid var(--clr-border);
+    border-radius: var(--radius-md); background: var(--clr-surface); cursor: pointer;
+    transition: all var(--transition-fast);
+    &:hover:not(:disabled) { border-color: var(--clr-primary); color: var(--clr-primary); }
+    &:disabled { opacity: .4; cursor: not-allowed; }
+  }
+  &__info { font-size: var(--fs-sm); color: var(--clr-text-muted); }
+}
+
+/* Badge */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 2px var(--space-3); border-radius: var(--radius-full);
+  font-size: var(--fs-xs); font-weight: var(--fw-semibold); white-space: nowrap;
+  &--success { background: #dcfce7; color: #166534; }
+  &--warning { background: #fef9c3; color: #854d0e; }
+  &--info    { background: #dbeafe; color: #1e40af; }
+  &--primary { background: var(--clr-primary-light); color: var(--clr-primary); }
+  &--danger  { background: #fee2e2; color: #991b1b; }
+  &--muted   { background: var(--clr-surface-2); color: var(--clr-text-muted); }
+}

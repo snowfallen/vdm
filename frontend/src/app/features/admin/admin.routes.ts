@@ -64,6 +64,11 @@ export const adminRoutes: Routes = [
           import('./users/users.component').then(m => m.UsersComponent)
       },
       {
+        path: 'orders',
+        loadComponent: () =>
+          import('./admin-orders/admin-orders.component').then(m => m.AdminOrdersComponent)
+      },
+      {
         path: '**',
         redirectTo: ''
       }

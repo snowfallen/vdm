@@ -1,0 +1,139 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-orders-and-favorites
+      author: snowfall
+      changes:
+
+        # ---- orders ----
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints: { primaryKey: true, nullable: false }
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_user
+                    references: users(id)
+              - column:
+                  name: status
+                  type: varchar(30)
+                  defaultValue: "PENDING"
+                  constraints: { nullable: false }
+              - column:
+                  name: payment_status
+                  type: varchar(30)
+                  defaultValue: "PENDING"
+                  constraints: { nullable: false }
+              - column:
+                  name: total_price
+                  type: "decimal(12, 2)"   # ← лапки обов'язкові
+                  constraints: { nullable: false }
+              - column:
+                  name: delivery_country
+                  type: varchar(100)
+              - column:
+                  name: delivery_city
+                  type: varchar(100)
+              - column:
+                  name: delivery_street
+                  type: varchar(255)
+              - column:
+                  name: delivery_house
+                  type: varchar(20)
+              - column:
+                  name: delivery_apartment
+                  type: varchar(20)
+              - column:
+                  name: delivery_postal_code
+                  type: varchar(20)
+              - column:
+                  name: comment
+                  type: varchar(1000)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints: { nullable: false }
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+        # ---- order_items ----
+        - createTable:
+            tableName: order_items
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints: { primaryKey: true, nullable: false }
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_item_order
+                    references: orders(id)
+                    deleteCascade: true
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_item_product
+                    references: products(id)
+              - column:
+                  name: product_name
+                  type: varchar(255)
+                  constraints: { nullable: false }
+              - column:
+                  name: price_per_unit
+                  type: "decimal(10, 2)"
+                  constraints: { nullable: false }
+              - column:
+                  name: quantity
+                  type: int
+                  constraints: { nullable: false }
+              - column:
+                  name: sub_total
+                  type: "decimal(12, 2)"   # ← лапки
+                  constraints: { nullable: false }
+
+        # ---- favorites ----
+        - createTable:
+            tableName: favorites
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints: { primaryKey: true, nullable: false }
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_favorite_user
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_favorite_product
+                    references: products(id)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints: { nullable: false }
+
+        - addUniqueConstraint:
+            tableName: favorites
+            columnNames: user_id, product_id
+            constraintName: uq_favorite_user_product

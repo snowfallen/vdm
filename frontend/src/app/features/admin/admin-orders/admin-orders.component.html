@@ -1,0 +1,117 @@
+<div class="admin-orders">
+
+  <div class="admin-orders__header">
+    <h2 class="admin-orders__title">Замовлення</h2>
+    <span class="admin-orders__total">{{ totalElements() }} всього</span>
+  </div>
+
+  <div class="success-msg" *ngIf="successMsg()">{{ successMsg() }}</div>
+
+  <!-- Деталі замовлення -->
+  <div *ngIf="selectedOrder()" class="order-detail">
+    <div class="order-detail__top">
+      <button class="btn btn--ghost btn--sm" (click)="closeOrder()">← Назад</button>
+      <h3>Замовлення #{{ selectedOrder()!.id }}</h3>
+      <div class="order-detail__user">
+        {{ selectedOrder()!.userFirstName }} {{ selectedOrder()!.userLastName }}
+        — {{ selectedOrder()!.userEmail }}
+      </div>
+    </div>
+
+    <div class="order-detail__statuses">
+      <div class="status-control">
+        <label class="status-control__label">Статус замовлення</label>
+        <select class="status-control__select"
+                [value]="selectedOrder()!.status"
+                (change)="updateStatus(selectedOrder()!.id, $any($event.target).value)">
+          <option *ngFor="let s of allStatuses" [value]="s">{{ orderStatusLabels[s] }}</option>
+        </select>
+      </div>
+      <div class="order-detail__payment-badge">
+        Оплата:
+        <span class="badge" [class]="getStatusColor(selectedOrder()!.paymentStatus)">
+          {{ paymentStatusLabels[selectedOrder()!.paymentStatus] }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Товари -->
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Товар</th>
+          <th>Ціна</th>
+          <th>К-сть</th>
+          <th>Сума</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of selectedOrder()!.items">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.pricePerUnit | number:'1.2-2' }} грн</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.subTotal | number:'1.2-2' }} грн</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Разом</strong></td>
+          <td><strong>{{ selectedOrder()!.totalPrice | number:'1.2-2' }} грн</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Адреса -->
+    <div class="order-address" *ngIf="selectedOrder()!.deliveryCity">
+      <strong>Доставка:</strong>
+      {{ selectedOrder()!.deliveryCountry }}, {{ selectedOrder()!.deliveryCity }},
+      {{ selectedOrder()!.deliveryStreet }}, {{ selectedOrder()!.deliveryHouse }}
+      <ng-container *ngIf="selectedOrder()!.deliveryApartment">, кв. {{ selectedOrder()!.deliveryApartment }}</ng-container>
+    </div>
+  </div>
+
+  <!-- Таблиця замовлень -->
+  <div *ngIf="!selectedOrder()">
+    <div *ngIf="isLoading()" class="skeleton" style="height:300px;border-radius:12px;"></div>
+
+    <table class="data-table" *ngIf="!isLoading()">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Клієнт</th>
+          <th>Дата</th>
+          <th>Статус</th>
+          <th>Оплата</th>
+          <th>Сума</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders()">
+          <td>{{ order.id }}</td>
+          <td>
+            <div class="data-table__user">
+              <span>{{ order.userFirstName }} {{ order.userLastName }}</span>
+              <span class="data-table__email">{{ order.userEmail }}</span>
+            </div>
+          </td>
+          <td>{{ order.createdAt | date:'dd.MM.yy HH:mm' }}</td>
+          <td><span class="badge" [class]="getStatusColor(order.status)">{{ orderStatusLabels[order.status] }}</span></td>
+          <td><span class="badge" [class]="getStatusColor(order.paymentStatus)">{{ paymentStatusLabels[order.paymentStatus] }}</span></td>
+          <td><strong>{{ order.totalPrice | number:'1.2-2' }} грн</strong></td>
+          <td>
+            <button class="btn btn--outline btn--sm" (click)="openOrder(order)">Деталі</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Пагінація -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="pagination__btn" [disabled]="currentPage() === 0" (click)="goPage(currentPage() - 1)">←</button>
+      <span class="pagination__info">{{ currentPage() + 1 }} / {{ totalPages }}</span>
+      <button class="pagination__btn" [disabled]="currentPage() >= totalPages - 1" (click)="goPage(currentPage() + 1)">→</button>
+    </div>
+  </div>
+
+</div>

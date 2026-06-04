@@ -1,15 +1,16 @@
-import {Component, inject, signal, HostListener, OnInit, ElementRef} from '@angular/core';
+import { Component, inject, signal, HostListener, OnInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import {AuthService} from "../../../core/auth/services/auth.service";
-import {CartService} from "../../../core/services/cart.service";
-import {Roles} from "../../../core/auth/enums/roles";
-import {CategoryService} from "../../../core/services/category.service";
-import {SubCategoryService} from "../../../core/services/sub-category.service";
-import {ProductGroupService} from "../../../core/services/product-group.service";
-import {forkJoin} from "rxjs";
-import {INavCategory} from "../nav-menu/nav-menu.component";
+import { RouterModule, Router } from '@angular/router';
+import { FormsModule }      from '@angular/forms';
+import { forkJoin }         from 'rxjs';
+import { AuthService }      from '../../../core/auth/services/auth.service';
+import { CartService }      from '../../../core/services/cart.service';
+import { FavoriteService }  from '../../../core/services/favorite.service';
+import { CategoryService }  from '../../../core/services/category.service';
+import { SubCategoryService }   from '../../../core/services/sub-category.service';
+import { ProductGroupService }  from '../../../core/services/product-group.service';
+import { Roles }            from '../../../core/auth/enums/roles';
+import { INavCategory }     from '../nav-menu/nav-menu.component';
 
 @Component({
   selector: 'app-header',
@@ -19,14 +20,21 @@ import {INavCategory} from "../nav-menu/nav-menu.component";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  private readonly authService = inject(AuthService);
-  private readonly cartService = inject(CartService);
+  private readonly authService     = inject(AuthService);
+  private readonly cartService     = inject(CartService);
+  private readonly favoriteService = inject(FavoriteService);
+  private readonly router          = inject(Router);
+  private readonly elRef           = inject(ElementRef);
+
+  private readonly categoryService     = inject(CategoryService);
+  private readonly subCategoryService  = inject(SubCategoryService);
+  private readonly productGroupService = inject(ProductGroupService);
 
   searchQuery = signal('');
   isScrolled  = signal(false);
 
-  // Живий лічильник кошика з CartService
   readonly cartCount = this.cartService.cartCount;
+  readonly favCount  = this.favoriteService.favoriteIds;
 
   get isLoggedIn(): boolean { return !!this.authService.getRoleId(); }
   get isAdmin():    boolean { return this.authService.getRoleId() === Roles.ADMIN; }
@@ -40,78 +48,58 @@ export class HeaderComponent implements OnInit {
   readonly workHours = 'Пн-Пт 09:00–17:30';
 
   readonly topLinks = [
-    { label: 'Про нас',            path: '/about' },
-    { label: 'Оплата та доставка', path: '/delivery' },
+    { label: 'Про нас',            path: '/about'        },
+    { label: 'Оплата та доставка', path: '/delivery'     },
     { label: 'Сертифікати',        path: '/certificates' },
-    { label: 'Новини',             path: '/news' },
-    { label: 'Статті',             path: '/articles' },
-    { label: 'Виробники',          path: '/brands' },
-    { label: 'Контакти',           path: '/contacts' },
+    { label: 'Новини',             path: '/news'         },
+    { label: 'Статті',             path: '/articles'     },
+    { label: 'Виробники',          path: '/brands'       },
+    { label: 'Контакти',           path: '/contacts'     },
   ];
+
+  categories      = signal<INavCategory[]>([]);
+  activeCategory  = signal<INavCategory | null>(null);
+  isLoading       = signal(true);
+  desktopMenuOpen = signal(false);
+  mobileNavOpen   = signal(false);
+  mobileOpen      = signal<number | null>(null);
 
   ngOnInit(): void {
     this.loadMenu();
 
-    // Завантажуємо кількість в кошику при старті якщо клієнт
     if (this.isClient) {
-      this.cartService.getCart().subscribe({
-        error: () => {}  // ігноруємо помилку — просто лічильник не оновиться
-      });
+      this.cartService.getCart().subscribe({ error: () => {} });
+      this.favoriteService.getMyFavorites().subscribe({ error: () => {} });
     }
   }
-
-  @HostListener('window:scroll')
-  onScroll(): void { this.isScrolled.set(window.scrollY > 40); }
-
-  onSearch(): void {
-    // TODO: navigate to search
-  }
-
-  logout(): void { this.authService.logout(); }
-
-  private readonly categoryService     = inject(CategoryService);
-  private readonly subCategoryService  = inject(SubCategoryService);
-  private readonly productGroupService = inject(ProductGroupService);
-  private readonly elRef               = inject(ElementRef); // Додаємо для відслідковування кліків
-
-  categories     = signal<INavCategory[]>([]);
-  activeCategory = signal<INavCategory | null>(null);
-  isLoading      = signal(true);
-
-  // Desktop Menu State
-  desktopMenuOpen = signal(false);
-
-  // Mobile Menu State
-  mobileNavOpen  = signal(false);
-  mobileOpen     = signal<number | null>(null);
-  mobileMenuOpen = signal<number | null>(null);
 
   private loadMenu(): void {
     this.categoryService.getAllList().subscribe({
       next: (cats) => {
-        const subRequests = cats.map(cat =>
-            this.subCategoryService.getByCategoryId(cat.id)
-        );
-
-        forkJoin(subRequests).subscribe({
-          next: (subCatsPerCategory) => {
-            const allSubCats = subCatsPerCategory.flat();
-            const groupRequests = allSubCats.map(sub =>
-                this.productGroupService.getBySubCategoryId(sub.id)
-            );
-
-            forkJoin(groupRequests).subscribe({
+        forkJoin(cats.map(c => this.subCategoryService.getByCategoryId(c.id))).subscribe({
+          next: (subCatsPerCat) => {
+            const allSubs = subCatsPerCat.flat();
+            forkJoin(allSubs.map(s => this.productGroupService.getBySubCategoryId(s.id))).subscribe({
               next: (groupsPerSub) => {
-                let globalIdx = 0;
-                const navCats: INavCategory[] = cats.map((cat, catIdx) => ({
-                  ...cat,
-                  subCategories: subCatsPerCategory[catIdx].map(sub => {
-                    const groups = groupsPerSub[globalIdx] || [];
-                    globalIdx++;
+                let idx = 0;
+                const navCats: INavCategory[] = cats.map((cat, ci) => {
+                  const subCategories = subCatsPerCat[ci].map(sub => {
+                    const groups = groupsPerSub[idx] || [];
+                    idx++;
                     return { ...sub, productGroups: groups };
-                  })
-                }));
-                console.log(navCats);
+                  });
+
+                  // КРИТИЧНА БІЗНЕС-ЛОГІКА: підкатегорії з найбільшою кількістю
+                  // груп товарів — першими. Сортуємо ОДИН РАЗ при побудові дерева
+                  // (не на кожен hover) — стабільно, без мутації сигнального стану.
+                  // .toSorted() повертає новий масив (ES2023), сортування стабільне.
+                  const sortedSubs = [...subCategories].sort(
+                    (a, b) => b.productGroups.length - a.productGroups.length
+                  );
+
+                  return { ...cat, subCategories: sortedSubs };
+                });
+
                 this.categories.set(navCats);
                 this.isLoading.set(false);
               }
@@ -122,32 +110,37 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  // ---- Desktop Logic (Click Based) ----
+  @HostListener('window:scroll')
+  onScroll(): void { this.isScrolled.set(window.scrollY > 40); }
+
+  onSearch(): void {
+    const q = this.searchQuery().trim();
+    if (!q) return;
+    this.desktopMenuOpen.set(false);
+    this.router.navigate(['/search'], { queryParams: { q } });
+  }
+
+  logout(): void { this.authService.logout(); }
 
   toggleDesktopMenu(event: Event): void {
-    // Зупиняємо спливання події, щоб document:click не спрацював миттєво і не закрив меню
     event.stopPropagation();
     this.desktopMenuOpen.update(v => !v);
-
-    // Якщо відкрили меню, але категорія не вибрана — ставимо першу
     if (this.desktopMenuOpen() && !this.activeCategory() && this.categories().length > 0) {
       this.activeCategory.set(this.categories()[0]);
     }
   }
 
-  // Закриваємо меню, якщо клікнули десь поза компонентом
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    const clickedInside = this.elRef.nativeElement.contains(event.target);
-    if (!clickedInside && this.desktopMenuOpen()) {
+    if (!this.elRef.nativeElement.contains(event.target) && this.desktopMenuOpen()) {
       this.desktopMenuOpen.set(false);
-      this.activeCategory.set(null); // скидаємо активну категорію при закритті
+      this.activeCategory.set(null);
     }
   }
 
-  // Залишаємо ховер для перемикання категорій ВСЕРЕДИНІ відкритого меню
+  // Тільки встановлюємо активну категорію — без мутації/сортування.
+  // Дерево вже відсортоване в loadMenu().
   onCategoryEnter(cat: INavCategory): void {
-    cat.subCategories.sort((a, b) => b.productGroups.length - a.productGroups.length);
     this.activeCategory.set(cat);
   }
 
@@ -156,31 +149,15 @@ export class HeaderComponent implements OnInit {
     this.activeCategory.set(null);
   }
 
-  // ---- Mobile Logic ----
-  toggleMobileNav(): void {
-    this.mobileNavOpen.update(v => !v);
-    if (!this.mobileNavOpen()) {
-      this.mobileOpen.set(null);
-    }
-  }
-
-  closeMobileNav(): void {
-    this.mobileNavOpen.set(false);
-    this.mobileOpen.set(null);
-  }
-
-  toggleMobile(catId: number): void {
-    this.mobileOpen.update(v => v === catId ? null : catId);
-  }
-
-  isMobileOpen(catId: number): boolean {
-    return this.mobileOpen() === catId;
-  }
+  toggleMobileNav(): void { this.mobileNavOpen.update(v => !v); }
+  closeMobileNav(): void  { this.mobileNavOpen.set(false); this.mobileOpen.set(null); }
+  toggleMobile(id: number): void { this.mobileOpen.update(v => v === id ? null : id); }
+  isMobileOpen(id: number): boolean { return this.mobileOpen() === id; }
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
-    this.activeCategory.set(null);
     this.desktopMenuOpen.set(false);
+    this.activeCategory.set(null);
     this.closeMobileNav();
   }
 }

@@ -3,20 +3,17 @@
 
     <h1 class="cart-page__title">Кошик</h1>
 
-    <!-- Скелетон -->
     <div *ngIf="isLoading()" class="cart-skeleton">
       <div *ngFor="let _ of [1,2,3]" class="skeleton cart-skeleton__row"></div>
     </div>
 
-    <!-- Помилка -->
     <div *ngIf="error() && !isLoading()" class="cart-error">{{ error() }}</div>
 
     <ng-container *ngIf="!isLoading() && !error()">
 
       <!-- Порожній кошик -->
       <div *ngIf="isEmpty" class="cart-empty">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="1">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
           <line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 0 1-8 0"/>
@@ -26,10 +23,9 @@
         <a routerLink="/catalog" class="btn btn--primary">До каталогу</a>
       </div>
 
-      <!-- Список товарів -->
       <div *ngIf="!isEmpty" class="cart-layout">
 
-        <!-- Ліва колонка — товари -->
+        <!-- Товари -->
         <div class="cart-items">
 
           <div class="cart-items__header">
@@ -41,13 +37,10 @@
           </div>
 
           <div *ngFor="let item of items" class="cart-item">
-
-            <!-- Фото -->
             <div class="cart-item__img-wrap">
               <a [routerLink]="['/products', item.productId]">
-                <img *ngIf="item.productImageUrl"
-                     [src]="item.productImageUrl" [alt]="item.productName"
-                     class="cart-item__img" />
+                <img *ngIf="item.productImageUrl" [src]="item.productImageUrl"
+                     [alt]="item.productName" class="cart-item__img" />
                 <div *ngIf="!item.productImageUrl" class="cart-item__no-img">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                        stroke="currentColor" stroke-width="1.5">
@@ -59,35 +52,26 @@
               </a>
             </div>
 
-            <!-- Назва -->
             <div class="cart-item__name-col">
-              <a [routerLink]="['/products', item.productId]"
-                 class="cart-item__name">{{ item.productName }}</a>
+              <a [routerLink]="['/products', item.productId]" class="cart-item__name">
+                {{ item.productName }}
+              </a>
             </div>
 
-            <!-- Ціна за одиницю -->
-            <div class="cart-item__price">
-              {{ item.pricePerUnit | number:'1.2-2' }} грн
-            </div>
+            <div class="cart-item__price">{{ item.pricePerUnit | number:'1.2-2' }} грн</div>
 
-            <!-- Кількість -->
             <div class="cart-item__qty">
               <div class="qty-ctrl">
                 <button class="qty-ctrl__btn" (click)="updateQty(item, -1)">−</button>
                 <input type="number" class="qty-ctrl__input"
-                       [value]="item.quantity"
-                       min="1"
+                       [value]="item.quantity" min="1"
                        (change)="setQty(item, $event)" />
                 <button class="qty-ctrl__btn" (click)="updateQty(item, 1)">+</button>
               </div>
             </div>
 
-            <!-- Підсума -->
-            <div class="cart-item__subtotal">
-              {{ item.subTotal | number:'1.2-2' }} грн
-            </div>
+            <div class="cart-item__subtotal">{{ item.subTotal | number:'1.2-2' }} грн</div>
 
-            <!-- Видалити -->
             <button class="cart-item__remove" (click)="remove(item)" title="Видалити">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" stroke-width="2">
@@ -96,22 +80,15 @@
                 <path d="M10 11v6M14 11v6"/>
               </svg>
             </button>
-
           </div>
 
-          <!-- Очистити кошик -->
           <div class="cart-items__footer">
-            <button class="btn btn--ghost btn--sm" (click)="clear()">
-              Очистити кошик
-            </button>
-            <a routerLink="/catalog" class="btn btn--outline btn--sm">
-              ← Продовжити покупки
-            </a>
+            <button class="btn btn--ghost btn--sm" (click)="clear()">Очистити кошик</button>
+            <a routerLink="/catalog" class="btn btn--outline btn--sm">← Продовжити покупки</a>
           </div>
-
         </div>
 
-        <!-- Права колонка — підсумок -->
+        <!-- Підсумок -->
         <aside class="cart-summary">
           <div class="cart-summary__card">
             <h2 class="cart-summary__title">Підсумок замовлення</h2>
@@ -123,19 +100,57 @@
               </div>
               <div class="cart-summary__row cart-summary__row--total">
                 <span>Разом</span>
-                <span class="cart-summary__total-price">
-                  {{ total | number:'1.2-2' }} грн
-                </span>
+                <span class="cart-summary__total-price">{{ total | number:'1.2-2' }} грн</span>
               </div>
             </div>
 
-            <button class="btn btn--primary cart-summary__order-btn">
-              Оформити замовлення
-            </button>
+            <!-- Блок підтвердження замовлення -->
+            <ng-container *ngIf="!showCheckout()">
+              <button class="btn btn--primary cart-summary__order-btn" (click)="openCheckout()">
+                Оформити замовлення
+              </button>
+              <p class="cart-summary__note">Доставка та знижки розраховуються при оформленні</p>
+            </ng-container>
 
-            <p class="cart-summary__note">
-              Доставка та знижки розраховуються при оформленні
-            </p>
+            <ng-container *ngIf="showCheckout()">
+              <div class="checkout-form">
+                <p class="checkout-form__note">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  Адреса доставки береться з вашого профілю.
+                  <a routerLink="/cabinet" [queryParams]="{tab:'address'}" class="checkout-form__link">
+                    Змінити адресу
+                  </a>
+                </p>
+
+                <div class="checkout-form__field">
+                  <label class="checkout-form__label">Коментар до замовлення</label>
+                  <textarea class="checkout-form__textarea" rows="2"
+                            placeholder="Необов'язково"
+                            [value]="comment()"
+                            (input)="comment.set($any($event.target).value)"></textarea>
+                </div>
+
+                <div class="checkout-form__error" *ngIf="orderError()">{{ orderError() }}</div>
+
+                <div class="checkout-form__actions">
+                  <button class="btn btn--primary checkout-form__submit"
+                          [disabled]="isOrdering()"
+                          (click)="placeOrder()">
+                    <svg *ngIf="isOrdering()" class="btn-spinner" width="16" height="16"
+                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
+                    {{ isOrdering() ? 'Оформлення...' : 'Підтвердити замовлення' }}
+                  </button>
+                  <button class="btn btn--ghost btn--sm" (click)="closeCheckout()">Назад</button>
+                </div>
+              </div>
+            </ng-container>
+
           </div>
         </aside>
 

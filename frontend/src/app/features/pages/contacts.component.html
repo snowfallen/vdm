@@ -1,0 +1,105 @@
+<div class="static-page">
+  <div class="container">
+
+    <nav class="breadcrumbs">
+      <a routerLink="/" class="breadcrumbs__link">Головна</a>
+      <span class="breadcrumbs__sep">›</span>
+      <span class="breadcrumbs__current">Контакти</span>
+    </nav>
+
+    <h1 class="static-page__title">Контакти</h1>
+
+    <div class="contacts-layout">
+
+      <!-- Жива Google-карта -->
+      <div class="contacts-map">
+        <iframe
+          [src]="mapUrl"
+          class="contacts-map__frame"
+          title="VDM на карті — бульвар Романа Роллана, 3, Київ"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+        <a href="https://www.google.com/maps?q=бульвар+Романа+Роллана,+3,+Київ"
+           target="_blank" rel="noopener" class="contacts-map__link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          Прокласти маршрут
+        </a>
+      </div>
+
+      <!-- Info -->
+      <div class="contacts-info">
+
+        <div class="contacts-block-section">
+          <h2 class="contacts-block-section__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.77 12 19.79 19.79 0 0 1 1.7 3.33A2 2 0 0 1 3.68 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Телефони
+          </h2>
+          <div class="contacts-phones">
+            <div class="contacts-phones__group">
+              <span class="contacts-phones__label">тел./факс:</span>
+              <a href="tel:+380672917197" class="contacts-phones__num">(067) 291-71-97</a>
+              <span class="contacts-phones__note">(багатоканальний)</span>
+            </div>
+            <div class="contacts-phones__group">
+              <span class="contacts-phones__label">тел.:</span>
+              <a href="tel:+380672917197" class="contacts-phones__num">(067) 291-71-97</a>
+            </div>
+            <div class="contacts-phones__group">
+              <span class="contacts-phones__label">тел.:</span>
+              <a href="tel:+380674053344" class="contacts-phones__num">(067) 405-33-44</a>
+            </div>
+            <div class="contacts-phones__group">
+              <span class="contacts-phones__label">моб.:</span>
+              <a href="tel:+380672917179" class="contacts-phones__num">(067) 291-71-79</a>
+            </div>
+            <div class="contacts-phones__group">
+              <span class="contacts-phones__label">e-mail:</span>
+              <a href="mailto:info@vdm.ua" class="contacts-phones__num">info&#64;vdm.ua</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts-block-section">
+          <h2 class="contacts-block-section__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Час роботи
+          </h2>
+          <div class="contacts-hours">
+            <div class="contacts-hours__row contacts-hours__row--open">
+              <span>Пн – Пт</span>
+              <span>09:00 – 17:30</span>
+            </div>
+            <div class="contacts-hours__row contacts-hours__row--closed">
+              <span>Сб – Нд</span>
+              <span>Вихідний</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts-block-section">
+          <h2 class="contacts-block-section__title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            Адреса
+          </h2>
+          <address class="contacts-address">
+            03162, м. Київ,<br>
+            бульвар Жуля Верна (Романа Роллана), 3
+          </address>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

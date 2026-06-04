@@ -65,4 +65,19 @@
       opacity: .5;
     }
   }
+
+  &__heart {
+    position: absolute; top: var(--space-2); left: var(--space-2); z-index: 2;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,.85); border: none;
+    color: var(--clr-text-muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: all var(--transition-fast);
+    backdrop-filter: blur(4px);
+
+    &:hover { color: #ef4444; background: rgba(255,255,255,.95); }
+    &--active { color: #ef4444 !important; opacity: 1 !important; background: rgba(255,255,255,.95) !important; }
+  }
+
+  &:hover &__heart { opacity: 1; }
 }

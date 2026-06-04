@@ -1,0 +1,125 @@
+<!-- delivery.component.ts: standalone, imports CommonModule + RouterModule, selector app-delivery -->
+
+<div class="static-page">
+  <div class="container">
+
+    <nav class="breadcrumbs">
+      <a routerLink="/" class="breadcrumbs__link">Головна</a>
+      <span class="breadcrumbs__sep">›</span>
+      <span class="breadcrumbs__current">Оплата та доставка</span>
+    </nav>
+
+    <div class="static-page__layout">
+      <div class="static-page__content">
+        <h1 class="static-page__title">Оплата та доставка</h1>
+
+        <!-- Доставка -->
+        <div class="delivery-section">
+          <div class="delivery-section__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="1" y="3" width="15" height="13" rx="1"/>
+              <path d="M16 8h4l3 5v3h-7V8z"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="delivery-section__title">Доставка замовлень</h2>
+            <p class="delivery-section__sub">Доставка по Києву</p>
+            <p>
+              Доставка фурнітури, замовленої та оплаченої в магазині, здійснюється наступного дня
+              (за погодженням). Якщо час погодження з менеджером не влаштовує покупця, доставка
+              у такому разі може бути здійснена службою таксі, «Нова Пошта» або іншим перевізником.
+            </p>
+            <div class="delivery-term">
+              <strong>Термін виконання:</strong> наступний робочий день
+            </div>
+          </div>
+        </div>
+
+        <div class="delivery-section">
+          <div class="delivery-section__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="delivery-section__title">Доставка по регіонах</h2>
+            <p>
+              Доставка по регіонах здійснюється на суму замовлення від <strong>400,00 грн</strong>.
+              Здійснюється при 100% передоплаті, а також післяплатою, в пункти видачі перевізників.
+            </p>
+            <div class="delivery-term">
+              <strong>Термін виконання:</strong> доставка товару до перевізника — середа та п'ятниця
+            </div>
+          </div>
+        </div>
+
+        <!-- Оплата -->
+        <div class="delivery-section">
+          <div class="delivery-section__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="delivery-section__title">Оплата</h2>
+            <p>Оплата товару здійснюється лише у національній валюті України — гривні.</p>
+            <p>Можлива оплата на картку «Приватбанку».</p>
+            <p>
+              Компанія «Все Для Меблів» відповідає за якість і кількість матеріалу тільки до
+              його отримання службою доставки. У разі виникнення спірних питань між клієнтом та
+              компанією-перевізником, клієнт діє відповідно до умов компанії-перевізника.
+            </p>
+            <p>
+              При безготівковому розрахунку доставка буде здійснена лише після отримання від
+              клієнта довіреності (для юр. осіб) або копій паспорту та ідентифікаційного номера
+              (для фіз. осіб).
+            </p>
+          </div>
+        </div>
+
+        <div class="delivery-contact">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.77 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.68 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          +38 (044) 405-50-30 (багатоканальний)
+        </div>
+
+      </div>
+
+      <aside class="static-page__aside">
+        <div class="delivery-summary-card">
+          <h3>Швидко про доставку</h3>
+          <div class="delivery-summary-card__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Київ: наступний день
+          </div>
+          <div class="delivery-summary-card__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Регіони: від 400 грн
+          </div>
+          <div class="delivery-summary-card__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Нова Пошта / кур'єр
+          </div>
+          <div class="delivery-summary-card__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Оплата карткою Приват
+          </div>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</div>
