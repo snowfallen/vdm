@@ -1,0 +1,156 @@
+<div class="cat-home">
+  <div class="container">
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+      <a routerLink="/" class="breadcrumbs__link">Головна</a>
+      <span class="breadcrumbs__sep">›</span>
+      <span class="breadcrumbs__current">Каталог</span>
+    </nav>
+
+    <div class="cat-home__head">
+      <h1 class="cat-home__title">Каталог товарів</h1>
+      <p class="cat-home__sub">Меблева фурнітура від провідних виробників — 8 000+ позицій</p>
+    </div>
+
+    <!-- ══════════ SKELETON ══════════ -->
+    <div class="cat-skeleton" *ngIf="isLoading()">
+      <div class="cat-skeleton__rail">
+        <div *ngFor="let _ of [1,2,3,4,5,6,7,8]" class="skeleton cat-skeleton__item"></div>
+      </div>
+      <div class="cat-skeleton__panel">
+        <div class="skeleton cat-skeleton__title"></div>
+        <div class="cat-skeleton__grid">
+          <div *ngFor="let _ of [1,2,3,4,5,6]" class="skeleton cat-skeleton__card"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ ERROR ══════════ -->
+    <div class="cat-error" *ngIf="error()">{{ error() }}</div>
+
+    <!-- ══════════ DESKTOP: sidebar + panel ══════════ -->
+    <div class="cat-layout" *ngIf="!isLoading() && !error()">
+
+      <!-- Sidebar: список категорій -->
+      <aside class="cat-rail">
+        <div class="cat-rail__head">Категорії</div>
+        <ul class="cat-rail__list">
+          <li *ngFor="let cat of categories()"
+              class="cat-rail__item"
+              [class.cat-rail__item--active]="activeId() === cat.id"
+              (mouseenter)="setActive(cat.id)"
+              (click)="setActive(cat.id)">
+            <a [routerLink]="['/catalog', cat.id]" class="cat-rail__link"
+               (click)="$event.stopPropagation()">
+              <span class="cat-rail__marker"></span>
+              <span class="cat-rail__text">{{ cat.name }}</span>
+              <svg class="cat-rail__chev" width="14" height="14" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Panel: підкатегорії + групи активної категорії -->
+      <div class="cat-panel" *ngIf="activeCategory">
+        <div class="cat-panel__head">
+          <a [routerLink]="['/catalog', activeCategory!.id]" class="cat-panel__title">
+            {{ activeCategory!.name }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </a>
+          <span class="cat-panel__meta">
+            {{ activeCategory!.subCategories.length }} підкатегорій
+          </span>
+        </div>
+
+        <div class="cat-panel__grid">
+          <div *ngFor="let sub of activeCategory!.subCategories" class="cat-col">
+            <a [routerLink]="['/catalog', activeCategory!.id, sub.id]" class="cat-col__title">
+              {{ sub.name }}
+              <span class="cat-col__count" *ngIf="sub.productGroups.length > 0">
+                {{ sub.productGroups.length }}
+              </span>
+            </a>
+
+            <ul *ngIf="sub.productGroups.length > 0" class="cat-col__links">
+              <li *ngFor="let group of sub.productGroups.slice(0, 8)">
+                <a [routerLink]="['/catalog', activeCategory!.id, sub.id, group.id]"
+                   class="cat-col__link">{{ group.name }}</a>
+              </li>
+              <li *ngIf="sub.productGroups.length > 8">
+                <a [routerLink]="['/catalog', activeCategory!.id, sub.id]"
+                   class="cat-col__more">
+                  Ще {{ sub.productGroups.length - 8 }}
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+
+            <a *ngIf="sub.productGroups.length === 0"
+               [routerLink]="['/catalog', activeCategory!.id, sub.id]"
+               class="cat-col__more">
+              Переглянути всі
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MOBILE: accordion ══════════ -->
+    <div class="cat-mobile" *ngIf="!isLoading() && !error()">
+      <div *ngFor="let cat of categories()" class="cat-acc">
+
+        <!-- Заголовок категорії -->
+        <button class="cat-acc__btn"
+                [class.cat-acc__btn--open]="cat.expanded"
+                (click)="toggleExpand(cat)">
+          <a [routerLink]="['/catalog', cat.id]" class="cat-acc__name"
+             (click)="$event.stopPropagation()">{{ cat.name }}</a>
+          <svg class="cat-acc__chev" width="14" height="14" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        <!-- Підкатегорії -->
+        <div class="cat-acc__body" [class.cat-acc__body--open]="cat.expanded">
+          <div class="cat-acc__inner">
+            <div *ngFor="let sub of cat.subCategories" class="cat-acc__sub">
+              <a [routerLink]="['/catalog', cat.id, sub.id]" class="cat-acc__sub-title">
+                {{ sub.name }}
+                <span class="cat-acc__sub-count" *ngIf="sub.productGroups.length > 0">
+                  {{ sub.productGroups.length }}
+                </span>
+              </a>
+              <div class="cat-acc__groups" *ngIf="sub.productGroups.length > 0">
+                <a *ngFor="let group of sub.productGroups.slice(0, 6)"
+                   [routerLink]="['/catalog', cat.id, sub.id, group.id]"
+                   class="cat-acc__group">{{ group.name }}</a>
+                <a *ngIf="sub.productGroups.length > 6"
+                   [routerLink]="['/catalog', cat.id, sub.id]"
+                   class="cat-acc__group cat-acc__group--more">
+                  +{{ sub.productGroups.length - 6 }} ще
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
