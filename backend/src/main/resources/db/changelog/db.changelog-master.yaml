@@ -49,3 +49,5 @@ databaseChangeLog:
       file: db/changelog/changes/24-fill-test-client.yaml
   - include:
       file: db/changelog/changes/25-create-orders-favorites.yaml
+  - include:
+      file: db/changelog/changes/26-create-media-settings.yaml

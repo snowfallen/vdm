@@ -1,24 +1,15 @@
 <footer class="footer">
 
-  <!-- ======================================================
-       Рядок з посиланнями верхнього меню (для мобілі особливо)
-       ====================================================== -->
   <div class="footer__nav-row">
     <div class="container footer__nav-inner">
       <a *ngFor="let link of topLinks"
          [routerLink]="link.path"
-         class="footer__nav-link">
-        {{ link.label }}
-      </a>
+         class="footer__nav-link">{{ link.label }}</a>
     </div>
   </div>
 
-  <!-- ======================================================
-       Основна сітка футера
-       ====================================================== -->
   <div class="container footer__grid">
 
-    <!-- Компанія -->
     <div class="footer__col">
       <p class="footer__heading">КОМПАНІЯ</p>
       <ul class="footer__links">
@@ -28,22 +19,24 @@
       </ul>
     </div>
 
-    <!-- Телефон -->
     <div class="footer__col">
       <p class="footer__heading">ТЕЛЕФОН</p>
-      <a [href]="phones.main.href"  class="footer__link">{{ phones.main.label }}</a>
-      <a [href]="phones.email.href" class="footer__link">{{ phones.email.label }}</a>
+      <a [href]="phoneHref(s().contact_phone_main)"
+         class="footer__link">тел./факс: {{ s().contact_phone_main }}</a>
+      <a [href]="'mailto:' + s().contact_email"
+         class="footer__link">e-mail: {{ s().contact_email }}</a>
     </div>
 
-    <!-- Доп. телефони -->
     <div class="footer__col">
       <p class="footer__heading">ДОД. ТЕЛЕФОНИ</p>
-      <a [href]="phones.main.href"   class="footer__link">{{ phones.main.label }}</a>
-      <a [href]="phones.second.href" class="footer__link">{{ phones.second.label }}</a>
-      <a [href]="phones.mobile.href" class="footer__link">{{ phones.mobile.label }}</a>
+      <a [href]="phoneHref(s().contact_phone_main)"
+         class="footer__link">тел.: {{ s().contact_phone_main }}</a>
+      <a [href]="phoneHref(s().contact_phone_second)"
+         class="footer__link">тел.: {{ s().contact_phone_second }}</a>
+      <a [href]="phoneHref(s().contact_phone_mobile)"
+         class="footer__link">моб.: {{ s().contact_phone_mobile }}</a>
     </div>
 
-    <!-- Покупцям -->
     <div class="footer__col">
       <p class="footer__heading">ПОКУПЦЯМ</p>
       <ul class="footer__links">
@@ -53,14 +46,13 @@
       </ul>
     </div>
 
-    <!-- Відкриті для спілкування -->
     <div class="footer__col footer__col--cta">
       <p class="footer__heading">ВІДКРИТІ ДЛЯ СПІЛКУВАННЯ</p>
-      <a [href]="phones.main.href" class="footer__big-phone">
-        (067) 291-71-97
-      </a>
+      <a [href]="phoneHref(s().contact_phone_main)"
+         class="footer__big-phone">{{ s().contact_phone_main }}</a>
       <div class="footer__hours">
-        <p *ngFor="let h of workHours" class="footer__hours-line">{{ h }}</p>
+        <p class="footer__hours-line">{{ s().work_hours_weekday }}</p>
+        <p class="footer__hours-line">{{ s().work_hours_weekend }}</p>
       </div>
       <a routerLink="/contacts" class="btn btn--outline btn--sm footer__callback">
         Передзвонити мені
@@ -69,7 +61,6 @@
 
   </div>
 
-  <!-- Bottom bar -->
   <div class="footer__bottom">
     <div class="container footer__bottom-inner">
       <p class="footer__copy">
@@ -77,15 +68,11 @@
       </p>
       <div class="footer__socials">
         <a *ngFor="let s of socials"
-           [href]="s.href"
-           [attr.aria-label]="s.label"
-           target="_blank"
-           rel="noopener"
-           class="footer__social-btn">
+           [href]="s.href" [attr.aria-label]="s.label"
+           target="_blank" rel="noopener" class="footer__social-btn">
           <svg width="18" height="18" viewBox="0 0 24 24"
                fill="none" stroke="currentColor" stroke-width="2"
-               [innerHTML]="s.icon">
-          </svg>
+               [innerHTML]="s.icon"></svg>
         </a>
       </div>
     </div>

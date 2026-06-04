@@ -1,9 +1,10 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../../core/services/product.service';
 import { CartService }    from '../../../../core/services/cart.service';
 import { AuthService }    from '../../../../core/auth/services/auth.service';
+import { MediaService, IMediaFile } from '../../../../core/services/media.service';
 import { IProduct }       from '../../../../core/models/models';
 
 @Component({
@@ -13,46 +14,67 @@ import { IProduct }       from '../../../../core/models/models';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private readonly productService = inject(ProductService);
   private readonly cartService    = inject(CartService);
   private readonly authService    = inject(AuthService);
+  private readonly mediaService   = inject(MediaService);
 
   newArrivals   = signal<IProduct[]>([]);
   bestsellers   = signal<IProduct[]>([]);
   isLoadingNew  = signal(true);
   isLoadingBest = signal(true);
 
-  // Які товари зараз "додані" — для анімації кнопки
   addedIds = signal<Set<number>>(new Set());
 
   get isClient(): boolean { return this.authService.getRoleId() === 2; }
 
-  // Hero слайдер
-  activeSlide = signal(0);
-  readonly slides = [
+  // Hero слайдер — файли з MinIO
+  sliderFiles   = signal<IMediaFile[]>([]);
+  activeSlide   = signal(0);
+  private sliderTimer: ReturnType<typeof setInterval> | null = null;
+
+  // Fallback слайди якщо MinIO порожній
+  readonly fallbackSlides = [
     {
       title:    'Оновлено асортимент освітлення для меблів',
       subtitle: 'Вимикачі · Світлодіодна стрічка · Трансформатори',
       cta:      'Дивитись каталог',
       ctaLink:  '/catalog',
-      bg:       'slide-lighting'
+      bg:       'slide-lighting',
+      imageUrl: ''
     },
     {
       title:    'Гардеробні системи від провідних виробників',
       subtitle: 'LAGUNA · Blum · GTV — офіційний представник',
       cta:      'Обрати систему',
-      ctaLink:  '/catalog/1',
-      bg:       'slide-wardrobe'
+      ctaLink:  '/catalog',
+      bg:       'slide-wardrobe',
+      imageUrl: ''
     },
     {
       title:    '8000+ позицій в асортименті',
       subtitle: '22 роки досвіду · Сертифікована продукція',
       cta:      'Про компанію',
       ctaLink:  '/about',
-      bg:       'slide-main'
+      bg:       'slide-main',
+      imageUrl: ''
     }
   ];
+
+  // Поточні слайди — або з MinIO або fallback
+  get slides() {
+    const files = this.sliderFiles();
+    if (files.length === 0) return this.fallbackSlides;
+    return files.map((f, i) => ({
+      title:    f.title || 'VDM — Все для меблів',
+      subtitle: '',
+      cta:      'Дивитись каталог',
+      ctaLink:  '/catalog',
+      bg:       `slide-${i}`,
+      imageUrl: f.url
+    }));
+  }
 
   readonly stats = [
     { value: '22+',    label: 'роки лідерства',        icon: 'shield' },
@@ -68,8 +90,26 @@ export class HomeComponent implements OnInit {
   readonly skeletonArray = Array(8).fill(0);
 
   ngOnInit(): void {
+    this.loadSlider();
     this.loadProducts();
     this.startSlider();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sliderTimer) clearInterval(this.sliderTimer);
+  }
+
+  private loadSlider(): void {
+    this.mediaService.getFiles('slider').subscribe({
+      next: (files: IMediaFile[]) => {
+        this.sliderFiles.set(files);
+        // Скидаємо на перший слайд після завантаження
+        this.activeSlide.set(0);
+      },
+      error: () => {
+        // Мовчки ігноруємо — покажуться fallback слайди з CSS градієнтами
+      }
+    });
   }
 
   private loadProducts(): void {
@@ -85,7 +125,7 @@ export class HomeComponent implements OnInit {
   }
 
   private startSlider(): void {
-    setInterval(() => {
+    this.sliderTimer = setInterval(() => {
       this.activeSlide.update(i => (i + 1) % this.slides.length);
     }, 5000);
   }

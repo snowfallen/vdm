@@ -1,0 +1,127 @@
+databaseChangeLog:
+  - changeSet:
+      id: 40-create-media-settings
+      author: vdm
+      changes:
+        - createTable:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: setting_key
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: setting_value
+                  type: text
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+        - createTable:
+            tableName: media_files
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: file_key
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: object_name
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(1000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: original_name
+                  type: varchar(255)
+              - column:
+                  name: sort_order
+                  type: int
+                  defaultValueNumeric: 0
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: now()
+
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: contact_phone_main
+              - column:
+                  name: setting_value
+                  value: "(067) 291-71-97"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: contact_phone_second
+              - column:
+                  name: setting_value
+                  value: "(067) 405-33-44"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: contact_phone_mobile
+              - column:
+                  name: setting_value
+                  value: "(067) 291-71-79"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: contact_email
+              - column:
+                  name: setting_value
+                  value: "info@vdm.ua"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: contact_address
+              - column:
+                  name: setting_value
+                  value: "03162, м. Київ, бульвар Жуля Верна (Романа Роллана), 3"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: work_hours_weekday
+              - column:
+                  name: setting_value
+                  value: "Пн-Пт 09:00 – 17:30"
+        - insert:
+            tableName: media_settings
+            columns:
+              - column:
+                  name: setting_key
+                  value: work_hours_weekend
+              - column:
+                  name: setting_value
+                  value: "Сб-Нд – Вихідний"

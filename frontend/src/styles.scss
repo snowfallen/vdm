@@ -1033,3 +1033,17 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   from { opacity: 0; transform: scale(.94); }
   to   { opacity: 1; transform: scale(1); }
 }
+ .about-showroom-img {
+   width: 100%; border-radius: var(--radius-xl);
+   border: 1px solid var(--clr-border);
+   object-fit: cover; max-height: 400px;
+   display: block;
+ }
+/* ─── Додати в кінець static-pages.scss ─── */
+
+.certs-empty {
+  text-align: center;
+  color: var(--clr-text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-12);
+}

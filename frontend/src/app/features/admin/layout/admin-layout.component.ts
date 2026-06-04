@@ -36,6 +36,7 @@ export class AdminLayoutComponent {
     { label: 'Товари',          path: '/admin/products',          icon: 'package',      adminOnly: true },
     { label: 'Користувачі',     path: '/admin/users',             icon: 'users',        adminOnly: true },
     { label: 'Замовлення',      path: '/admin/orders',            icon: 'orders',       adminOnly: true },
+    { label: 'Медіа', path: '/admin/media', icon: 'image', adminOnly: true },
   ];
 
   get visibleNavItems(): INavItem[] {

@@ -149,6 +149,7 @@ services:
       MINIO_ENDPOINT: http://minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      APP_PUBLIC_URL: http://localhost:${MINIO_API_PORT}
     networks:
       - vdm-app
 

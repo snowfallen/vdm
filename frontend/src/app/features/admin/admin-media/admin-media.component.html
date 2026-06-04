@@ -1,0 +1,244 @@
+<div class="media-manager">
+
+  <!-- Tabs -->
+  <div class="mm-tabs">
+    <button class="mm-tab" [class.mm-tab--active]="activeTab()==='settings'" (click)="setTab('settings')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      Налаштування
+    </button>
+    <button class="mm-tab" [class.mm-tab--active]="activeTab()==='slider'" (click)="setTab('slider')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      Слайдер
+      <span class="mm-tab__badge">{{ sliderFiles().length }}</span>
+    </button>
+    <button class="mm-tab" [class.mm-tab--active]="activeTab()==='certificates'" (click)="setTab('certificates')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+      </svg>
+      Сертифікати
+      <span class="mm-tab__badge">{{ certFiles().length }}</span>
+    </button>
+    <button class="mm-tab" [class.mm-tab--active]="activeTab()==='about'" (click)="setTab('about')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+      </svg>
+      Фото "Про нас"
+    </button>
+  </div>
+
+  <!-- Alerts -->
+  <div class="mm-alert mm-alert--success" *ngIf="saveMsg()">{{ saveMsg() }}</div>
+  <div class="mm-alert mm-alert--error"   *ngIf="saveErr()">{{ saveErr() }}</div>
+
+  <!-- ═══ SETTINGS ════════════════════════════════════ -->
+  <div class="mm-panel" *ngIf="activeTab()==='settings'">
+    <div class="mm-panel__head">
+      <h2 class="mm-panel__title">Контактні дані та графік роботи</h2>
+      <p class="mm-panel__sub">Відображаються у хедері, футері та сторінці контактів</p>
+    </div>
+
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" class="mm-form">
+      <div class="mm-form__section">
+        <h3 class="mm-form__section-title">Телефони</h3>
+        <div class="mm-form__grid">
+          <div class="mm-form__field">
+            <label class="mm-form__label">Основний тел./факс</label>
+            <input formControlName="contact_phone_main" class="mm-form__input" placeholder="(067) 291-71-97" />
+          </div>
+          <div class="mm-form__field">
+            <label class="mm-form__label">Додатковий тел.</label>
+            <input formControlName="contact_phone_second" class="mm-form__input" placeholder="(067) 405-33-44" />
+          </div>
+          <div class="mm-form__field">
+            <label class="mm-form__label">Мобільний</label>
+            <input formControlName="contact_phone_mobile" class="mm-form__input" placeholder="(067) 291-71-79" />
+          </div>
+          <div class="mm-form__field">
+            <label class="mm-form__label">E-mail</label>
+            <input formControlName="contact_email" class="mm-form__input" type="email" placeholder="info@vdm.ua" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-form__section">
+        <h3 class="mm-form__section-title">Адреса</h3>
+        <div class="mm-form__field mm-form__field--full">
+          <label class="mm-form__label">Адреса магазину</label>
+          <input formControlName="contact_address" class="mm-form__input"
+                 placeholder="03162, м. Київ, бульвар Жуля Верна (Романа Роллана), 3" />
+        </div>
+      </div>
+
+      <div class="mm-form__section">
+        <h3 class="mm-form__section-title">Графік роботи</h3>
+        <div class="mm-form__grid">
+          <div class="mm-form__field">
+            <label class="mm-form__label">Будні</label>
+            <input formControlName="work_hours_weekday" class="mm-form__input" placeholder="Пн-Пт 09:00 – 17:30" />
+          </div>
+          <div class="mm-form__field">
+            <label class="mm-form__label">Вихідні</label>
+            <input formControlName="work_hours_weekend" class="mm-form__input" placeholder="Сб-Нд – Вихідний" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-form__footer">
+        <button type="submit" class="btn btn--primary" [disabled]="saving() || settingsForm.invalid">
+          <svg *ngIf="!saving()" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span *ngIf="saving()" class="mm-spinner"></span>
+          {{ saving() ? 'Зберігаємо...' : 'Зберегти зміни' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ═══ SLIDER ════════════════════════════════════ -->
+  <div class="mm-panel" *ngIf="activeTab()==='slider'">
+    <div class="mm-panel__head">
+      <h2 class="mm-panel__title">Слайдер на головній сторінці</h2>
+      <p class="mm-panel__sub">Рекомендований розмір: 1920×540px. Конвертуються в WebP автоматично.</p>
+    </div>
+
+    <!-- Upload zone -->
+    <div class="mm-drop-zone"
+         [class.mm-drop-zone--over]="dragOver()==='slider'"
+         (dragover)="$event.preventDefault(); dragOver.set('slider')"
+         (dragleave)="dragOver.set(null)"
+         (drop)="onDrop($event, 'slider')">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+      </svg>
+      <p>Перетягніть фото сюди або</p>
+      <label class="btn btn--outline btn--sm mm-upload-btn">
+        Вибрати файли
+        <input type="file" accept="image/*" multiple (change)="onFileInput($event, 'slider')" hidden />
+      </label>
+      <span *ngIf="uploading()['slider']" class="mm-spinner mm-spinner--lg"></span>
+    </div>
+
+    <!-- Files list -->
+    <div class="mm-file-list" *ngIf="sliderFiles().length > 0">
+      <div *ngFor="let file of sliderFiles(); let i = index; let last = last" class="mm-file-row">
+        <div class="mm-file-row__thumb">
+          <img [src]="file.url" [alt]="file.title" />
+        </div>
+        <div class="mm-file-row__info">
+          <span class="mm-file-row__title">{{ file.title }}</span>
+          <span class="mm-file-row__meta">{{ file.originalName }}</span>
+        </div>
+        <div class="mm-file-row__actions">
+          <button class="mm-icon-btn" title="Вгору" [disabled]="i === 0"
+                  (click)="moveUp(sliderFiles(), i, 'slider')">↑</button>
+          <button class="mm-icon-btn" title="Вниз" [disabled]="last"
+                  (click)="moveDown(sliderFiles(), i, 'slider')">↓</button>
+          <button class="mm-icon-btn" title="Змінити назву"
+                  (click)="editTitle(file, 'slider')">✏</button>
+          <button class="mm-icon-btn mm-icon-btn--danger" title="Видалити"
+                  (click)="deleteFile(file.id, 'slider')">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="mm-empty" *ngIf="sliderFiles().length === 0 && !uploading()['slider']">
+      Слайди ще не додано
+    </p>
+  </div>
+
+  <!-- ═══ CERTIFICATES ════════════════════════════════════ -->
+  <div class="mm-panel" *ngIf="activeTab()==='certificates'">
+    <div class="mm-panel__head">
+      <h2 class="mm-panel__title">Сертифікати</h2>
+      <p class="mm-panel__sub">Рекомендований розмір: A4 вертикальний (1240×1753px). WebP конвертація автоматична.</p>
+    </div>
+
+    <div class="mm-drop-zone"
+         [class.mm-drop-zone--over]="dragOver()==='certificates'"
+         (dragover)="$event.preventDefault(); dragOver.set('certificates')"
+         (dragleave)="dragOver.set(null)"
+         (drop)="onDrop($event, 'certificates')">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+      </svg>
+      <p>Перетягніть сертифікати або</p>
+      <label class="btn btn--outline btn--sm mm-upload-btn">
+        Вибрати файли
+        <input type="file" accept="image/*" multiple (change)="onFileInput($event, 'certificates')" hidden />
+      </label>
+      <span *ngIf="uploading()['certificates']" class="mm-spinner mm-spinner--lg"></span>
+    </div>
+
+    <div class="mm-certs-preview" *ngIf="certFiles().length > 0">
+      <div *ngFor="let file of certFiles(); let i = index; let last = last" class="mm-cert-card">
+        <img [src]="file.url" [alt]="file.title" class="mm-cert-card__img" />
+        <div class="mm-cert-card__overlay">
+          <button class="mm-icon-btn" title="Вгору" [disabled]="i === 0"
+                  (click)="moveUp(certFiles(), i, 'certificates')">↑</button>
+          <button class="mm-icon-btn" title="Вниз" [disabled]="last"
+                  (click)="moveDown(certFiles(), i, 'certificates')">↓</button>
+          <button class="mm-icon-btn" title="Змінити назву"
+                  (click)="editTitle(file, 'certificates')">✏</button>
+          <button class="mm-icon-btn mm-icon-btn--danger" title="Видалити"
+                  (click)="deleteFile(file.id, 'certificates')">✕</button>
+        </div>
+        <p class="mm-cert-card__title">{{ file.title }}</p>
+      </div>
+    </div>
+
+    <p class="mm-empty" *ngIf="certFiles().length === 0 && !uploading()['certificates']">
+      Сертифікати ще не додано
+    </p>
+  </div>
+
+  <!-- ═══ ABOUT IMAGE ════════════════════════════════════ -->
+  <div class="mm-panel" *ngIf="activeTab()==='about'">
+    <div class="mm-panel__head">
+      <h2 class="mm-panel__title">Фото шоуруму — сторінка "Про нас"</h2>
+      <p class="mm-panel__sub">Рекомендований розмір: 1200×500px. WebP конвертація автоматична.</p>
+    </div>
+
+    <!-- Поточне фото -->
+    <div class="mm-about-preview" *ngIf="aboutFile()">
+      <img [src]="aboutFile()!.url" [alt]="aboutFile()!.title" class="mm-about-preview__img" />
+      <div class="mm-about-preview__actions">
+        <span class="mm-about-preview__name">{{ aboutFile()!.originalName }}</span>
+        <button class="btn btn--ghost btn--sm"
+                (click)="deleteFile(aboutFile()!.id, 'about')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/>
+          </svg>
+          Видалити і замінити
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload якщо ще нема -->
+    <div class="mm-drop-zone"
+         *ngIf="!aboutFile()"
+         [class.mm-drop-zone--over]="dragOver()==='about'"
+         (dragover)="$event.preventDefault(); dragOver.set('about')"
+         (dragleave)="dragOver.set(null)"
+         (drop)="onDrop($event, 'about')">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+      </svg>
+      <p>Перетягніть фото або</p>
+      <label class="btn btn--outline btn--sm mm-upload-btn">
+        Вибрати фото
+        <input type="file" accept="image/*" (change)="onFileInput($event, 'about')" hidden />
+      </label>
+      <span *ngIf="uploading()['about']" class="mm-spinner mm-spinner--lg"></span>
+    </div>
+  </div>
+
+</div>

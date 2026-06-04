@@ -16,11 +16,30 @@
     opacity: 0; transition: opacity 700ms cubic-bezier(0.16,1,0.3,1);
     background-size: cover; background-position: center;
 
-    &--slide-main     { background: linear-gradient(135deg, #1a1209 0%, #2e1f07 40%, #1c1c1c 100%); }
-    &--slide-lighting { background: linear-gradient(135deg, #0d0d0d 0%, #1a1209 50%, #2e1f07 100%); }
-    &--slide-wardrobe { background: linear-gradient(135deg, #111008 0%, #1e1a0f 50%, #2a2215 100%); }
+    /* Fallback градієнти — показуються якщо MinIO порожній */
+    &--slide-main     { background-color: #1c1c1c; background-image: linear-gradient(135deg, #1a1209 0%, #2e1f07 40%, #1c1c1c 100%); }
+    &--slide-lighting { background-color: #0d0d0d; background-image: linear-gradient(135deg, #0d0d0d 0%, #1a1209 50%, #2e1f07 100%); }
+    &--slide-wardrobe { background-color: #111008; background-image: linear-gradient(135deg, #111008 0%, #1e1a0f 50%, #2a2215 100%); }
+
+    /* Динамічні слайди з MinIO — темний фон поки фото вантажиться */
+    &--slide-0 { background-color: #1a1209; }
+    &--slide-1 { background-color: #111008; }
+    &--slide-2 { background-color: #0d0d0d; }
+    &--slide-3 { background-color: #1c1c1c; }
+    &--slide-4 { background-color: #1a1209; }
 
     &--active { opacity: 1; z-index: 1; }
+  }
+
+  /* Темний оверлей поверх фото щоб текст читався */
+  &__overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+                    to right,
+                    rgba(0,0,0,.65) 0%,
+                    rgba(0,0,0,.35) 60%,
+                    rgba(0,0,0,.1)  100%
+    );
   }
 
   &__content { position: relative; z-index: 2; }
@@ -44,7 +63,9 @@
     border-radius: var(--radius-full) !important;
     background: var(--clr-primary) !important; color: #1c1c1c !important;
     box-shadow: 0 6px 20px rgba(201,168,76,.35);
-    transition: background 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1), transform 280ms cubic-bezier(0.16,1,0.3,1);
+    transition: background 280ms cubic-bezier(0.16,1,0.3,1),
+    box-shadow  280ms cubic-bezier(0.16,1,0.3,1),
+    transform   280ms cubic-bezier(0.16,1,0.3,1);
     &:hover {
       background: var(--clr-primary-dark) !important;
       box-shadow: 0 10px 28px rgba(201,168,76,.45);
@@ -54,13 +75,15 @@
 
   &__dots {
     position: absolute; bottom: var(--space-5); left: 50%;
-    transform: translateX(-50%); display: flex; gap: var(--space-2); z-index: 10;
+    transform: translateX(-50%); display: flex; gap: var(--space-2);
+    z-index: 10;
   }
 
   &__dot {
     width: 6px; height: 6px; border-radius: var(--radius-full);
     background: rgba(255,255,255,.3); border: none;
-    transition: width 320ms cubic-bezier(0.22,1,0.36,1), background 320ms cubic-bezier(0.22,1,0.36,1);
+    transition: width 320ms cubic-bezier(0.22,1,0.36,1),
+    background 320ms cubic-bezier(0.22,1,0.36,1);
     &--active { width: 22px; background: var(--clr-primary); }
     &:hover   { background: rgba(255,255,255,.6); }
   }
@@ -119,7 +142,6 @@
   background: var(--clr-surface-2); color: var(--clr-border);
 }
 
-/* Footer тепер у стовпчик: ціна зверху, кнопка на всю ширину */
 .product-card__footer {
   display: flex !important;
   flex-direction: column;
@@ -130,37 +152,40 @@
 .product-card__price {
   font-size: var(--fs-lg); font-weight: var(--fw-bold);
   color: var(--clr-text-primary); line-height: 1;
-  span { font-size: var(--fs-xs); font-weight: var(--fw-regular); color: var(--clr-text-muted); margin-left: 2px; }
+  span {
+    font-size: var(--fs-xs); font-weight: var(--fw-regular);
+    color: var(--clr-text-muted); margin-left: 2px;
+  }
 }
 
-/* Кнопка кошика/детальніше на всю ширину картки */
 .product-card__cart {
-  width: 100%;
-  justify-content: center;
+  width: 100%; justify-content: center;
   display: inline-flex; align-items: center; gap: var(--space-2);
-  transition: background 220ms cubic-bezier(0.16,1,0.3,1), border-color 220ms cubic-bezier(0.16,1,0.3,1), transform 180ms cubic-bezier(0.16,1,0.3,1);
+  transition: background 220ms cubic-bezier(0.16,1,0.3,1),
+  border-color 220ms cubic-bezier(0.16,1,0.3,1),
+  transform    180ms cubic-bezier(0.16,1,0.3,1);
   &:active { transform: scale(.97); }
 }
 
-/* Пульсуюча крапка "в наявності" */
 .product-card__availability {
   display: flex; align-items: center; gap: var(--space-2);
   font-size: var(--fs-xs); font-weight: var(--fw-semibold);
   color: #16a34a; margin-bottom: var(--space-3);
 }
+
 .product-card__dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: #16a34a; flex-shrink: 0;
   box-shadow: 0 0 0 0 rgba(22,163,74,.5);
   animation: stock-pulse 2.4s infinite;
 }
+
 @keyframes stock-pulse {
   0%   { box-shadow: 0 0 0 0 rgba(22,163,74,.5); }
   70%  { box-shadow: 0 0 0 6px rgba(22,163,74,0); }
   100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
 }
 
-/* Кнопка "Додано" — зелений стан */
 .btn--success {
   background: #16a34a !important; border-color: #16a34a !important; color: #fff !important;
   &:hover { background: #15803d !important; border-color: #15803d !important; }
@@ -180,7 +205,9 @@
 
   &__inner {
     display: flex; align-items: center; gap: var(--space-10); flex-wrap: wrap;
-    @media (max-width: 767px) { flex-direction: column; gap: var(--space-6); text-align: center; }
+    @media (max-width: 767px) {
+      flex-direction: column; gap: var(--space-6); text-align: center;
+    }
   }
 
   &__text { flex-shrink: 0; }
@@ -225,7 +252,9 @@
   padding: var(--space-4) var(--space-3);
   border: 1px solid var(--clr-border); border-radius: var(--radius-lg);
   background: var(--clr-surface); min-height: 60px;
-  transition: border-color 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1), transform 280ms cubic-bezier(0.16,1,0.3,1);
+  transition: border-color 280ms cubic-bezier(0.16,1,0.3,1),
+  box-shadow   280ms cubic-bezier(0.16,1,0.3,1),
+  transform    280ms cubic-bezier(0.16,1,0.3,1);
 
   &:hover {
     border-color: var(--clr-primary);

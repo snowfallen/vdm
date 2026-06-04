@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {roleAdminGuard} from '../../core/auth/guards/role.guard';
 
 export const adminRoutes: Routes = [
@@ -67,6 +67,10 @@ export const adminRoutes: Routes = [
         path: 'orders',
         loadComponent: () =>
           import('./admin-orders/admin-orders.component').then(m => m.AdminOrdersComponent)
+      },
+      {
+        path: 'media',
+        loadComponent: () => import('./admin-media/admin-media.component').then(m => m.AdminMediaComponent)
       },
       {
         path: '**',

@@ -168,27 +168,27 @@ $dur-menu:   480ms;
 /* ============================================================
    ЛОГО
    ============================================================ */
+/* ============================================================
+   ЛОГО
+   ============================================================ */
 .logo {
-  display: flex; flex-direction: column; gap: 2px;
-  text-decoration: none; flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
 
-  &__mark { display: flex; flex-direction: column; line-height: 1; }
+  &__img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* Базова ширина десктопу (підганяй під свій дизайн) */
+    width: 120px;
+    object-fit: contain;
 
-  &__vdm {
-    font-family: var(--font-display); font-size: 1.55rem; font-weight: var(--fw-bold);
-    color: var(--clr-primary); letter-spacing: .03em;
-    @media (max-width: 575px) { font-size: 1.2rem; }
-  }
-
-  &__sub {
-    font-size: var(--fs-xs); font-weight: var(--fw-extrabold);
-    color: var(--clr-text-muted); letter-spacing: .14em; text-transform: uppercase;
-  }
-
-  &__tagline {
-    font-size: 10px; font-weight: var(--fw-medium);
-    color: var(--clr-text-muted); letter-spacing: .07em; white-space: nowrap;
-    @media (max-width: 575px) { display: none; }
+    @media (max-width: 990px) {
+      /* Адаптив під мобілки */
+      width: 100px;
+    }
   }
 }
 

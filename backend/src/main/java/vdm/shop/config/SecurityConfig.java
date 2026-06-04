@@ -64,7 +64,9 @@ public class SecurityConfig {
                                 "/units/**",
                                 "/attributes/**",
                                 "/attribute-options/**",
-                                "/product-attributes/**"
+                                "/product-attributes/**",
+                                 "/media/settings",
+                                 "/media/files/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()

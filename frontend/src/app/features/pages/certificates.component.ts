@@ -1,11 +1,7 @@
-import { Component, signal, HostListener } from '@angular/core';
+import { Component, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-interface ICertificate {
-  src: string;
-  title: string;
-}
+import {IMediaFile, MediaService} from "../../core/services/media.service";
 
 @Component({
   selector: 'app-certificates',
@@ -13,33 +9,37 @@ interface ICertificate {
   imports: [CommonModule, RouterModule],
   templateUrl: './certificates.component.html',
 })
-export class CertificatesComponent {
-  // ⚠️ ПОМІНЯЙ src на свої реальні шляхи до фото
-  readonly certificates: ICertificate[] = [
-    { src: 'assets/certificates/cert-1.jpg', title: 'Сертифікат якості Blum' },
-    { src: 'assets/certificates/cert-2.jpg', title: 'Офіційний дилер LAGUNA' },
-    { src: 'assets/certificates/cert-3.jpg', title: 'Сертифікат відповідності GTV' },
-    { src: 'assets/certificates/cert-4.jpg', title: 'Партнерський статус FGV' },
-  ];
+export class CertificatesComponent implements OnInit {
+  private readonly media = inject(MediaService);
 
-  // Лайтбокс
-  activeIndex = signal<number | null>(null);
+  certificates = signal<IMediaFile[]>([]);
+  activeIndex  = signal<number | null>(null);
 
-  open(i: number): void { this.activeIndex.set(i); }
-  close(): void         { this.activeIndex.set(null); }
+  ngOnInit(): void {
+    this.media.getFiles('certificates').subscribe({
+      next: files => this.certificates.set(files)
+    });
+  }
+
+  open(i: number): void  { this.activeIndex.set(i); }
+  close(): void          { this.activeIndex.set(null); }
 
   prev(event: Event): void {
     event.stopPropagation();
     const cur = this.activeIndex();
     if (cur === null) return;
-    this.activeIndex.set((cur - 1 + this.certificates.length) % this.certificates.length);
+    this.activeIndex.set(
+      (cur - 1 + this.certificates().length) % this.certificates().length
+    );
   }
 
   next(event: Event): void {
     event.stopPropagation();
     const cur = this.activeIndex();
     if (cur === null) return;
-    this.activeIndex.set((cur + 1) % this.certificates.length);
+    this.activeIndex.set(
+      (cur + 1) % this.certificates().length
+    );
   }
 
   @HostListener('document:keydown.escape')
