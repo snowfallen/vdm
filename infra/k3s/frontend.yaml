@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/snowfallen/vdm:latest
+          image: ghcr.io/snowfallen/vdm-frontend:latest
           ports:
             - containerPort: 80
           resources:

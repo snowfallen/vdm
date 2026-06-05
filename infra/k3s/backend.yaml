@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/snowfallen/vdm:latest
+          image: ghcr.io/snowfallen/vdm-api:latest
           ports:
             - containerPort: 8080
           envFrom:
