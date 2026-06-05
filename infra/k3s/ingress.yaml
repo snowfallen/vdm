@@ -21,7 +21,8 @@ metadata:
 spec:
   tls:
     - hosts:
-        - vdm-test.bond-tech.pl                  # Змінити!
+        - vdm-test.bond-tech.pl
+        - minio.bond-tech.pl
       secretName: vdm-tls                 # cert-manager створить цей Secret
   rules:
     - host: vdm-test.bond-tech.pl                # Змінити!
