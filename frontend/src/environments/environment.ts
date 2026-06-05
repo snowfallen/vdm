@@ -1,5 +1,5 @@
 // environment.ts (production)
 export const environment = {
   production: true,
-  rootUrl: 'http://localhost:8080/api/v1/'
+  rootUrl: 'https://vdm-test.bond-tech.pl/api/v1/'
 };
