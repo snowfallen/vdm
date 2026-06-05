@@ -36,15 +36,15 @@ spec:
           # Spring Boot Actuator health endpoints
           readinessProbe:
             httpGet:
-              path: /api/v1/actuator/health/readiness
-              port: 8080
+              path: /actuator/health/readiness
+              port: 8081
             initialDelaySeconds: 120
             periodSeconds: 10
             failureThreshold: 5
           livenessProbe:
             httpGet:
-              path: /api/v1/actuator/health/liveness
-              port: 8080
+              path: /actuator/health/liveness
+              port: 8081
             initialDelaySeconds: 160
             periodSeconds: 15
             failureThreshold: 5
