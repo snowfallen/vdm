@@ -7,14 +7,6 @@
         <span class="sidebar__logo-vdm">ВДМ</span>
         <span class="sidebar__logo-panel" *ngIf="sidebarOpen()">Адмін</span>
       </a>
-      <button class="sidebar__toggle" (click)="toggleSidebar()" aria-label="Згорнути меню">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
     </div>
 
     <nav class="sidebar__nav">
@@ -35,7 +27,11 @@
         <span class="badge" [class.badge--top]="isAdmin()" [class.badge--muted]="!isAdmin()">
           {{ isAdmin() ? 'ADMIN' : 'CLIENT' }}
         </span>
+          <a routerLink="/" class="btn btn--outline btn--sm">
+              ← На сайт
+          </a>
       </div>
+
 
       <button class="sidebar__logout" (click)="logout()" [title]="!sidebarOpen() ? 'Вийти' : ''">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"

@@ -85,7 +85,7 @@ export class CatalogComponent implements OnInit {
   filterLoading  = signal(false);  // окремий лоадер для застосування фільтрів
   viewMode       = signal<ViewMode>('grid');
   sortOption     = signal<SortOption>('default');
-  filtersOpen    = signal(true);
+  filtersOpen    = signal(false);
   error          = signal('');
 
   availableFilters = signal<IFilterAttribute[]>([]);

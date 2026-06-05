@@ -162,8 +162,13 @@
   top: 80px;
 
   @media (max-width: 991px) {
+    position: static;
     display: none;
-    &--open { display: block; }
+    margin-bottom: var(--space-4);
+
+    &--open {
+      display: block;
+    }
   }
 
   &__header {

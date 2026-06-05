@@ -51,8 +51,8 @@ export class HeaderComponent implements OnInit {
     { label: 'Про нас',            path: '/about'        },
     { label: 'Оплата та доставка', path: '/delivery'     },
     { label: 'Сертифікати',        path: '/certificates' },
-    { label: 'Новини',             path: '/news'         },
-    { label: 'Статті',             path: '/articles'     },
+    // { label: 'Новини',             path: '/news'         },
+    // { label: 'Статті',             path: '/articles'     },
     { label: 'Виробники',          path: '/brands'       },
     { label: 'Контакти',           path: '/contacts'     },
   ];

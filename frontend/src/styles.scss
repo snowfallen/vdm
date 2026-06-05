@@ -286,6 +286,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 /* ============================================================
    КАРТКА ТОВАРУ
    ============================================================ */
+/* ============================================================
+   КАРТКА ТОВАРУ — вирівняна по висоті
+   ============================================================ */
 .product-card {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -293,6 +296,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   overflow: hidden;
   transition: all var(--transition-base);
   position: relative;
+
+  /* 🟢 ДОДАЄМО: Робимо картку флексовою і змушуємо розтягуватися */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &:hover {
     box-shadow: var(--shadow-lg);
@@ -311,6 +319,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     aspect-ratio: 1 / 1;
     overflow: hidden;
     background: var(--clr-surface-2);
+    flex-shrink: 0; /* Щоб фотку не стискало */
 
     img {
       width: 100%;
@@ -324,6 +333,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
   &__body {
     padding: var(--space-4);
+    /* 🟢 ДОДАЄМО: Тіло картки забирає весь вільний простір */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   &__name {
@@ -336,19 +349,26 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: var(--space-2);
+
+    /* 🟢 ДОДАЄМО: Фіксована мін-висота для тексту (приблизно 2 рядки),
+       щоб картки з короткими назвами не перекошувало */
+    min-height: 40px;
   }
 
   &__availability {
     font-size: var(--fs-xs);
     font-weight: var(--fw-semibold);
     color: var(--clr-success);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4); /* Трохи збільшив для краси */
   }
 
   &__footer {
+    /* 🟢 ЗМІНЮЄМО: тепер елементи йдуть стовпчиком (як у першому файлі),
+       а margin-top: auto штовхає весь футер на саме дно */
+    margin-top: auto;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch;
     gap: var(--space-3);
   }
 
@@ -356,11 +376,13 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     font-size: var(--fs-lg);
     font-weight: var(--fw-bold);
     color: var(--clr-text-primary);
+    line-height: 1;
 
     span {
       font-size: var(--fs-xs);
       font-weight: var(--fw-regular);
       color: var(--clr-text-muted);
+      margin-left: 2px;
     }
   }
 }

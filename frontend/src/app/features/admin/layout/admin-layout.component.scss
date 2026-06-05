@@ -177,3 +177,8 @@ $sidebar-w-collapsed: 60px;
     &:hover { background: rgba(239,68,68,.1); color: #ef4444; }
   }
 }
+.btn {
+  &--outline {
+    margin-left: 3.5rem;
+  }
+}
