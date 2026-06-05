@@ -51,7 +51,7 @@ spec:
                 name: frontend-service
                 port:
                   number: 80
-    - host: minio.vdm-test.bond-tech.pl
+    - host: minio.bond-tech.pl
       http:
         paths:
             - path: /
