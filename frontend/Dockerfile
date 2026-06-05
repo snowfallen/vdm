@@ -32,7 +32,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Копіюємо зібрану статику
 # Шлях dist/vdm/browser — стандарт Angular 17+, змінити якщо інше
-COPY --from=build /app/dist/vdm/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
 EXPOSE 80
 
