@@ -2,901 +2,411 @@ databaseChangeLog:
   - changeSet:
       id: fill-product-attributes
       author: snowfall
-      # Відповідає products з 19-fill-products-table.yaml:
-      # 1-4:   product_group 1  (Напрямні для розсувних дверей)
-      # 5-8:   product_group 2  (Шухляди та системи висування)
-      # 9-11:  product_group 3  (Підйомні механізми)
-      # 12-13: product_group 4  (Барні механізми)
-      # 14-17: product_group 5  (Петлі меблеві)
-      # 18-22: product_group 6  (Ручки меблеві)
-      # 23-25: product_group 7  (Замки меблеві)
-      # 26-29: product_group 8  (Куточки та кріплення)
-      # 30-32: product_group 9  (Ніжки меблеві)
-      # 33-35: product_group 10 (Направляючі телескопічні)
-      # 36-38: product_group 11 (Вішалки та гачки)
-      # 39-41: product_group 12 (Кошики та органайзери)
-      # 42-44: product_group 13 (Освітлення меблеве)
-      # 45-47: product_group 14 (Цоколі та плінтуси)
-      # 48-50: product_group 15 (Кромка ПВХ)
       changes:
-
-        # ===== Products 1-4: Напрямні для розсувних дверей =====
+        # ===== Product 1: Напрямна верхня алюмінієва 1800мм =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 1 }
-              - column: { name: product_id, valueNumeric: 1 }
-              - column: { name: attribute_id, valueNumeric: 25 }  # Матеріал
-              - column: { name: option_id, valueNumeric: 14 }     # Алюміній
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Напрямна верхня алюмінієва 1800мм' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1) AND value='Алюміній' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 2 }
-              - column: { name: product_id, valueNumeric: 1 }
-              - column: { name: attribute_id, valueNumeric: 80 }  # Довжина, мм
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Напрямна верхня алюмінієва 1800мм' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Довжина, мм' LIMIT 1)"
               - column: { name: custom_value, value: "1800" }
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 3 }
-              - column: { name: product_id, valueNumeric: 1 }
-              - column: { name: attribute_id, valueNumeric: 36 }  # Тип відкривання
-              - column: { name: option_id, valueNumeric: 30 }     # Розсувне
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Напрямна верхня алюмінієва 1800мм' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Тип відкривання' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Тип відкривання' LIMIT 1) AND value='Розсувне' LIMIT 1)"
 
+        # ===== Product 2: Напрямна нижня сталева 2400мм =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 4 }
-              - column: { name: product_id, valueNumeric: 2 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }     # Сталь
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Напрямна нижня сталева 2400мм' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1) AND value='Сталь' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 5 }
-              - column: { name: product_id, valueNumeric: 2 }
-              - column: { name: attribute_id, valueNumeric: 80 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Напрямна нижня сталева 2400мм' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Довжина, мм' LIMIT 1)"
               - column: { name: custom_value, value: "2400" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 6 }
-              - column: { name: product_id, valueNumeric: 2 }
-              - column: { name: attribute_id, valueNumeric: 36 }
-              - column: { name: option_id, valueNumeric: 30 }
 
+        # ===== Product 3: Комплект напрямних Hafele =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 7 }
-              - column: { name: product_id, valueNumeric: 3 }
-              - column: { name: attribute_id, valueNumeric: 18 }  # Виробник
-              - column: { name: option_id, valueNumeric: 2 }      # HAFELE
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Комплект напрямних розсувних дверей 2м Hafele' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1) AND value='HAFELE' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 8 }
-              - column: { name: product_id, valueNumeric: 3 }
-              - column: { name: attribute_id, valueNumeric: 90 }  # Навантаження, кг
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Комплект напрямних розсувних дверей 2м Hafele' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Навантаження, кг' LIMIT 1)"
               - column: { name: custom_value, value: "50" }
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 9 }
-              - column: { name: product_id, valueNumeric: 3 }
-              - column: { name: attribute_id, valueNumeric: 24 }  # Країна
-              - column: { name: option_id, valueNumeric: 8 }      # Німеччина
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Комплект напрямних розсувних дверей 2м Hafele' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Країна' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Країна' LIMIT 1) AND value='Німеччина' LIMIT 1)"
 
+        # ===== Product 5: Шухляда Legrabox =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 10 }
-              - column: { name: product_id, valueNumeric: 4 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 15 }     # Пластик
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Шухляда Legrabox Pure 500мм антрацит' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1) AND value='BLUM' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 11 }
-              - column: { name: product_id, valueNumeric: 4 }
-              - column: { name: attribute_id, valueNumeric: 19 }  # Колір
-              - column: { name: option_id, valueNumeric: 22 }     # Білий
-
-        # ===== Products 5-8: Шухляди та системи висування =====
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Шухляда Legrabox Pure 500мм антрацит' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Тип висування' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Тип висування' LIMIT 1) AND value='Повне' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 12 }
-              - column: { name: product_id, valueNumeric: 5 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }      # BLUM
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 13 }
-              - column: { name: product_id, valueNumeric: 5 }
-              - column: { name: attribute_id, valueNumeric: 37 }  # Тип висування
-              - column: { name: option_id, valueNumeric: 28 }     # Повне
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 14 }
-              - column: { name: product_id, valueNumeric: 5 }
-              - column: { name: attribute_id, valueNumeric: 80 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Шухляда Legrabox Pure 500мм антрацит' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Довжина, мм' LIMIT 1)"
               - column: { name: custom_value, value: "500" }
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 15 }
-              - column: { name: product_id, valueNumeric: 5 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 21 }     # Чорний матовий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 16 }
-              - column: { name: product_id, valueNumeric: 5 }
-              - column: { name: attribute_id, valueNumeric: 24 }
-              - column: { name: option_id, valueNumeric: 7 }      # Австрія
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Шухляда Legrabox Pure 500мм антрацит' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Колір' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Колір' LIMIT 1) AND value='Чорний матовий' LIMIT 1)"
 
+        # ===== Product 9: Підйомник Aventos HK-S =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 17 }
-              - column: { name: product_id, valueNumeric: 6 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }      # BLUM
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Підйомник Aventos HK-S Blum до 11кг' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1) AND value='BLUM' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 18 }
-              - column: { name: product_id, valueNumeric: 6 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 28 }     # Повне
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Підйомник Aventos HK-S Blum до 11кг' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Тип підйомного механізму' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Тип підйомного механізму' LIMIT 1) AND value='AVENTOS HK-S' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 19 }
-              - column: { name: product_id, valueNumeric: 6 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "450" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 20 }
-              - column: { name: product_id, valueNumeric: 6 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 22 }     # Білий
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 21 }
-              - column: { name: product_id, valueNumeric: 7 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }      # BLUM
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 22 }
-              - column: { name: product_id, valueNumeric: 7 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 28 }     # Повне
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 23 }
-              - column: { name: product_id, valueNumeric: 7 }
-              - column: { name: attribute_id, valueNumeric: 90 }
-              - column: { name: custom_value, value: "30" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 24 }
-              - column: { name: product_id, valueNumeric: 7 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "500" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 25 }
-              - column: { name: product_id, valueNumeric: 8 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 29 }     # Часткове
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 26 }
-              - column: { name: product_id, valueNumeric: 8 }
-              - column: { name: attribute_id, valueNumeric: 90 }
-              - column: { name: custom_value, value: "25" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 27 }
-              - column: { name: product_id, valueNumeric: 8 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "400" }
-
-        # ===== Products 9-11: Підйомні механізми =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 28 }
-              - column: { name: product_id, valueNumeric: 9 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }      # BLUM
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 29 }
-              - column: { name: product_id, valueNumeric: 9 }
-              - column: { name: attribute_id, valueNumeric: 46 }  # Тип підйомного
-              - column: { name: option_id, valueNumeric: 45 }     # AVENTOS HK-S
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 30 }
-              - column: { name: product_id, valueNumeric: 9 }
-              - column: { name: attribute_id, valueNumeric: 24 }
-              - column: { name: option_id, valueNumeric: 7 }      # Австрія
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 31 }
-              - column: { name: product_id, valueNumeric: 9 }
-              - column: { name: attribute_id, valueNumeric: 90 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Підйомник Aventos HK-S Blum до 11кг' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Навантаження, кг' LIMIT 1)"
               - column: { name: custom_value, value: "11" }
 
+        # ===== Product 14: Петля Clip Top 110° напівнакладна =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 32 }
-              - column: { name: product_id, valueNumeric: 10 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Петля Clip Top 110° напівнакладна Blum' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1) AND value='BLUM' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 33 }
-              - column: { name: product_id, valueNumeric: 10 }
-              - column: { name: attribute_id, valueNumeric: 46 }
-              - column: { name: option_id, valueNumeric: 44 }     # AVENTOS HL
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Петля Clip Top 110° напівнакладна Blum' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид петлі' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид петлі' LIMIT 1) AND value='Напівнакладна' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 34 }
-              - column: { name: product_id, valueNumeric: 10 }
-              - column: { name: attribute_id, valueNumeric: 24 }
-              - column: { name: option_id, valueNumeric: 7 }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 35 }
-              - column: { name: product_id, valueNumeric: 11 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 22 }     # Білий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 36 }
-              - column: { name: product_id, valueNumeric: 11 }
-              - column: { name: attribute_id, valueNumeric: 90 }
-              - column: { name: custom_value, value: "80" }
-
-        # ===== Products 12-13: Барні механізми =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 37 }
-              - column: { name: product_id, valueNumeric: 12 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 38 }
-              - column: { name: product_id, valueNumeric: 13 }
-              - column: { name: attribute_id, valueNumeric: 76 }  # Висота, мм
-              - column: { name: custom_value, value: "450" }
-
-        # ===== Products 14-17: Петлі меблеві =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 39 }
-              - column: { name: product_id, valueNumeric: 14 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }      # BLUM
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 40 }
-              - column: { name: product_id, valueNumeric: 14 }
-              - column: { name: attribute_id, valueNumeric: 9 }   # Вид петлі
-              - column: { name: option_id, valueNumeric: 26 }     # Напівнакладна
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 41 }
-              - column: { name: product_id, valueNumeric: 14 }
-              - column: { name: attribute_id, valueNumeric: 24 }
-              - column: { name: option_id, valueNumeric: 7 }      # Австрія
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 42 }
-              - column: { name: product_id, valueNumeric: 14 }
-              - column: { name: attribute_id, valueNumeric: 77 }  # Діаметр отвору, мм
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Петля Clip Top 110° напівнакладна Blum' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Діаметр отвору, мм' LIMIT 1)"
               - column: { name: custom_value, value: "35" }
 
+        # ===== Product 15: Петля Clip Top Blumotion вбудована =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 43 }
-              - column: { name: product_id, valueNumeric: 15 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Петля Clip Top Blumotion 110° вбудована' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Виробник' LIMIT 1) AND value='BLUM' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 44 }
-              - column: { name: product_id, valueNumeric: 15 }
-              - column: { name: attribute_id, valueNumeric: 9 }
-              - column: { name: option_id, valueNumeric: 27 }     # Вбудована
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 45 }
-              - column: { name: product_id, valueNumeric: 15 }
-              - column: { name: attribute_id, valueNumeric: 24 }
-              - column: { name: option_id, valueNumeric: 7 }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 46 }
-              - column: { name: product_id, valueNumeric: 15 }
-              - column: { name: attribute_id, valueNumeric: 77 }
-              - column: { name: custom_value, value: "35" }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Петля Clip Top Blumotion 110° вбудована' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид петлі' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид петлі' LIMIT 1) AND value='Вбудована' LIMIT 1)"
 
+        # ===== Product 18: Ручка скоба 160мм =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 47 }
-              - column: { name: product_id, valueNumeric: 16 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ручка скоба 160мм матовий нікель' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид ручки' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид ручки' LIMIT 1) AND value='Скоба' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 48 }
-              - column: { name: product_id, valueNumeric: 16 }
-              - column: { name: attribute_id, valueNumeric: 9 }
-              - column: { name: option_id, valueNumeric: 25 }     # Накладна
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ручка скоба 160мм матовий нікель' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Колір' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Колір' LIMIT 1) AND value='Матовий нікель' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 49 }
-              - column: { name: product_id, valueNumeric: 16 }
-              - column: { name: attribute_id, valueNumeric: 77 }
-              - column: { name: custom_value, value: "35" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 50 }
-              - column: { name: product_id, valueNumeric: 17 }
-              - column: { name: attribute_id, valueNumeric: 18 }
-              - column: { name: option_id, valueNumeric: 1 }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 51 }
-              - column: { name: product_id, valueNumeric: 17 }
-              - column: { name: attribute_id, valueNumeric: 9 }
-              - column: { name: option_id, valueNumeric: 25 }     # Накладна
-
-        # ===== Products 18-22: Ручки меблеві =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 52 }
-              - column: { name: product_id, valueNumeric: 18 }
-              - column: { name: attribute_id, valueNumeric: 10 }  # Вид ручки
-              - column: { name: option_id, valueNumeric: 37 }     # Скоба
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 53 }
-              - column: { name: product_id, valueNumeric: 18 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 20 }     # Матовий нікель
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 54 }
-              - column: { name: product_id, valueNumeric: 18 }
-              - column: { name: attribute_id, valueNumeric: 81 }  # Міжцентрова, мм
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ручка скоба 160мм матовий нікель' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Міжцентрова відстань, мм' LIMIT 1)"
               - column: { name: custom_value, value: "160" }
 
+        # ===== Product 30: Ніжка регульована пластикова =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 55 }
-              - column: { name: product_id, valueNumeric: 19 }
-              - column: { name: attribute_id, valueNumeric: 10 }
-              - column: { name: option_id, valueNumeric: 37 }     # Скоба
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ніжка регульована пластикова 50мм чорна' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид ніжки' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид ніжки' LIMIT 1) AND value='Регульована' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 56 }
-              - column: { name: product_id, valueNumeric: 19 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ніжка регульована пластикова 50мм чорна' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Матеріал' LIMIT 1) AND value='Пластик' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 57 }
-              - column: { name: product_id, valueNumeric: 19 }
-              - column: { name: attribute_id, valueNumeric: 81 }
-              - column: { name: custom_value, value: "192" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 58 }
-              - column: { name: product_id, valueNumeric: 20 }
-              - column: { name: attribute_id, valueNumeric: 10 }
-              - column: { name: option_id, valueNumeric: 39 }     # Врізна
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 59 }
-              - column: { name: product_id, valueNumeric: 21 }
-              - column: { name: attribute_id, valueNumeric: 10 }
-              - column: { name: option_id, valueNumeric: 36 }     # Рейлінг
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 60 }
-              - column: { name: product_id, valueNumeric: 21 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 21 }     # Чорний матовий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 61 }
-              - column: { name: product_id, valueNumeric: 21 }
-              - column: { name: attribute_id, valueNumeric: 81 }
-              - column: { name: custom_value, value: "320" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 62 }
-              - column: { name: product_id, valueNumeric: 22 }
-              - column: { name: attribute_id, valueNumeric: 10 }
-              - column: { name: option_id, valueNumeric: 38 }     # Кнопка
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 63 }
-              - column: { name: product_id, valueNumeric: 22 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 23 }     # Золото
-
-        # ===== Products 23-25: Замки =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 64 }
-              - column: { name: product_id, valueNumeric: 23 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 16 }     # Цинк
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 65 }
-              - column: { name: product_id, valueNumeric: 24 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }     # Сталь
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 66 }
-              - column: { name: product_id, valueNumeric: 25 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }
-
-        # ===== Products 26-29: Куточки та кріплення =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 67 }
-              - column: { name: product_id, valueNumeric: 26 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }     # Сталь
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 68 }
-              - column: { name: product_id, valueNumeric: 26 }
-              - column: { name: attribute_id, valueNumeric: 82 }  # Розмір, мм
-              - column: { name: custom_value, value: "40" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 69 }
-              - column: { name: product_id, valueNumeric: 27 }
-              - column: { name: attribute_id, valueNumeric: 41 }  # Тип кріплення
-              - column: { name: option_id, valueNumeric: 51 }     # Ексцентрик
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 70 }
-              - column: { name: product_id, valueNumeric: 28 }
-              - column: { name: attribute_id, valueNumeric: 41 }
-              - column: { name: option_id, valueNumeric: 49 }     # Конфірмат
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 71 }
-              - column: { name: product_id, valueNumeric: 28 }
-              - column: { name: attribute_id, valueNumeric: 76 }  # Висота, мм
-              - column: { name: custom_value, value: "50" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 72 }
-              - column: { name: product_id, valueNumeric: 29 }
-              - column: { name: attribute_id, valueNumeric: 41 }
-              - column: { name: option_id, valueNumeric: 50 }     # Мінікс
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 73 }
-              - column: { name: product_id, valueNumeric: 29 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
-
-        # ===== Products 30-32: Ніжки меблеві =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 74 }
-              - column: { name: product_id, valueNumeric: 30 }
-              - column: { name: attribute_id, valueNumeric: 8 }   # Вид ніжки
-              - column: { name: option_id, valueNumeric: 40 }     # Регульована
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 75 }
-              - column: { name: product_id, valueNumeric: 30 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 15 }     # Пластик
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 76 }
-              - column: { name: product_id, valueNumeric: 30 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 21 }     # Чорний матовий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 77 }
-              - column: { name: product_id, valueNumeric: 30 }
-              - column: { name: attribute_id, valueNumeric: 76 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Ніжка регульована пластикова 50мм чорна' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Висота, мм' LIMIT 1)"
               - column: { name: custom_value, value: "50" }
 
+        # ===== Product 42: Світлодіодна стрічка =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 78 }
-              - column: { name: product_id, valueNumeric: 31 }
-              - column: { name: attribute_id, valueNumeric: 8 }
-              - column: { name: option_id, valueNumeric: 40 }     # Регульована
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 79 }
-              - column: { name: product_id, valueNumeric: 31 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }     # Сталь
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 80 }
-              - column: { name: product_id, valueNumeric: 31 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 81 }
-              - column: { name: product_id, valueNumeric: 31 }
-              - column: { name: attribute_id, valueNumeric: 76 }
-              - column: { name: custom_value, value: "115" }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Світлодіодна стрічка 12V 5м тепле світло' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вольтаж, V' LIMIT 1)"
+              - column: { name: custom_value, value: "12" }
 
+        # ===== Product 44: Блок живлення =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 82 }
-              - column: { name: product_id, valueNumeric: 32 }
-              - column: { name: attribute_id, valueNumeric: 8 }
-              - column: { name: option_id, valueNumeric: 41 }     # Фіксована
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 83 }
-              - column: { name: product_id, valueNumeric: 32 }
-              - column: { name: attribute_id, valueNumeric: 76 }
-              - column: { name: custom_value, value: "120" }
-
-        # ===== Products 33-35: Направляючі телескопічні =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 84 }
-              - column: { name: product_id, valueNumeric: 33 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 28 }     # Повне
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 85 }
-              - column: { name: product_id, valueNumeric: 33 }
-              - column: { name: attribute_id, valueNumeric: 90 }
-              - column: { name: custom_value, value: "45" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 86 }
-              - column: { name: product_id, valueNumeric: 33 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "300" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 87 }
-              - column: { name: product_id, valueNumeric: 34 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 28 }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 88 }
-              - column: { name: product_id, valueNumeric: 34 }
-              - column: { name: attribute_id, valueNumeric: 90 }
-              - column: { name: custom_value, value: "45" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 89 }
-              - column: { name: product_id, valueNumeric: 34 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "450" }
-
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 90 }
-              - column: { name: product_id, valueNumeric: 35 }
-              - column: { name: attribute_id, valueNumeric: 37 }
-              - column: { name: option_id, valueNumeric: 28 }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 91 }
-              - column: { name: product_id, valueNumeric: 35 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "500" }
-
-        # ===== Products 36-38: Вішалки та гачки =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 92 }
-              - column: { name: product_id, valueNumeric: 36 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 14 }     # Алюміній
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 93 }
-              - column: { name: product_id, valueNumeric: 36 }
-              - column: { name: attribute_id, valueNumeric: 80 }
-              - column: { name: custom_value, value: "1000" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 94 }
-              - column: { name: product_id, valueNumeric: 37 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 95 }
-              - column: { name: product_id, valueNumeric: 38 }
-              - column: { name: attribute_id, valueNumeric: 36 }  # Тип відкривання
-              - column: { name: option_id, valueNumeric: 32 }     # Підйомне
-
-        # ===== Products 39-41: Кошики та органайзери =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 96 }
-              - column: { name: product_id, valueNumeric: 39 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 13 }     # Сталь
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 97 }
-              - column: { name: product_id, valueNumeric: 39 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 19 }     # Хром глянець
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 98 }
-              - column: { name: product_id, valueNumeric: 39 }
-              - column: { name: attribute_id, valueNumeric: 86 }  # Ширина, мм
-              - column: { name: custom_value, value: "450" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 99 }
-              - column: { name: product_id, valueNumeric: 40 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 21 }     # Чорний матовий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 100 }
-              - column: { name: product_id, valueNumeric: 40 }
-              - column: { name: attribute_id, valueNumeric: 86 }
-              - column: { name: custom_value, value: "800" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 101 }
-              - column: { name: product_id, valueNumeric: 41 }
-              - column: { name: attribute_id, valueNumeric: 86 }
-              - column: { name: custom_value, value: "600" }
-
-        # ===== Products 42-44: Освітлення меблеве =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 102 }
-              - column: { name: product_id, valueNumeric: 42 }
-              - column: { name: attribute_id, valueNumeric: 92 }  # Вольтаж, V
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Блок живлення 12V 30W для LED' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вольтаж, V' LIMIT 1)"
               - column: { name: custom_value, value: "12" }
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 103 }
-              - column: { name: product_id, valueNumeric: 43 }
-              - column: { name: attribute_id, valueNumeric: 92 }
-              - column: { name: custom_value, value: "12" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 104 }
-              - column: { name: product_id, valueNumeric: 44 }
-              - column: { name: attribute_id, valueNumeric: 92 }
-              - column: { name: custom_value, value: "12" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 105 }
-              - column: { name: product_id, valueNumeric: 44 }
-              - column: { name: attribute_id, valueNumeric: 91 }  # Потужність, W
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Блок живлення 12V 30W для LED' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Потужність, W' LIMIT 1)"
               - column: { name: custom_value, value: "30" }
 
-        # ===== Products 45-47: Цоколі та плінтуси =====
+        # ===== Product 48: Кромка ПВХ =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 106 }
-              - column: { name: product_id, valueNumeric: 45 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 17 }     # ПВХ
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Кромка ПВХ 0.4мм біла 50м' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид кромки' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид кромки' LIMIT 1) AND value='ПВХ' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 107 }
-              - column: { name: product_id, valueNumeric: 45 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 22 }     # Білий
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Кромка ПВХ 0.4мм біла 50м' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Колір' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Колір' LIMIT 1) AND value='Білий' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 108 }
-              - column: { name: product_id, valueNumeric: 45 }
-              - column: { name: attribute_id, valueNumeric: 76 }
-              - column: { name: custom_value, value: "100" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 109 }
-              - column: { name: product_id, valueNumeric: 46 }
-              - column: { name: attribute_id, valueNumeric: 25 }
-              - column: { name: option_id, valueNumeric: 14 }     # Алюміній
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 110 }
-              - column: { name: product_id, valueNumeric: 46 }
-              - column: { name: attribute_id, valueNumeric: 76 }
-              - column: { name: custom_value, value: "150" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 111 }
-              - column: { name: product_id, valueNumeric: 47 }
-              - column: { name: attribute_id, valueNumeric: 8 }   # Вид ніжки
-              - column: { name: option_id, valueNumeric: 40 }     # Регульована
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 112 }
-              - column: { name: product_id, valueNumeric: 47 }
-              - column: { name: attribute_id, valueNumeric: 76 }
-              - column: { name: custom_value, value: "100" }
-
-        # ===== Products 48-50: Кромка ПВХ =====
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 113 }
-              - column: { name: product_id, valueNumeric: 48 }
-              - column: { name: attribute_id, valueNumeric: 17 }  # Вид кромки
-              - column: { name: option_id, valueNumeric: 46 }     # ПВХ
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 114 }
-              - column: { name: product_id, valueNumeric: 48 }
-              - column: { name: attribute_id, valueNumeric: 19 }
-              - column: { name: option_id, valueNumeric: 22 }     # Білий
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 115 }
-              - column: { name: product_id, valueNumeric: 48 }
-              - column: { name: attribute_id, valueNumeric: 84 }  # Товщина, мм
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Кромка ПВХ 0.4мм біла 50м' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Товщина, мм' LIMIT 1)"
               - column: { name: custom_value, value: "0.4" }
+
+        # ===== Product 49: Кромка АБС =====
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 116 }
-              - column: { name: product_id, valueNumeric: 49 }
-              - column: { name: attribute_id, valueNumeric: 17 }
-              - column: { name: option_id, valueNumeric: 47 }     # ABS
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Кромка АБС 2мм дуб натуральний 25м' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Вид кромки' LIMIT 1)"
+              - column:
+                  name: option_id
+                  valueComputed: "(SELECT id FROM attribute_options WHERE attribute_id=(SELECT id FROM attributes WHERE name='Вид кромки' LIMIT 1) AND value='ABS' LIMIT 1)"
         - insert:
             tableName: product_attributes
             columns:
-              - column: { name: id, valueNumeric: 117 }
-              - column: { name: product_id, valueNumeric: 49 }
-              - column: { name: attribute_id, valueNumeric: 84 }
+              - column:
+                  name: product_id
+                  valueComputed: "(SELECT id FROM products WHERE name='Кромка АБС 2мм дуб натуральний 25м' LIMIT 1)"
+              - column:
+                  name: attribute_id
+                  valueComputed: "(SELECT id FROM attributes WHERE name='Товщина, мм' LIMIT 1)"
               - column: { name: custom_value, value: "2" }
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 118 }
-              - column: { name: product_id, valueNumeric: 50 }
-              - column: { name: attribute_id, valueNumeric: 17 }
-              - column: { name: option_id, valueNumeric: 48 }     # Меламін
-        - insert:
-            tableName: product_attributes
-            columns:
-              - column: { name: id, valueNumeric: 119 }
-              - column: { name: product_id, valueNumeric: 50 }
-              - column: { name: attribute_id, valueNumeric: 84 }
-              - column: { name: custom_value, value: "0" }

@@ -2,606 +2,510 @@ databaseChangeLog:
   - changeSet:
       id: fill-attributes-table
       author: snowfall
-      # unit_id mapping:
-      # 1=мм  2=м  3=мл  4=л  5=кг  6=W  7=V  8=N  null=без одиниць
-      # dataType: DICT=вибір зі списку  TEXT=довільний текст  NUMBER=число
       changes:
-        # --- DICT атрибути (вибір зі списку, без одиниць) ---
+        # --- DICT атрибути ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 1 }
               - column: { name: name, value: "Вид" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 2 }
               - column: { name: name, value: "Вид важеля / висота фасаду" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 3 }
               - column: { name: name, value: "Вид гачка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 4 }
               - column: { name: name, value: "Вид заглушки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 5 }
               - column: { name: name, value: "Вид замка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 6 }
               - column: { name: name, value: "Вид кріплення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 7 }
               - column: { name: name, value: "Вид куточка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 8 }
               - column: { name: name, value: "Вид ніжки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 9 }
               - column: { name: name, value: "Вид петлі" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 10 }
               - column: { name: name, value: "Вид ручки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 11 }
               - column: { name: name, value: "Вид силового механізму" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 12 }
               - column: { name: name, value: "Вид труби" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 13 }
               - column: { name: name, value: "Види" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 14 }
               - column: { name: name, value: "Види барних механізмів" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 15 }
               - column: { name: name, value: "Види вішаків" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 16 }
               - column: { name: name, value: "Види кошиків" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 17 }
               - column: { name: name, value: "Вид кромки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 18 }
               - column: { name: name, value: "Виробник" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 19 }
               - column: { name: name, value: "Колір" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 20 }
               - column: { name: name, value: "Колір корпусу" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 21 }
               - column: { name: name, value: "Колір освітлення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 22 }
               - column: { name: name, value: "Колір піддону" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 23 }
               - column: { name: name, value: "Колір покриття" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 24 }
               - column: { name: name, value: "Країна" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 25 }
               - column: { name: name, value: "Матеріал" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 26 }
               - column: { name: name, value: "Матеріал корпусу" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 27 }
               - column: { name: name, value: "Призначення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 28 }
               - column: { name: name, value: "Радіус" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 29 }
               - column: { name: name, value: "Розмір" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 30 }
               - column: { name: name, value: "Розмір кріплення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 31 }
               - column: { name: name, value: "Розмір січення дроту" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 32 }
               - column: { name: name, value: "Розсіювач" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 33 }
               - column: { name: name, value: "Ступінь захисту" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 34 }
               - column: { name: name, value: "Стопор" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 35 }
               - column: { name: name, value: "Тип" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 36 }
               - column: { name: name, value: "Тип відкривання" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 37 }
               - column: { name: name, value: "Тип висування" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 38 }
               - column: { name: name, value: "Тип замка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 39 }
               - column: { name: name, value: "Тип закривання" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 40 }
               - column: { name: name, value: "Тип замазки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 41 }
               - column: { name: name, value: "Тип кріплення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 42 }
               - column: { name: name, value: "Тип міжкімнатної перегородки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 43 }
               - column: { name: name, value: "Тип наконечника" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 44 }
               - column: { name: name, value: "Тип напрямних" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 45 }
               - column: { name: name, value: "Тип опори" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 46 }
               - column: { name: name, value: "Тип підйомного механізму" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 47 }
               - column: { name: name, value: "Тип планки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 48 }
               - column: { name: name, value: "Тип профілю" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 49 }
               - column: { name: name, value: "Тип розсувних скляних дверей" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 50 }
               - column: { name: name, value: "Тип ричага" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 51 }
               - column: { name: name, value: "Тип силового механізму" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 52 }
               - column: { name: name, value: "Тип складних дверей" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 53 }
               - column: { name: name, value: "Тип сталевої системи" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 54 }
               - column: { name: name, value: "Тип сушарки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 55 }
               - column: { name: name, value: "Тип свердла" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 56 }
               - column: { name: name, value: "Тип шафи-купе" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 57 }
               - column: { name: name, value: "Типи" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 58 }
               - column: { name: name, value: "Відкривання" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 59 }
               - column: { name: name, value: "Види відкривання" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 60 }
               - column: { name: name, value: "Ширина фасаду" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 61 }
               - column: { name: name, value: "Ширина цоколя" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 62 }
               - column: { name: name, value: "Ширина секції" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 63 }
               - column: { name: name, value: "Вставка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 64 }
               - column: { name: name, value: "Глибина лотка" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 65 }
               - column: { name: name, value: "Діаметр заглушки" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 66 }
               - column: { name: name, value: "Товщина ДСП" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 67 }
               - column: { name: name, value: "Товщина наповнення" }
               - column: { name: data_type, value: "DICT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 68 }
               - column: { name: name, value: "Товщина полиці" }
               - column: { name: data_type, value: "DICT" }
+
+        # --- TEXT атрибути ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 69 }
               - column: { name: name, value: "Комплектація" }
               - column: { name: data_type, value: "TEXT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 70 }
               - column: { name: name, value: "Властивості" }
               - column: { name: data_type, value: "TEXT" }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 71 }
               - column: { name: name, value: "Розмір модуля, мм" }
               - column: { name: data_type, value: "TEXT" }
 
-        # --- NUMBER атрибути з одиницями ---
-
-        # мм (unit_id: 1)
+        # --- NUMBER атрибути (мм, unit_id: 1) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 72 }
               - column: { name: name, value: "Висота кошика, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 73 }
               - column: { name: name, value: "Висота напрямних" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 74 }
               - column: { name: name, value: "Висота регулювання" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 75 }
               - column: { name: name, value: "Висота цоколя" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 76 }
               - column: { name: name, value: "Висота, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 77 }
               - column: { name: name, value: "Діаметр отвору, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 78 }
               - column: { name: name, value: "Діаметр, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 79 }
               - column: { name: name, value: "Довжина комплекту" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 80 }
               - column: { name: name, value: "Довжина, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 81 }
               - column: { name: name, value: "Міжцентрова відстань, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 82 }
               - column: { name: name, value: "Розмір, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 83 }
               - column: { name: name, value: "Товщина стінки, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 84 }
               - column: { name: name, value: "Товщина, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 85 }
               - column: { name: name, value: "Ширина стрічки, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 86 }
               - column: { name: name, value: "Ширина, мм" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 1 }
 
-        # м (unit_id: 2)
+        # --- NUMBER (м, unit_id: 2) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 87 }
               - column: { name: name, value: "Довжина, м" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 2 }
 
-        # мл (unit_id: 3)
+        # --- NUMBER (мл, unit_id: 3) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 88 }
               - column: { name: name, value: "Об'єм, мл" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 3 }
 
-        # л (unit_id: 4)
+        # --- NUMBER (л, unit_id: 4) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 89 }
               - column: { name: name, value: "Об'єм, л" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 4 }
 
-        # кг (unit_id: 5)
+        # --- NUMBER (кг, unit_id: 5) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 90 }
               - column: { name: name, value: "Навантаження, кг" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 5 }
 
-        # W (unit_id: 6)
+        # --- NUMBER (W, unit_id: 6) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 91 }
               - column: { name: name, value: "Потужність, W" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 6 }
 
-        # V (unit_id: 7)
+        # --- NUMBER (V, unit_id: 7) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 92 }
               - column: { name: name, value: "Вольтаж, V" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 7 }
 
-        # N (unit_id: 8)
+        # --- NUMBER (N, unit_id: 8) ---
         - insert:
             tableName: attributes
             columns:
-              - column: { name: id, valueNumeric: 93 }
               - column: { name: name, value: "Потужність витягу, N" }
               - column: { name: data_type, value: "NUMBER" }
               - column: { name: unit_id, valueNumeric: 8 }

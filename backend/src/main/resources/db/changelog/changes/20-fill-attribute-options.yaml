@@ -7,37 +7,31 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 1 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "BLUM" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 2 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "HAFELE" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 3 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "HETTICH" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 4 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "GTV" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 5 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "SLIDO" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 6 }
               - column: { name: attribute_id, valueNumeric: 18 }
               - column: { name: value, value: "AMIG" }
 
@@ -45,37 +39,31 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 7 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Австрія" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 8 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Німеччина" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 9 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Польща" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 10 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Туреччина" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 11 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Китай" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 12 }
               - column: { name: attribute_id, valueNumeric: 24 }
               - column: { name: value, value: "Італія" }
 
@@ -83,37 +71,31 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 13 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "Сталь" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 14 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "Алюміній" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 15 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "Пластик" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 16 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "Цинк" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 17 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "ПВХ" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 18 }
               - column: { name: attribute_id, valueNumeric: 25 }
               - column: { name: value, value: "ABS" }
 
@@ -121,37 +103,31 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 19 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Хром глянець" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 20 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Матовий нікель" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 21 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Чорний матовий" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 22 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Білий" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 23 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Золото" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 24 }
               - column: { name: attribute_id, valueNumeric: 19 }
               - column: { name: value, value: "Антична бронза" }
 
@@ -159,19 +135,16 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 25 }
               - column: { name: attribute_id, valueNumeric: 9 }
               - column: { name: value, value: "Накладна" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 26 }
               - column: { name: attribute_id, valueNumeric: 9 }
               - column: { name: value, value: "Напівнакладна" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 27 }
               - column: { name: attribute_id, valueNumeric: 9 }
               - column: { name: value, value: "Вбудована" }
 
@@ -179,13 +152,11 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 28 }
               - column: { name: attribute_id, valueNumeric: 37 }
               - column: { name: value, value: "Повне" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 29 }
               - column: { name: attribute_id, valueNumeric: 37 }
               - column: { name: value, value: "Часткове" }
 
@@ -193,25 +164,21 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 30 }
               - column: { name: attribute_id, valueNumeric: 36 }
               - column: { name: value, value: "Розсувне" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 31 }
               - column: { name: attribute_id, valueNumeric: 36 }
               - column: { name: value, value: "Розкладне" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 32 }
               - column: { name: attribute_id, valueNumeric: 36 }
               - column: { name: value, value: "Підйомне" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 33 }
               - column: { name: attribute_id, valueNumeric: 36 }
               - column: { name: value, value: "Петельне" }
 
@@ -219,13 +186,11 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 34 }
               - column: { name: attribute_id, valueNumeric: 34 }
               - column: { name: value, value: "Є" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 35 }
               - column: { name: attribute_id, valueNumeric: 34 }
               - column: { name: value, value: "Немає" }
 
@@ -233,25 +198,21 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 36 }
               - column: { name: attribute_id, valueNumeric: 10 }
               - column: { name: value, value: "Рейлінг" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 37 }
               - column: { name: attribute_id, valueNumeric: 10 }
               - column: { name: value, value: "Скоба" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 38 }
               - column: { name: attribute_id, valueNumeric: 10 }
               - column: { name: value, value: "Кнопка" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 39 }
               - column: { name: attribute_id, valueNumeric: 10 }
               - column: { name: value, value: "Врізна" }
 
@@ -259,19 +220,16 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 40 }
               - column: { name: attribute_id, valueNumeric: 8 }
               - column: { name: value, value: "Регульована" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 41 }
               - column: { name: attribute_id, valueNumeric: 8 }
               - column: { name: value, value: "Фіксована" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 42 }
               - column: { name: attribute_id, valueNumeric: 8 }
               - column: { name: value, value: "З колесиком" }
 
@@ -279,19 +237,16 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 43 }
               - column: { name: attribute_id, valueNumeric: 46 }
               - column: { name: value, value: "AVENTOS HF" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 44 }
               - column: { name: attribute_id, valueNumeric: 46 }
               - column: { name: value, value: "AVENTOS HL" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 45 }
               - column: { name: attribute_id, valueNumeric: 46 }
               - column: { name: value, value: "AVENTOS HK-S" }
 
@@ -299,19 +254,16 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 46 }
               - column: { name: attribute_id, valueNumeric: 17 }
               - column: { name: value, value: "ПВХ" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 47 }
               - column: { name: attribute_id, valueNumeric: 17 }
               - column: { name: value, value: "ABS" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 48 }
               - column: { name: attribute_id, valueNumeric: 17 }
               - column: { name: value, value: "Меламін" }
 
@@ -319,24 +271,20 @@ databaseChangeLog:
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 49 }
               - column: { name: attribute_id, valueNumeric: 41 }
               - column: { name: value, value: "Конфірмат" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 50 }
               - column: { name: attribute_id, valueNumeric: 41 }
               - column: { name: value, value: "Мінікс" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 51 }
               - column: { name: attribute_id, valueNumeric: 41 }
               - column: { name: value, value: "Ексцентрик" }
         - insert:
             tableName: attribute_options
             columns:
-              - column: { name: id, valueNumeric: 52 }
               - column: { name: attribute_id, valueNumeric: 41 }
               - column: { name: value, value: "Шуруп" }

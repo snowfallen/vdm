@@ -9,6 +9,7 @@ metadata:
 data:
   # --- App ---
   SPRING_PROFILES_ACTIVE: "production"
+  MANAGEMENT_SERVER_PORT: "8081"
 
   # --- PostgreSQL ---
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-service:5432/vdm_shop"
