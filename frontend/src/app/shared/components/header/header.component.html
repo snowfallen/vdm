@@ -148,14 +148,24 @@
                   </span>
                                 </a>
 
-                                <ul *ngIf="sub.productGroups.length > 0" class="mega__links">
-                                    <li *ngFor="let group of sub.productGroups">
-                                        <a [routerLink]="['/catalog', activeCategory()!.id, sub.id, group.id]"
-                                           class="mega__link" (click)="onLinkClick()">
-                                            {{ group.name }}
-                                        </a>
-                                    </li>
-                                </ul>
+                              <ul *ngIf="sub.productGroups.length > 0" class="mega__links">
+                                <li *ngFor="let group of sub.productGroups.slice(0, 8)">
+                                  <a [routerLink]="['/catalog', activeCategory()!.id, sub.id, group.id]"
+                                     class="mega__link" (click)="onLinkClick()">
+                                    {{ group.name }}
+                                  </a>
+                                </li>
+                                <li *ngIf="sub.productGroups.length > 8">
+                                  <a [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
+                                     class="mega__all" (click)="onLinkClick()">
+                                    Ще {{ sub.productGroups.length - 8 }}
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2">
+                                      <path d="m9 18 6-6-6-6"/>
+                                    </svg>
+                                  </a>
+                                </li>
+                              </ul>
 
                                 <a *ngIf="sub.productGroups.length === 0"
                                    [routerLink]="['/catalog', activeCategory()!.id, sub.id]"
