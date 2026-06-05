@@ -27,6 +27,6 @@ data:
 
   # --- MinIO (S3-сумісний) ---
   MINIO_ENDPOINT: "http://minio-service:9000"
-  APP_PUBLIC_URL: "https://vdm-test.bond-tech.pl"
+  APP_PUBLIC_URL: "https://minio.bond-tech.pl"
   MINIO_BUCKET_PRODUCTS: "vdm-products"   # бакет для зображень меблів
   AWS_REGION: "us-east-1"
