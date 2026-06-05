@@ -83,16 +83,6 @@
     align-items: center;
     gap: var(--space-2);
 
-    &::before {
-      content: '';
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: var(--clr-primary);
-      opacity: .5;
-      flex-shrink: 0;
-      transition: opacity var(--transition-fast);
-    }
-
     &:hover {
       color: var(--clr-primary);
       &::before { opacity: 1; }
