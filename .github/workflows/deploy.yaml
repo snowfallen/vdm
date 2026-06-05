@@ -12,35 +12,19 @@ env:
 
 jobs:
   # -------------------------------------------------------
-  # Job 1: Build і push Backend
+  # Job 1: Build і push Docker images (завжди)
   # -------------------------------------------------------
-  build-backend:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    outputs:
-      changed: ${{ steps.changes.outputs.backend }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Check backend changes
-        id: changes
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "backend=true" >> $GITHUB_OUTPUT
-          elif git diff --name-only HEAD~1 HEAD | grep -q '^backend/'; then
-            echo "backend=true" >> $GITHUB_OUTPUT
-          else
-            echo "backend=false" >> $GITHUB_OUTPUT
-          fi
 
       - name: Login to GitHub Container Registry
-        if: steps.changes.outputs.backend == 'true'
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -48,11 +32,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
-        if: steps.changes.outputs.backend == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Backend
-        if: steps.changes.outputs.backend == 'true'
         uses: docker/build-push-action@v5
         with:
           context: ./backend
@@ -63,48 +45,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  # -------------------------------------------------------
-  # Job 2: Build і push Frontend
-  # -------------------------------------------------------
-  build-frontend:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      changed: ${{ steps.changes.outputs.frontend }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Check frontend changes
-        id: changes
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "frontend=true" >> $GITHUB_OUTPUT
-          elif git diff --name-only HEAD~1 HEAD | grep -q '^frontend/'; then
-            echo "frontend=true" >> $GITHUB_OUTPUT
-          else
-            echo "frontend=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Login to GitHub Container Registry
-        if: steps.changes.outputs.frontend == 'true'
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        if: steps.changes.outputs.frontend == 'true'
-        uses: docker/setup-buildx-action@v3
-
       - name: Build and push Frontend
-        if: steps.changes.outputs.frontend == 'true'
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
@@ -116,12 +57,11 @@ jobs:
           cache-to: type=gha,mode=max
 
   # -------------------------------------------------------
-  # Job 3: Deploy на VPS
+  # Job 2: Deploy на VPS через SSH + kubectl
   # -------------------------------------------------------
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-backend, build-frontend]
-    if: always() && !cancelled() && !contains(needs.*.result, 'failure')
+    needs: build
 
     steps:
       - name: Deploy via SSH
@@ -131,20 +71,12 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            if [ "${{ needs.build-backend.outputs.changed }}" = "true" ]; then
-              echo "🔄 Deploying backend..."
-              kubectl -n vdm set image deployment/backend \
-                backend=${{ env.BACKEND_IMAGE }}:${{ github.sha }}
-              kubectl -n vdm rollout status deployment/backend --timeout=180s
-              echo "✅ Backend deployed"
-            fi
+            kubectl -n vdm set image deployment/backend \
+              backend=${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+            kubectl -n vdm set image deployment/frontend \
+              frontend=${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
-            if [ "${{ needs.build-frontend.outputs.changed }}" = "true" ]; then
-              echo "🔄 Deploying frontend..."
-              kubectl -n vdm set image deployment/frontend \
-                frontend=${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
-              kubectl -n vdm rollout status deployment/frontend --timeout=120s
-              echo "✅ Frontend deployed"
-            fi
+            kubectl -n vdm rollout status deployment/backend --timeout=180s
+            kubectl -n vdm rollout status deployment/frontend --timeout=120s
 
-            echo "🎉 Deploy completed: ${{ github.sha }}"
+            echo "✅ Deploy completed: ${{ github.sha }}"
