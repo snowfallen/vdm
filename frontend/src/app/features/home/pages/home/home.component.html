@@ -9,7 +9,6 @@
              [class.hero__slide--active]="activeSlide() === i"
              [style.background-image]="slide.imageUrl ? 'url(' + slide.imageUrl + ')' : null">
 
-            <!-- Оверлей для фото щоб текст читався -->
             <div class="hero__overlay" *ngIf="slide.imageUrl"></div>
 
             <div class="container hero__content">
@@ -45,20 +44,17 @@
     <div class="container stats-bar__inner">
         <div *ngFor="let stat of stats" class="stats-bar__item">
             <svg *ngIf="stat.icon === 'shield'" class="stats-bar__icon"
-                 width="32" height="32" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.5">
+                 width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             <svg *ngIf="stat.icon === 'layers'" class="stats-bar__icon"
-                 width="32" height="32" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.5">
+                 width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"/>
                 <polyline points="2 17 12 22 22 17"/>
                 <polyline points="2 12 12 17 22 12"/>
             </svg>
             <svg *ngIf="stat.icon === 'users'" class="stats-bar__icon"
-                 width="32" height="32" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.5">
+                 width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -81,16 +77,15 @@
             <h2 class="section__title">Новинки</h2>
             <a routerLink="/catalog" class="section__link">
                 Весь список
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m9 18 6-6-6-6"/>
                 </svg>
             </a>
         </div>
 
+        <!-- Скелетон -->
         <div class="products-grid" *ngIf="isLoadingNew()">
-            <div *ngFor="let _ of skeletonArray.slice(0,4)"
-                 class="product-card product-card--skeleton">
+            <div *ngFor="let _ of skeletonArray.slice(0,4)" class="product-card product-card--skeleton">
                 <div class="skeleton" style="aspect-ratio:1;"></div>
                 <div class="product-card__body">
                     <div class="skeleton" style="height:14px;margin-bottom:8px;width:80%"></div>
@@ -99,72 +94,14 @@
             </div>
         </div>
 
+        <!-- Картки через компонент -->
         <div class="products-grid" *ngIf="!isLoadingNew()">
-            <article *ngFor="let product of newArrivals(); let i = index"
-                     class="product-card animate-fade-in"
-                     [class]="'delay-' + (i + 1)">
-
-                <div class="product-card__badge">
-                    <span class="badge badge--new">NEW</span>
-                </div>
-
-                <a [routerLink]="['/products', product.id]" class="product-card__image">
-                    <img *ngIf="product.imageUrl"
-                         [src]="product.imageUrl" [alt]="product.name" loading="lazy" />
-                    <div *ngIf="!product.imageUrl" class="product-card__placeholder">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="1">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <polyline points="21 15 16 10 5 21"/>
-                        </svg>
-                    </div>
-                </a>
-
-                <div class="product-card__body">
-                    <a [routerLink]="['/products', product.id]" class="product-card__name">
-                        {{ product.name }}
-                    </a>
-                    <p class="product-card__availability">
-                        <span class="product-card__dot"></span> В наявності
-                    </p>
-
-                    <div class="product-card__footer">
-                        <div class="product-card__price">
-                            {{ formatPrice(product.price) }}<span>грн</span>
-                        </div>
-
-                        <button *ngIf="isClient"
-                                class="product-card__cart btn btn--sm"
-                                [class.btn--primary]="!isAdded(product.id)"
-                                [class.btn--success]="isAdded(product.id)"
-                                (click)="addToCart($event, product)">
-                            <ng-container *ngIf="!isAdded(product.id)">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2">
-                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                                    <line x1="3" y1="6" x2="21" y2="6"/>
-                                    <path d="M16 10a4 4 0 0 1-8 0"/>
-                                </svg>
-                                В кошик
-                            </ng-container>
-                            <ng-container *ngIf="isAdded(product.id)">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2.5">
-                                    <polyline points="20 6 9 17 4 12"/>
-                                </svg>
-                                Додано
-                            </ng-container>
-                        </button>
-
-                        <a *ngIf="!isClient"
-                           [routerLink]="['/products', product.id]"
-                           class="product-card__cart btn btn--outline btn--sm">
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </article>
+            <app-product-card
+                *ngFor="let product of newArrivals(); let i = index"
+                [product]="product"
+                [badge]="'NEW'"
+                class="animate-fade-in delay-{{ i + 1 }}">
+            </app-product-card>
         </div>
     </div>
 </section>
@@ -178,16 +115,15 @@
             <h2 class="section__title">Хіти продажів</h2>
             <a routerLink="/catalog" class="section__link">
                 Весь список
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m9 18 6-6-6-6"/>
                 </svg>
             </a>
         </div>
 
+        <!-- Скелетон -->
         <div class="products-grid" *ngIf="isLoadingBest()">
-            <div *ngFor="let _ of skeletonArray.slice(0,4)"
-                 class="product-card product-card--skeleton">
+            <div *ngFor="let _ of skeletonArray.slice(0,4)" class="product-card product-card--skeleton">
                 <div class="skeleton" style="aspect-ratio:1;"></div>
                 <div class="product-card__body">
                     <div class="skeleton" style="height:14px;margin-bottom:8px;width:80%"></div>
@@ -196,72 +132,14 @@
             </div>
         </div>
 
+        <!-- Картки через компонент -->
         <div class="products-grid" *ngIf="!isLoadingBest()">
-            <article *ngFor="let product of bestsellers(); let i = index"
-                     class="product-card animate-fade-in"
-                     [class]="'delay-' + (i + 1)">
-
-                <div class="product-card__badge">
-                    <span class="badge badge--top">TOP</span>
-                </div>
-
-                <a [routerLink]="['/products', product.id]" class="product-card__image">
-                    <img *ngIf="product.imageUrl"
-                         [src]="product.imageUrl" [alt]="product.name" loading="lazy"/>
-                    <div *ngIf="!product.imageUrl" class="product-card__placeholder">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="1">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <polyline points="21 15 16 10 5 21"/>
-                        </svg>
-                    </div>
-                </a>
-
-                <div class="product-card__body">
-                    <a [routerLink]="['/products', product.id]" class="product-card__name">
-                        {{ product.name }}
-                    </a>
-                    <p class="product-card__availability">
-                        <span class="product-card__dot"></span> В наявності
-                    </p>
-
-                    <div class="product-card__footer">
-                        <div class="product-card__price">
-                            {{ formatPrice(product.price) }}<span>грн</span>
-                        </div>
-
-                        <button *ngIf="isClient"
-                                class="product-card__cart btn btn--sm"
-                                [class.btn--primary]="!isAdded(product.id)"
-                                [class.btn--success]="isAdded(product.id)"
-                                (click)="addToCart($event, product)">
-                            <ng-container *ngIf="!isAdded(product.id)">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2">
-                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                                    <line x1="3" y1="6" x2="21" y2="6"/>
-                                    <path d="M16 10a4 4 0 0 1-8 0"/>
-                                </svg>
-                                В кошик
-                            </ng-container>
-                            <ng-container *ngIf="isAdded(product.id)">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2.5">
-                                    <polyline points="20 6 9 17 4 12"/>
-                                </svg>
-                                Додано
-                            </ng-container>
-                        </button>
-
-                        <a *ngIf="!isClient"
-                           [routerLink]="['/products', product.id]"
-                           class="product-card__cart btn btn--outline btn--sm">
-                            Детальніше
-                        </a>
-                    </div>
-                </div>
-            </article>
+            <app-product-card
+                *ngFor="let product of bestsellers(); let i = index"
+                [product]="product"
+                [badge]="'TOP'"
+                class="animate-fade-in delay-{{ i + 1 }}">
+            </app-product-card>
         </div>
     </div>
 </section>

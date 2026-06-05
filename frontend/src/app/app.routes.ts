@@ -53,11 +53,11 @@ export const routes: Routes = [
     loadComponent: () =>
         import('./shared/components/search.component').then(m => m.SearchComponent)
   },
-  { path: 'about',    loadComponent: () => import('./features/pages/about.component').then(m => m.AboutComponent) },
-  { path: 'delivery', loadComponent: () => import('./features/pages/delivery.component').then(m => m.DeliveryComponent) },
-  { path: 'brands',   loadComponent: () => import('./features/pages/brands.component').then(m => m.BrandsComponent) },
-  { path: 'contacts', loadComponent: () => import('./features/pages/contacts.component').then(m => m.ContactsComponent) },
-  { path: 'certificates', loadComponent: () => import('./features/pages/certificates.component').then(m => m.CertificatesComponent) },
+  { path: 'about',    loadComponent: () => import('./features/pages/about/about.component').then(m => m.AboutComponent) },
+  { path: 'delivery', loadComponent: () => import('./features/pages/delivery/delivery.component').then(m => m.DeliveryComponent) },
+  { path: 'brands',   loadComponent: () => import('./features/pages/brands/brands.component').then(m => m.BrandsComponent) },
+  { path: 'contacts', loadComponent: () => import('./features/pages/contacts/contacts.component').then(m => m.ContactsComponent) },
+  { path: 'certificates', loadComponent: () => import('./features/pages/certificates/certificates.component').then(m => m.CertificatesComponent) },
   {
     path: '**',
     redirectTo: ''

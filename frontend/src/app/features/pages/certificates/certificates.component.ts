@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {IMediaFile, MediaService} from "../../core/services/media.service";
+import {IMediaFile, MediaService} from "../../../core/services/media.service";
 
 @Component({
   selector: 'app-certificates',
