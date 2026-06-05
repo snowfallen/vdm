@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/YOUR_GITHUB_USER/vdm-api:latest   # Змінити YOUR_GITHUB_USER!
+          image: ghcr.io/snowfallen/vdm:latest
           ports:
             - containerPort: 8080
           envFrom:

@@ -21,10 +21,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - yourdomain.com                  # Змінити!
+        - vdm-test.bond-tech.pl                  # Змінити!
       secretName: vdm-tls                 # cert-manager створить цей Secret
   rules:
-    - host: yourdomain.com                # Змінити!
+    - host: vdm-test.bond-tech.pl                # Змінити!
       http:
         paths:
           # API → Spring Boot

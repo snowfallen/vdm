@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/YOUR_GITHUB_USER/vdm-frontend:latest   # Змінити YOUR_GITHUB_USER!
+          image: ghcr.io/snowfallen/vdm:latest
           ports:
             - containerPort: 80
           resources:
